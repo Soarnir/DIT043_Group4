@@ -11,5 +11,8 @@ public class Main {
         MainMenu menu1 = new MainMenu();
         menu1.printMenu();
 
+
+        //Below this comment is just for testing
+
     }
 }
