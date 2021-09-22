@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Input {
 
-    public Scanner inputScanner = new Scanner(System.in);
+    public Scanner inputScanner = new Scanner(System.in); //Why do we create this object if we have "inputter" in MainMenu for example?
 
 
     public String readString() {
