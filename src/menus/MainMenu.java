@@ -2,6 +2,7 @@ package menus;
 
 import utility.MenuUtility;
 import utility.Input;
+import utility.Storage;
 
 public class MainMenu {
 
