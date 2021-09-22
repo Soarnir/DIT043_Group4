@@ -19,7 +19,7 @@ public class Item {
             itemID = id;
         }
 
-        if (name == ""){
+        if (name.equals("")){
             System.out.println("Invalid data for item.");
             return;
         } else {
@@ -38,7 +38,7 @@ public class Item {
 
     public void updateItem(String newName, int newPrice){
 
-        if (newName == "" || newPrice <= 0){
+        if (newName.equals("") || newPrice <= 0){
             System.out.println("Invalid data for item.");
         } else {
             itemName = newName;

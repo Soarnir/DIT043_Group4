@@ -1,2 +1,15 @@
-
-*.jar
+# Default ignored files
+/.idea/shelf/
+/.idea/workspace.xml
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+#libraries
+/lib/
+/libraries/
+#out
+/out/
+#file types
+.jar

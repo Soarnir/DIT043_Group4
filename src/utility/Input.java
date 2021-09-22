@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Input {
 
-    public Scanner inputScanner = new Scanner(System.in); //Why do we create this object if we have "inputter" in MainMenu for example?
-
+    //Create protected Scanner object, due to menu design this is the only scanner created in the project
+    final Scanner inputScanner = new Scanner(System.in);
 
     public String readString() {
         String word = inputScanner.next();
@@ -19,34 +19,27 @@ public class Input {
         return wordy;
     }
 
+    /*
+     * Method manages user input of menu options, assuming nothing other than integers gets input by the user.
+     * User must enter integer between lowerBound and upperBound inclusive in order to progress through menu.
+     */
     public int readMenuInt(int lowerBound, int upperBound) {
-        boolean fail = true;
+        boolean invalidInput = true;
+        int x;
         do {
-            int x = inputScanner.nextInt();
+            x = inputScanner.nextInt();
             inputScanner.nextLine();
             if (x < lowerBound || x > upperBound) {
                 System.out.println("Invalid menu option. Please type another option");
             } else {
-                return x;
+                invalidInput = false;
             }
-        } while (fail);
-        return 0;
-    }
-
-    public int readInt(int lowerBound, int upperBound) {
-        int x = inputScanner.nextInt();
-        inputScanner.nextLine();
+        } while (invalidInput);
         return x;
     }
 
     public int readInt() {
         int x = inputScanner.nextInt();
-        inputScanner.nextLine();
-        return x;
-    }
-
-    public double readDouble(double lowerBound, double upperBound) {
-        double x = inputScanner.nextDouble();
         inputScanner.nextLine();
         return x;
     }
