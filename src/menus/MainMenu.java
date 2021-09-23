@@ -52,6 +52,7 @@ public class MainMenu {
                     break;
                 default:
                     loop = false;
+                    inputter.closeScanner();
             }
         } while (loop);
         System.exit(0);

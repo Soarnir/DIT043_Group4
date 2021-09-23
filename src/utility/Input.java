@@ -50,4 +50,8 @@ public class Input {
         return x;
     }
 
+    public void closeScanner() {
+        inputScanner.close();
+    }
+
 }
