@@ -2,43 +2,43 @@ import utility.Storage;
 
 public class Item {
 
-    public String itemID = ""; //int or string?
-    public String itemName = "";
-    public int itemPrice = 0;
+    private String itemID = "";
+    private String itemName = "";
+    private int itemPrice = 0;
 
-    public Item(String id, String name, int price) {
+    public Item(String itemID, String itemName, int itemPrice) {
 
-        if (id.equals("") && (Storage.usedIDs.contains(id))) { //Only checking for blank IDs, no check for uniqueness has been implemented yet.
-            System.out.println("Invalid data for item."); //Lines 9 - 10 are repeated, can it be placed in a function?
-            return;
-        } else {
-            itemID = id;
-        }
-
-        if (name.equals("")) {
+        if (itemID.equals("") || (Storage.usedIDs.contains(itemID)) || itemName.equals("") || (itemPrice <= 0)) {
             System.out.println("Invalid data for item.");
-            return;
+            return; // Is this needed?
         } else {
-            itemName = name;
+            this.itemID = itemID;
+            this.itemName = itemName;
+            this.itemPrice = itemPrice;
+            System.out.println("Item " + this.itemID + " was registered successfully.");
         }
 
-        if (price <= 0) {
-            System.out.println("Invalid data for item.");
-            return;
-        } else {
-            itemPrice = price;
-        }
     }
 
-    //When the item is created successfully, the system should print the message: "Item <ID> was registered successfully."
+    public String getItemID(){
+        return this.itemID;
+    }
+
+    public String getItemName(){
+        return this.itemName;
+    }
+
+    public int getItemPrice(){
+        return this.itemPrice;
+    }
 
     public void updateItem(String newName, int newPrice) {
 
         if (newName.equals("") || newPrice <= 0) {
             System.out.println("Invalid data for item.");
         } else {
-            itemName = newName;
-            itemPrice = newPrice;
+            this.itemName = newName;
+            this.itemPrice = newPrice;
         }
 
     }
