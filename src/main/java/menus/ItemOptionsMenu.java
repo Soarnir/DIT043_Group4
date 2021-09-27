@@ -1,7 +1,7 @@
 package menus;
 
-import utility.MenuUtility;
 import utility.Input;
+import utility.MenuUtility;
 
 public class ItemOptionsMenu {
 
