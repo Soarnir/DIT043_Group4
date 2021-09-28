@@ -21,11 +21,11 @@ public class ReviewOptionsMenu {
     //Menu text
     String reviewMenuOptions = "Reviews options menu:" + MenuUtility.EOL +
                                "0. Return to Main Menu." + MenuUtility.EOL +
-                               "1. Create a review for an Item." + MenuUtility.EOL +
-                               "2. Print a specific review of an Item." + MenuUtility.EOL +
-                               "3. Print all reviews of an Item." + MenuUtility.EOL +
-                               "4. Print mean grade of an Item" + MenuUtility.EOL +
-                               "5. Print all comments of an Item." + MenuUtility.EOL +
+                               "1. Create a review for an Item.Item." + MenuUtility.EOL +
+                               "2. Print a specific review of an Item.Item." + MenuUtility.EOL +
+                               "3. Print all reviews of an Item.Item." + MenuUtility.EOL +
+                               "4. Print mean grade of an Item.Item" + MenuUtility.EOL +
+                               "5. Print all comments of an Item.Item." + MenuUtility.EOL +
                                "6. Print all registered reviews." + MenuUtility.EOL +
                                "7. Print item(s) with most reviews." + MenuUtility.EOL +
                                "8. Print item(s) with least reviews." + MenuUtility.EOL +
@@ -44,19 +44,19 @@ public class ReviewOptionsMenu {
             int chosenMenuOption = inputter.readMenuInt(0, 10);
             switch (chosenMenuOption) {
                 case 1:
-                    //Create a review for an Item
+                    //Create a review for an Item.Item
                     break;
                 case 2:
-                    //Print a specific review of an Item
+                    //Print a specific review of an Item.Item
                     break;
                 case 3:
-                    //Print all reviews of an Item
+                    //Print all reviews of an Item.Item
                     break;
                 case 4:
-                    //Print mean grade of an Item
+                    //Print mean grade of an Item.Item
                     break;
                 case 5:
-                    //Print all comments of an Item
+                    //Print all comments of an Item.Item
                     break;
                 case 6:
                     //Print all registered reviews

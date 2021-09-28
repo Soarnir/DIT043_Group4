@@ -1,4 +1,4 @@
-import utility.Storage;
+package Item;
 
 public class Item {
 
@@ -7,22 +7,12 @@ public class Item {
     private int itemPrice = 0;
 
     public Item(String itemID, String itemName, int itemPrice) {
-
-        if (itemID.equals("") || (Storage.usedIDs.contains(itemID)) || itemName.equals("") || (itemPrice <= 0)) {
-            System.out.println("Invalid data for item.");
-            return; // Is this needed?
-        } else {
-            this.itemID = itemID;
-            this.itemName = itemName;
-            this.itemPrice = itemPrice;
-            System.out.println("Item " + this.itemID + " was registered successfully.");
-        }
-
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.itemPrice = itemPrice;
     }
 
-    public String getItemID(){
-        return this.itemID;
-    }
+    public String getItemID(){ return this.itemID; }
 
     public String getItemName(){
         return this.itemName;
