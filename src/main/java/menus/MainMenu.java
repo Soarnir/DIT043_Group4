@@ -26,7 +26,7 @@ public class MainMenu {
     //Menu text
     String mainMenuOptions = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
                              "0. Close system." + MenuUtility.EOL +
-                             "1. Open Item.Item options." + MenuUtility.EOL +
+                             "1. Open Item options." + MenuUtility.EOL +
                              "2. Open Review options." + MenuUtility.EOL +
                              "3. Open Transaction History options." + MenuUtility.EOL + MenuUtility.EOL +
                              "Type an option number: ";

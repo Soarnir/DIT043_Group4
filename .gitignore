@@ -11,5 +11,7 @@
 /libraries/
 #out
 /out/
+#target
+/target/
 #file types
 .jar

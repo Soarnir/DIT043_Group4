@@ -19,12 +19,12 @@ public class ItemOptionsMenu {
     }
 
     //Menu text
-    String itemMenuOptions = "Item.Item options menu:" + MenuUtility.EOL +
+    String itemMenuOptions = "Item options menu:" + MenuUtility.EOL +
                              "0. Return to Main Menu." + MenuUtility.EOL +
-                             "1. Create an Item.Item." + MenuUtility.EOL +
-                             "2. Remove an Item.Item." + MenuUtility.EOL +
+                             "1. Create an Item." + MenuUtility.EOL +
+                             "2. Remove an Item." + MenuUtility.EOL +
                              "3. Print all registered Items." + MenuUtility.EOL +
-                             "4. Buy an Item.Item." + MenuUtility.EOL +
+                             "4. Buy an Item." + MenuUtility.EOL +
                              "5. Update an item’s name." + MenuUtility.EOL +
                              "6. Update an item’s price." + MenuUtility.EOL + MenuUtility.EOL +
                              "Type an option number:";
@@ -42,16 +42,16 @@ public class ItemOptionsMenu {
             int chosenMenuOption = inputter.readMenuInt(0, 6);
             switch (chosenMenuOption) {
                 case 1:
-                    //Create an Item.Item
+                    //Create an Item
                     break;
                 case 2:
-                    //Remove an Item.Item
+                    //Remove an Item
                     break;
                 case 3:
                     //Print all registered Items
                     break;
                 case 4:
-                    //Buy an Item.Item
+                    //Buy an Item
                     break;
                 case 5:
                     //Update an item’s name
@@ -66,21 +66,21 @@ public class ItemOptionsMenu {
     }
 
     /*
-     * -Whenever the user decides to buy an Item.Item, he must specify the ID of the Item.Item he wants to buy.
-     * -The System checks if the specified Item.Item ID exists and if so, proceeds to the amount screen
+     * -Whenever the user decides to buy an Item, he must specify the ID of the Item he wants to buy.
+     * -The System checks if the specified Item ID exists and if so, proceeds to the amount screen
      * -The amount screen should be put in by the user
      * -The total price containing discounts should be calculated and then printed by the system
-     * -Return to Item.Item options menu
+     * -Return to Item options menu
      */
     public String buyItem(){
 
-        System.out.println("Main Menu > Item.Item options menu > Buy an Item.Item." + MenuUtility.EOL +
+        System.out.println("Main Menu > Item options menu > Buy an Item." + MenuUtility.EOL +
                 "Please specify the ID of the item you would like to buy:");
 
         String inputItemID = inputter.readString();
         //TODO Implement Input ID existance
         /*
-        if (Item.Item.usedIDs.contains(Item.Item(String inputItemID))){
+        if (Item.usedIDs.contains(Item(String inputItemID))){
 
         }
         */
