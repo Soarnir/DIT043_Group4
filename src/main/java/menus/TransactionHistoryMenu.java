@@ -1,21 +1,20 @@
 package menus;
 
+import facade.Facade;
 import utility.Input;
 import utility.MenuUtility;
 
 public class TransactionHistoryMenu {
 
     //Utility class declaration
-    Input inputter;
-    MenuUtility mUtil;
+    Facade facade;
 
     /*
      * Constructor for TransactionHistoryMenu
      * Requires Input and MenuUtility utility classes
      */
-    public TransactionHistoryMenu (Input input, MenuUtility menuUtility) {
-        this.inputter = input;
-        this.mUtil = menuUtility;
+    public TransactionHistoryMenu (Facade facade) {
+        this.facade = facade;
     }
 
     //Menu text
@@ -39,7 +38,7 @@ public class TransactionHistoryMenu {
         boolean loop = true;
         do {
             System.out.println(transactionMenuOptions);
-            int chosenMenuOption = inputter.readMenuInt(0, 3);
+            int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case 1:
                     //Print total profit from all item purchases

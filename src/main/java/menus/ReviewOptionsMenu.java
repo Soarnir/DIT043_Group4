@@ -1,21 +1,20 @@
 package menus;
 
+import facade.Facade;
 import utility.Input;
 import utility.MenuUtility;
 
 public class ReviewOptionsMenu {
 
     //Utility class declaration
-    Input inputter;
-    MenuUtility mUtil;
+    Facade facade;
 
     /*
      * Constructor for ReviewOptionsMenu
      * Requires Input and MenuUtility utility classes
      */
-    public ReviewOptionsMenu (Input input, MenuUtility menuUtility) {
-        this.inputter = input;
-        this.mUtil = menuUtility;
+    public ReviewOptionsMenu (Facade facade) {
+        this.facade = facade;
     }
 
     //Menu text
@@ -41,7 +40,7 @@ public class ReviewOptionsMenu {
         boolean loop = true;
         do {
             System.out.println(reviewMenuOptions);
-            int chosenMenuOption = inputter.readMenuInt(0, 10);
+            int chosenMenuOption = Input.readMenuInt(0, 10);
             switch (chosenMenuOption) {
                 case 1:
                     //Create a review for an Item

@@ -1,9 +1,12 @@
 package facade;
 
+import Item.Storage;
+
 import java.util.List;
 
 public class Facade {
 
+    Storage storage = new Storage();
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
@@ -13,19 +16,19 @@ public class Facade {
     }
 
     public String createItem(String itemID, String itemName, double unitPrice) {
-        return "";
+        return storage.createItem(itemID, itemName, unitPrice);
     }
 
     public String printItem(String itemID) {
-        return "";
+        return storage.getItem(itemID).printItem();
     }
 
     public String removeItem(String itemID) {
-        return "";
+        return storage.removeItem(itemID);
     }
 
     public boolean containsItem(String itemID) {
-        return false;
+        return storage.getItemMap().containsKey(itemID);
     }
 
     public double buyItem(String itemID, int amount) {
@@ -33,11 +36,11 @@ public class Facade {
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        return "";
+        return storage.createReview(itemID, reviewComment, reviewGrade);
     }
 
     public String reviewItem(String itemID, int reviewGrade) {
-        return "";
+        return storage.createReview(itemID, reviewGrade);
     }
 
     public String getItemCommentsPrinted(String itemID) {
@@ -45,15 +48,15 @@ public class Facade {
     }
 
     public List<String> getItemComments(String itemID) {
-        return null;
+        return storage.getItemComments(itemID);
     }
 
     public double getItemMeanGrade(String itemID) {
-        return -1.0;
+        return storage.getItemMeanGrade(itemID);
     }
 
     public int getNumberOfReviews(String itemID) {
-        return -1;
+        return storage.getItemComments(itemID).size();
     }
 
     public String getPrintedItemReview(String itemID, int reviewNumber) {
@@ -137,7 +140,8 @@ public class Facade {
     }
 
     public String printAllItems() {
-        return "";
+        System.out.println(storage.printAllItems());
+        return storage.printAllItems();
     }
 
     public String printMostProfitableItems() {

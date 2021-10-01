@@ -1,27 +1,23 @@
 package menus;
 
+import facade.Facade;
 import utility.Input;
 import utility.MenuUtility;
-import Item.Storage;
 
 public class MainMenu {
 
-    //Create utility objects
-    Input inputter = new Input();
-
-    Storage storage = new Storage();
-
-    MenuUtility mUtil = new MenuUtility();
+    //Create Facade
+    Facade facade = new Facade();
 
     /*
      * Create Menu objects
      * Constructor passes through utility objects such that they do not need to be created multiple times, retaining the same object reference
      */
-    ItemOptionsMenu itemOptionsMenu = new ItemOptionsMenu(inputter, mUtil);
+    ItemOptionsMenu itemOptionsMenu = new ItemOptionsMenu(facade);
 
-    ReviewOptionsMenu reviewOptionsMenu = new ReviewOptionsMenu(inputter, mUtil);
+    ReviewOptionsMenu reviewOptionsMenu = new ReviewOptionsMenu(facade);
 
-    TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(inputter, mUtil);
+    TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(facade);
 
     //Menu text
     String mainMenuOptions = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
@@ -39,7 +35,7 @@ public class MainMenu {
         boolean loop = true;
         do {
             System.out.println(mainMenuOptions);
-            int chosenMenuOption = inputter.readMenuInt(0, 3);
+            int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case 1:
                     itemOptionsMenu.printMenu();
@@ -52,7 +48,7 @@ public class MainMenu {
                     break;
                 default:
                     loop = false;
-                    inputter.closeScanner();
+                    Input.closeScanner();
             }
         } while (loop);
         System.exit(0);
