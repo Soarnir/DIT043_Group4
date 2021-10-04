@@ -39,7 +39,7 @@ public class ReviewOptionsMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            System.out.println(reviewMenuOptions);
+            MenuUtility.sout(reviewMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 10);
             switch (chosenMenuOption) {
                 case 1:

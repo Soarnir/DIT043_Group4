@@ -13,9 +13,9 @@ public class Storage {
     // No getter has been implemented because only the Storage class should be accessing usedIDs.
     private static final List<String> usedIDs = new ArrayList<>();
 
-    private final HashMap<String, Item> itemMap = new HashMap<>();
+    private static final HashMap<String, Item> itemMap = new HashMap<>();
 
-    public HashMap<String, Item> getItemMap(){
+    public static HashMap<String, Item> getItemMap(){
         return itemMap;
     }
 
@@ -24,30 +24,79 @@ public class Storage {
      * I (Kevin) has implemented this as discussed but do not need it for User Stories 2.1 - 2.3
      * Oliver, feel free to use if needed for your user stories in Epic feature 2. If not, we can delete it.
      */
-    public boolean checkForUsedID(String itemID) {
+    public static boolean checkForUsedID(String itemID) {
         return usedIDs.contains(itemID);
     }
 
-    public String createItem(String itemID, String itemName, double itemPrice) {
+    public static String createItem(String itemID, String itemName, double itemPrice) {
         if (itemID.equals("") || checkForUsedID(itemID) || itemName.equals("") || (itemPrice <= 0)) {
-            System.out.println("Problem: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + checkForUsedID(itemID));
+            MenuUtility.sout("Problem: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + checkForUsedID(itemID));
             return "Invalid data for item."; // Not sure about this part yet.
         } else {
-            Item item = new Item(itemID, itemName, BigDecimal.valueOf(itemPrice));
-            System.out.println("Created: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + checkForUsedID(itemID));
+            MenuUtility.sout("Created: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + checkForUsedID(itemID));
             usedIDs.add(itemID);
-            itemMap.put(itemID, item);
+            itemMap.put(itemID, new Item(itemID, itemName, BigDecimal.valueOf(itemPrice)));
             return "Item " + itemID + " was registered successfully.";
         }
     }
 
-    public Item getItem(String itemID) {
+    public static Item getItem(String itemID) {
         return itemMap.get(itemID);
     }
 
-    public String createReview(String itemID, String reviewText, int reviewGrade) {
+    public static String removeItem(String itemID) {
+        if (checkForUsedID(itemID) && getItem(itemID) != null) {
+            usedIDs.remove(itemID);
+            itemMap.remove(itemID);
+            MenuUtility.sout("Item " + itemID + " was successfully removed.");
+            return "Item " + itemID + " was successfully removed.";
+        }
+        MenuUtility.sout("Item " + itemID + " could not be removed.");
+        return "Item " + itemID + " could not be removed.";
+    }
+
+    public static String printAllItems() {
+        if (itemMap.isEmpty()) {
+            return "No items registered yet";
+        } else {
+            StringBuilder stringBuilder = new StringBuilder("All registered items:" + MenuUtility.EOL);
+            for (int i = 0; i < usedIDs.size(); i++) {
+                Item item = getItem(usedIDs.get(i));
+                stringBuilder.append(item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK" + MenuUtility.EOL);
+            }
+            return stringBuilder.toString();
+        }
+    }
+
+    public static String updateItem(String itemID, String newName) {
         if (!checkForUsedID(itemID)) {
-            return "Item <ID> was not registered yet.";
+            return "Item " + itemID + " was not registered yet.";
+        } else if (newName.equals("")) {
+            return "Invalid data for item.";
+        } else {
+            MenuUtility.sout("Item: " + itemID + " name: " + getItem(itemID).getItemName() + " | new name: " + newName);
+            getItem(itemID).updateItemName(newName);
+            return "Item " + itemID + " was updated successfully.";
+        }
+    }
+
+    public static String updateItem(String itemID, BigDecimal newPrice) {
+        if (!checkForUsedID(itemID)) {
+            return "Item " + itemID + " was not registered yet.";
+        } else if (newPrice.doubleValue() <= 0) {
+            return "Invalid data for item.";
+        } else {
+            MenuUtility.sout("Item: " + itemID + " price: " + getItem(itemID).getItemPrice() + " | new price: " + newPrice);
+            getItem(itemID).updateItemPrice(newPrice);
+            return "Item " + itemID + " was updated successfully.";
+        }
+    }
+
+    //*********************************REVIEWS*********************************//
+
+    public static String createReview(String itemID, String reviewText, int reviewGrade) {
+        if (!checkForUsedID(itemID)) {
+            return "Item " + itemID + " was not registered yet.";
         } else if (reviewGrade < 1 || reviewGrade > 5) {
             return "Grade values must be between 1 and 5.";
         } else {
@@ -60,28 +109,7 @@ public class Storage {
         }
     }
 
-    public String removeItem(String itemID) {
-        if (checkForUsedID(itemID) && getItem(itemID) != null) {
-            usedIDs.remove(itemID);
-            itemMap.remove(itemID);
-            return "Item " + itemID + " was successfully removed.";
-        }
-        return "Item " + itemID + " could not be removed.";
-    }
-
-
-    public String printAllItems() {
-        StringBuilder stringBuilder = new StringBuilder("All registered items:" + MenuUtility.EOL);
-        for (int i = 0; i < usedIDs.size(); i++) {
-            Item item = getItem(usedIDs.get(i));
-            stringBuilder.append(item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK" + MenuUtility.EOL);
-        }
-        return stringBuilder.toString();
-    }
-
-    //*********************************REVIEWS*********************************//
-
-    public String createReview(String itemID, int reviewGrade) {
+    public static String createReview(String itemID, int reviewGrade) {
         if (!usedIDs.contains(itemID)) {
             return "Item <ID> was not registered yet.";
         } else if (reviewGrade < 1 || reviewGrade > 5) {
@@ -92,11 +120,11 @@ public class Storage {
         }
     }
 
-    public List<Review> getReviewList(String itemID) {
-        return itemMap.get(itemID).getReviewList();
+    public static List<Review> getReviewList(String itemID) {
+        return getItem(itemID).getReviewList();
     }
 
-    public List<String> getItemComments(String itemID) {
+    public static List<String> getItemComments(String itemID) {
         List<String> itemComments = new ArrayList<>();
         for (Review review : getReviewList(itemID)) {
             if (review.getReviewText() != null) {
@@ -106,7 +134,7 @@ public class Storage {
         return itemComments;
     }
 
-    public double getItemMeanGrade(String itemID) {
+    public static double getItemMeanGrade(String itemID) {
         BigDecimal sum = new BigDecimal(0).setScale(1, RoundingMode.DOWN);
         for (Review review : getReviewList(itemID)) {
             sum = sum.add(review.getReviewGrade());
@@ -114,11 +142,25 @@ public class Storage {
         return (sum.divide(BigDecimal.valueOf(getReviewList(itemID).size()), RoundingMode.DOWN)).doubleValue();
     }
 
-    public Review getReview(String itemID, int reviewIndex) {
-        return itemMap.get(itemID).getReviewList().get(reviewIndex);
+    public static Review getReview(String itemID, int reviewIndex) {
+        return getItem(itemID).getReviewList().get(reviewIndex);
     }
 
-    public String printAllItemReviews(String itemID) {
+    public static String printReview(String itemID, int reviewIndex) {
+        int reviewListSize = getReviewList(itemID).size();
+        if (!checkForUsedID(itemID)) {
+            return "Item " + itemID + " was not registered yet.";
+        } else if (reviewListSize == 0) {
+            return "Item " + getItem(itemID).getItemName() + "";
+        } else if (reviewIndex < 1 || reviewIndex > reviewListSize) {
+            return "Invalid review number. Choose between 1 and " + reviewListSize + ".";
+        } else {
+            Review review = getReview(itemID, reviewIndex);
+            return "Grade: " + review.getReviewGrade() + "." + review.getReviewText() + MenuUtility.EOL;
+        }
+    }
+
+    public static String printAllItemReviews(String itemID) {
         StringBuilder sb = new StringBuilder();
         Item item = getItem(itemID);
         sb.append("Review(s) for " + item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK." + MenuUtility.EOL);
@@ -128,10 +170,27 @@ public class Storage {
         return sb.toString();
     }
 
-    public String printAllReviews() {
+    public static String printAllReviews() {
         StringBuilder sb = new StringBuilder();
         sb.append("");
         return sb.toString();
     }
+
+    //*********************************TRANSACTIONS*********************************//
+
+    public static double buyItem(String itemID, int amount) {
+        if (checkForUsedID(itemID)) {
+            Transaction transaction = new Transaction(getItem(itemID), amount);
+            getTransactionList(itemID).add(transaction);
+            return transaction.getTransactionCost().doubleValue();
+        } else {
+            return -1.0;
+        }
+    }
+
+    public static List<Transaction> getTransactionList(String itemID) {
+        return getItem(itemID).getTransactionList();
+    }
+
 
 }

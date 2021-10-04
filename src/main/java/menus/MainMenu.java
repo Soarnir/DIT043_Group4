@@ -34,7 +34,7 @@ public class MainMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            System.out.println(mainMenuOptions);
+            MenuUtility.sout(mainMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case 1:

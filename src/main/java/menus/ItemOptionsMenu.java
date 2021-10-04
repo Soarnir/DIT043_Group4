@@ -37,26 +37,29 @@ public class ItemOptionsMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            System.out.println(itemMenuOptions);
+            MenuUtility.sout(itemMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 6);
             switch (chosenMenuOption) {
                 case 1:
-                    System.out.println("pls create item");
+                    //create item
+                    MenuUtility.sout("pls create item");
                     String id = Input.readString();
-                    System.out.println(id);
+                    MenuUtility.sout(id);
                     String itemName = Input.readString(true);
-                    System.out.println(itemName);
+                    MenuUtility.sout(itemName);
                     double unitCost = Input.readDouble();
-                    System.out.println(unitCost);
+                    MenuUtility.sout(String.valueOf(unitCost));
                     facade.createItem(id, itemName, unitCost);
                     break;
                 case 2:
-                    System.out.println("pls remove item");
+                    //remove item
+                    MenuUtility.sout("pls remove item");
                     String removeID = Input.readString();
-                    System.out.println(facade.removeItem(removeID));
+                    MenuUtility.sout(facade.removeItem(removeID));
                     break;
                 case 3:
                     //Print all registered Items
+                    facade.printAllItems();
                     break;
                 case 4:
                     //Buy an Item
@@ -82,7 +85,7 @@ public class ItemOptionsMenu {
      */
     public String buyItem() {
 
-        System.out.println("Main Menu > Item options menu > Buy an Item." + MenuUtility.EOL +
+        MenuUtility.sout("Main Menu > Item options menu > Buy an Item." + MenuUtility.EOL +
                 "Please specify the ID of the item you would like to buy:");
         //TODO Implement Input ID existance
         /*

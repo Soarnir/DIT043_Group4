@@ -11,12 +11,14 @@ public class Item {
     private String itemName;
     private BigDecimal itemPrice;
     private List<Review> reviewList;
+    private List<Transaction> transactionList;
 
     public Item(String itemID, String itemName, BigDecimal itemPrice) {
         this.itemID = itemID;
         this.itemName = itemName;
-        this.itemPrice = itemPrice.setScale(2, RoundingMode.DOWN);
+        this.itemPrice = itemPrice.setScale(2, RoundingMode.FLOOR);
         this.reviewList = new ArrayList<>();
+        this.transactionList = new ArrayList<>();
     }
 
     public String getItemID(){ return this.itemID; }
@@ -29,15 +31,12 @@ public class Item {
         return this.itemPrice;
     }
 
-    public void updateItem(String newName, BigDecimal newPrice) {
+    public void updateItemName(String newName) {
+        this.itemName = newName;
+    }
 
-        if (newName.equals("") || newPrice.intValue() <= 0) {
-            System.out.println("Invalid data for item.");
-        } else {
-            this.itemName = newName;
-            this.itemPrice = newPrice;
-        }
-
+    public void updateItemPrice(BigDecimal newPrice) {
+        this.itemPrice = newPrice;
     }
 
     public String printItem() {
@@ -50,5 +49,13 @@ public class Item {
 
     public void setReviewList(List<Review> reviewList) {
         this.reviewList = reviewList;
+    }
+
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
     }
 }
