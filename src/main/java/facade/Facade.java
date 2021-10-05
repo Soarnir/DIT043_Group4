@@ -34,7 +34,9 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
-        return Storage.buyItem(itemID, amount);
+        //return Storage.buyItem(itemID, amount);
+        // Added this temporarily
+        return -1.0;
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {

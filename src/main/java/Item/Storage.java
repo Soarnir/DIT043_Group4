@@ -2,6 +2,7 @@ package Item;
 
 import utility.MenuUtility;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -116,6 +117,7 @@ public class Storage {
             return "Grade values must be between 1 and 5.";
         } else {
             getReviewList(itemID).add(new Review(reviewGrade));
+            getItem(itemID).increaseNumOfReviews();
             return "Your item review was registered successfully.";
         }
     }
@@ -134,6 +136,7 @@ public class Storage {
         return itemComments;
     }
 
+    // Error handling and making mean grade visible to the user is yet to be implemented.
     public static double getItemMeanGrade(String itemID) {
         BigDecimal sum = new BigDecimal(0).setScale(1, RoundingMode.DOWN);
         for (Review review : getReviewList(itemID)) {
@@ -151,10 +154,13 @@ public class Storage {
         if (!checkForUsedID(itemID)) {
             return "Item " + itemID + " was not registered yet.";
         } else if (reviewListSize == 0) {
-            return "Item " + getItem(itemID).getItemName() + "";
+            // Line below was commented out as specs required another print statement.
+            // return "Item " + getItem(itemID).getItemName() + "";
+            return "Item " + getItem(itemID).getItemName() + " has not been reviewed yet.";
         } else if (reviewIndex < 1 || reviewIndex > reviewListSize) {
             return "Invalid review number. Choose between 1 and " + reviewListSize + ".";
         } else {
+            // Should it be Review review = getReview(itemID, (reviewIndex - 1));
             Review review = getReview(itemID, reviewIndex);
             return "Grade: " + review.getReviewGrade() + "." + review.getReviewText() + MenuUtility.EOL;
         }
@@ -162,35 +168,106 @@ public class Storage {
 
     public static String printAllItemReviews(String itemID) {
         StringBuilder sb = new StringBuilder();
-        Item item = getItem(itemID);
-        sb.append("Review(s) for " + item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK." + MenuUtility.EOL);
-        for (Review review : getReviewList(itemID)) {
-            sb.append("Grade: " + review.getReviewGrade() + "." + review.getReviewText() + MenuUtility.EOL);
+        int reviewListSize = getReviewList(itemID).size();
+        if (!checkForUsedID(itemID)) {
+            return "Item " + itemID + " was not registered yet.";
+        } else if (reviewListSize == 0) {
+            Item item = getItem(itemID);
+            sb.append("Review(s) for " + item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK." + MenuUtility.EOL);
+            sb.append("Item " + getItem(itemID).getItemName() + " has not been reviewed yet.");
+            return sb.toString();
+        } else {
+            Item item = getItem(itemID);
+            sb.append("Review(s) for " + item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK." + MenuUtility.EOL);
+            for (Review review : getReviewList(itemID)) {
+                sb.append("Grade: " + review.getReviewGrade() + "." + review.getReviewText() + MenuUtility.EOL);
+            }
+            return sb.toString();
         }
-        return sb.toString();
     }
 
     public static String printAllReviews() {
         StringBuilder sb = new StringBuilder();
-        sb.append("");
-        return sb.toString();
+        if (itemMap.isEmpty()){
+            sb.append("No items registered yet.");
+            return sb.toString();
+        /*
+        For the else if condition, we can create a reviewCounter and whenever a Review has been created,
+        it increases by 1. Then check if reviewCounter = 0. A reviewList seems unnecessary but discussion
+        needed before implementation.
+         */
+        } else if (false){
+            sb.append("No items were reviewed yet.");
+            return sb.toString();
+        } else {
+            sb.append("All registered reviews:" + MenuUtility.EOL);
+            sb.append("------------------------------------");
+            for (String itemID : itemMap.keySet()){
+                // Repetition with printAllItemReviews method, need to make it more modular.
+                Item item = getItem(itemID);
+                sb.append("Review(s) for " + item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK." + MenuUtility.EOL);
+                for (Review review : getReviewList(itemID)) {
+                    sb.append("Grade: " + review.getReviewGrade() + "." + review.getReviewText() + MenuUtility.EOL);
+                }
+                sb.append("------------------------------------");
+            }
+            return sb.toString();
+        }
+    }
+
+    public List<String> getMostReviewedItems() {
+        // Method is not functional as it does not work when no itemIDs are in highestReviewedItems.
+        List<String> highestReviewedItems = new ArrayList<>();
+        for (String itemID : itemMap.keySet()) {
+            String currentHighestReviewedItem = highestReviewedItems.get(0);
+            if (getItem(itemID).getNumOfReviews() > getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                highestReviewedItems.clear();
+                highestReviewedItems.add(itemID);
+            } else if (getItem(itemID).getNumOfReviews() == getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                highestReviewedItems.add(itemID);
+            }
+        }
+        return highestReviewedItems;
+    }
+
+    // Method is not functional as it does not work when no itemIDs are in lowestReviewedItems.
+    public List<String> getLeastReviewedItems() {
+        List<String> lowestReviewedItems = new ArrayList<>();
+        for (String itemID : itemMap.keySet()) {
+            String currentHighestReviewedItem = lowestReviewedItems.get(0);
+            if (getItem(itemID).getNumOfReviews() < getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                lowestReviewedItems.clear();
+                lowestReviewedItems.add(itemID);
+            } else if (getItem(itemID).getNumOfReviews() == getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                lowestReviewedItems.add(itemID);
+            }
+        }
+        return lowestReviewedItems;
+    }
+
+    public String printMostReviewedItems() {
+        return "";
+    }
+
+    public String printLeastReviewedItems() {
+        return "";
     }
 
     //*********************************TRANSACTIONS*********************************//
 
-    public static double buyItem(String itemID, int amount) {
-        if (checkForUsedID(itemID)) {
-            Transaction transaction = new Transaction(getItem(itemID), amount);
-            getTransactionList(itemID).add(transaction);
-            return transaction.getTransactionCost().doubleValue();
-        } else {
-            return -1.0;
-        }
-    }
-
-    public static List<Transaction> getTransactionList(String itemID) {
-        return getItem(itemID).getTransactionList();
-    }
+//    public static double buyItem(String itemID, int amount) {
+//        if (checkForUsedID(itemID)) {
+//            Transaction transaction = new Transaction(getItem(itemID), amount);
+//            getTransactionList(itemID).add(transaction);
+//            return transaction.getTransactionCost().doubleValue();
+//        } else {
+//            return -1.0;
+//        }
+//    }
+//
+//    public static List<Transaction> getTransactionList(String itemID) {
+//        return getItem(itemID).getTransactionList();
+//    }
 
 
 }

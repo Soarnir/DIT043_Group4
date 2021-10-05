@@ -11,14 +11,15 @@ public class Item {
     private String itemName;
     private BigDecimal itemPrice;
     private List<Review> reviewList;
-    private List<Transaction> transactionList;
+    private int numOfReviews;
+    //private List<Transaction> transactionList;
 
     public Item(String itemID, String itemName, BigDecimal itemPrice) {
         this.itemID = itemID;
         this.itemName = itemName;
         this.itemPrice = itemPrice.setScale(2, RoundingMode.FLOOR);
         this.reviewList = new ArrayList<>();
-        this.transactionList = new ArrayList<>();
+        //this.transactionList = new ArrayList<>();
     }
 
     public String getItemID(){ return this.itemID; }
@@ -51,11 +52,19 @@ public class Item {
         this.reviewList = reviewList;
     }
 
-    public List<Transaction> getTransactionList() {
-        return transactionList;
+    public int getNumOfReviews() {
+        return numOfReviews;
     }
 
-    public void setTransactionList(List<Transaction> transactionList) {
-        this.transactionList = transactionList;
+    public void increaseNumOfReviews(){
+        this.numOfReviews += 1;
     }
+
+//    public List<Transaction> getTransactionList() {
+//        return transactionList;
+//    }
+//
+//    public void setTransactionList(List<Transaction> transactionList) {
+//        this.transactionList = transactionList;
+//    }
 }
