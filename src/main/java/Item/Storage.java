@@ -190,7 +190,6 @@ public class Storage {
         StringBuilder sb = new StringBuilder();
         if (itemMap.isEmpty()){
             sb.append("No items registered yet.");
-            return sb.toString();
         /*
         For the else if condition, we can create a reviewCounter and whenever a Review has been created,
         it increases by 1. Then check if reviewCounter = 0. A reviewList seems unnecessary but discussion
@@ -198,7 +197,6 @@ public class Storage {
          */
         } else if (false){
             sb.append("No items were reviewed yet.");
-            return sb.toString();
         } else {
             sb.append("All registered reviews:" + MenuUtility.EOL);
             sb.append("------------------------------------");
@@ -211,21 +209,26 @@ public class Storage {
                 }
                 sb.append("------------------------------------");
             }
-            return sb.toString();
         }
+        return sb.toString();
     }
 
     public List<String> getMostReviewedItems() {
         // Method is not functional as it does not work when no itemIDs are in highestReviewedItems.
         List<String> highestReviewedItems = new ArrayList<>();
         for (String itemID : itemMap.keySet()) {
-            String currentHighestReviewedItem = highestReviewedItems.get(0);
-            if (getItem(itemID).getNumOfReviews() > getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                highestReviewedItems.clear();
+            if (highestReviewedItems.isEmpty()){
                 highestReviewedItems.add(itemID);
-            } else if (getItem(itemID).getNumOfReviews() == getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                highestReviewedItems.add(itemID);
+            } else {
+                String currentHighestReviewedItem = highestReviewedItems.get(0);
+                if (getItem(itemID).getNumOfReviews() > getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                    highestReviewedItems.clear();
+                    highestReviewedItems.add(itemID);
+                } else if (getItem(itemID).getNumOfReviews() == getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                    highestReviewedItems.add(itemID);
+                }
             }
+
         }
         return highestReviewedItems;
     }
@@ -234,23 +237,55 @@ public class Storage {
     public List<String> getLeastReviewedItems() {
         List<String> lowestReviewedItems = new ArrayList<>();
         for (String itemID : itemMap.keySet()) {
-            String currentHighestReviewedItem = lowestReviewedItems.get(0);
-            if (getItem(itemID).getNumOfReviews() < getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                lowestReviewedItems.clear();
+            if (lowestReviewedItems.isEmpty()){
                 lowestReviewedItems.add(itemID);
-            } else if (getItem(itemID).getNumOfReviews() == getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                lowestReviewedItems.add(itemID);
+            } else {
+                String currentHighestReviewedItem = lowestReviewedItems.get(0);
+                if (getItem(itemID).getNumOfReviews() < getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                    lowestReviewedItems.clear();
+                    lowestReviewedItems.add(itemID);
+                } else if (getItem(itemID).getNumOfReviews() == getItem(currentHighestReviewedItem).getNumOfReviews()) {
+                    lowestReviewedItems.add(itemID);
+                }
             }
         }
         return lowestReviewedItems;
     }
 
     public String printMostReviewedItems() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (itemMap.isEmpty()) {
+            sb.append("No items registered yet.");
+        // Same problem as before, that's why it's "false" at the moment.
+        } else if (false){
+            sb.append("No items were reviewed yet.");
+        } else {
+            List<String> highestReviewedItems = getMostReviewedItems();
+            String tempItemID = highestReviewedItems.get(0);
+            sb.append("Most reviews: " + getItem(tempItemID).getNumOfReviews() + " review(s) each.");
+            for (String itemID : highestReviewedItems) {
+                sb.append(itemID + ": " + getItem(itemID).getItemName() + ". " + getItem(itemID).getItemPrice() + " SEK." + MenuUtility.EOL);
+            }
+        }
+        return sb.toString();
     }
 
     public String printLeastReviewedItems() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (itemMap.isEmpty()) {
+            sb.append("No items registered yet.");
+            // Same problem as before, that's why it's "false" at the moment.
+        } else if (false){
+            sb.append("No items were reviewed yet.");
+        } else {
+            List<String> lowestReviewedItems = getLeastReviewedItems();
+            String tempItemID = lowestReviewedItems.get(0);
+            sb.append("Least reviews: " + getItem(tempItemID).getNumOfReviews() + " review(s) each.");
+            for (String itemID : lowestReviewedItems) {
+                sb.append(itemID + ": " + getItem(itemID).getItemName() + ". " + getItem(itemID).getItemPrice() + " SEK." + MenuUtility.EOL);
+            }
+        }
+        return sb.toString();
     }
 
     //*********************************TRANSACTIONS*********************************//
