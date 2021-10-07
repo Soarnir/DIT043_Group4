@@ -2,21 +2,20 @@ package Item;
 
 import utility.MenuUtility;
 
-import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 
 public class Storage {
 
     // No getter has been implemented because only the Storage class should be accessing usedIDs.
-    private static final List<String> usedIDs = new ArrayList<>();
+    private final List<String> usedIDs = new ArrayList<>();
 
-    private static final HashMap<String, Item> itemMap = new HashMap<>();
+    private final HashMap<String, Item> itemMap = new HashMap<>();
 
-    public static HashMap<String, Item> getItemMap(){
+    public HashMap<String, Item> getItemMap(){
         return itemMap;
     }
 
@@ -25,11 +24,11 @@ public class Storage {
      * I (Kevin) has implemented this as discussed but do not need it for User Stories 2.1 - 2.3
      * Oliver, feel free to use if needed for your user stories in Epic feature 2. If not, we can delete it.
      */
-    public static boolean checkForUsedID(String itemID) {
+    public boolean checkForUsedID(String itemID) {
         return usedIDs.contains(itemID);
     }
 
-    public static String createItem(String itemID, String itemName, double itemPrice) {
+    public String createItem(String itemID, String itemName, double itemPrice) {
         if (itemID.equals("") || checkForUsedID(itemID) || itemName.equals("") || (itemPrice <= 0)) {
             MenuUtility.sout("Problem: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + checkForUsedID(itemID));
             return "Invalid data for item."; // Not sure about this part yet.
@@ -41,11 +40,11 @@ public class Storage {
         }
     }
 
-    public static Item getItem(String itemID) {
+    public Item getItem(String itemID) {
         return itemMap.get(itemID);
     }
 
-    public static String removeItem(String itemID) {
+    public String removeItem(String itemID) {
         if (checkForUsedID(itemID) && getItem(itemID) != null) {
             usedIDs.remove(itemID);
             itemMap.remove(itemID);
@@ -56,9 +55,9 @@ public class Storage {
         return "Item " + itemID + " could not be removed.";
     }
 
-    public static String printAllItems() {
+    public String printAllItems() {
         if (itemMap.isEmpty()) {
-            return "No items registered yet";
+            return "No items registered yet.";
         } else {
             StringBuilder stringBuilder = new StringBuilder("All registered items:" + MenuUtility.EOL);
             for (int i = 0; i < usedIDs.size(); i++) {
@@ -69,7 +68,7 @@ public class Storage {
         }
     }
 
-    public static String updateItem(String itemID, String newName) {
+    public String updateItem(String itemID, String newName) {
         if (!checkForUsedID(itemID)) {
             return "Item " + itemID + " was not registered yet.";
         } else if (newName.equals("")) {
@@ -81,7 +80,7 @@ public class Storage {
         }
     }
 
-    public static String updateItem(String itemID, BigDecimal newPrice) {
+    public String updateItem(String itemID, BigDecimal newPrice) {
         if (!checkForUsedID(itemID)) {
             return "Item " + itemID + " was not registered yet.";
         } else if (newPrice.doubleValue() <= 0) {
@@ -95,7 +94,7 @@ public class Storage {
 
     //*********************************REVIEWS*********************************//
 
-    public static String createReview(String itemID, String reviewText, int reviewGrade) {
+    public String createReview(String itemID, String reviewText, int reviewGrade) {
         if (!checkForUsedID(itemID)) {
             return "Item " + itemID + " was not registered yet.";
         } else if (reviewGrade < 1 || reviewGrade > 5) {
@@ -110,7 +109,7 @@ public class Storage {
         }
     }
 
-    public static String createReview(String itemID, int reviewGrade) {
+    public String createReview(String itemID, int reviewGrade) {
         if (!usedIDs.contains(itemID)) {
             return "Item <ID> was not registered yet.";
         } else if (reviewGrade < 1 || reviewGrade > 5) {
@@ -122,11 +121,11 @@ public class Storage {
         }
     }
 
-    public static List<Review> getReviewList(String itemID) {
+    public List<Review> getReviewList(String itemID) {
         return getItem(itemID).getReviewList();
     }
 
-    public static List<String> getItemComments(String itemID) {
+    public List<String> getItemComments(String itemID) {
         List<String> itemComments = new ArrayList<>();
         for (Review review : getReviewList(itemID)) {
             if (review.getReviewText() != null) {
@@ -137,19 +136,22 @@ public class Storage {
     }
 
     // Error handling and making mean grade visible to the user is yet to be implemented.
-    public static double getItemMeanGrade(String itemID) {
-        BigDecimal sum = new BigDecimal(0).setScale(1, RoundingMode.DOWN);
+    public double getItemMeanGrade(String itemID) {
+        BigDecimal sum = BigDecimal.valueOf(0).setScale(2, RoundingMode.FLOOR);
         for (Review review : getReviewList(itemID)) {
             sum = sum.add(review.getReviewGrade());
+            MenuUtility.sout(sum.toString());
         }
-        return (sum.divide(BigDecimal.valueOf(getReviewList(itemID).size()), RoundingMode.DOWN)).doubleValue();
+        sum = sum.divide(BigDecimal.valueOf(getReviewList(itemID).size()), RoundingMode.FLOOR);
+        MenuUtility.sout(sum.toString());
+        return MenuUtility.doubleFormatter(sum, 1);
     }
 
-    public static Review getReview(String itemID, int reviewIndex) {
+    public Review getReview(String itemID, int reviewIndex) {
         return getItem(itemID).getReviewList().get(reviewIndex);
     }
 
-    public static String printReview(String itemID, int reviewIndex) {
+    public String printReview(String itemID, int reviewIndex) {
         int reviewListSize = getReviewList(itemID).size();
         if (!checkForUsedID(itemID)) {
             return "Item " + itemID + " was not registered yet.";
@@ -161,12 +163,12 @@ public class Storage {
             return "Invalid review number. Choose between 1 and " + reviewListSize + ".";
         } else {
             // Should it be Review review = getReview(itemID, (reviewIndex - 1));
-            Review review = getReview(itemID, reviewIndex);
-            return "Grade: " + review.getReviewGrade() + "." + review.getReviewText() + MenuUtility.EOL;
+            Review review = getReview(itemID, (reviewIndex - 1));
+            return "Grade: " + review.getReviewGrade() + "." + review.getReviewText();
         }
     }
 
-    public static String printAllItemReviews(String itemID) {
+    public String printAllItemReviews(String itemID) {
         StringBuilder sb = new StringBuilder();
         int reviewListSize = getReviewList(itemID).size();
         if (!checkForUsedID(itemID)) {
@@ -186,7 +188,7 @@ public class Storage {
         }
     }
 
-    public static String printAllReviews() {
+    public String printAllReviews() {
         StringBuilder sb = new StringBuilder();
         if (itemMap.isEmpty()){
             sb.append("No items registered yet.");
@@ -290,19 +292,19 @@ public class Storage {
 
     //*********************************TRANSACTIONS*********************************//
 
-//    public static double buyItem(String itemID, int amount) {
-//        if (checkForUsedID(itemID)) {
-//            Transaction transaction = new Transaction(getItem(itemID), amount);
-//            getTransactionList(itemID).add(transaction);
-//            return transaction.getTransactionCost().doubleValue();
-//        } else {
-//            return -1.0;
-//        }
-//    }
-//
-//    public static List<Transaction> getTransactionList(String itemID) {
-//        return getItem(itemID).getTransactionList();
-//    }
+    public double buyItem(String itemID, int amount) {
+        if (checkForUsedID(itemID)) {
+            Transaction transaction = new Transaction(getItem(itemID), amount);
+            getTransactionList(itemID).add(transaction);
+            return MenuUtility.doubleFormatter(transaction.getTransactionCost(), 2);
+        } else {
+            return -1.0;
+        }
+    }
+
+    public List<Transaction> getTransactionList(String itemID) {
+        return getItem(itemID).getTransactionList();
+    }
 
 
 }

@@ -37,7 +37,7 @@ public class TransactionHistoryMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            System.out.println(transactionMenuOptions);
+            MenuUtility.sout(transactionMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case 1:

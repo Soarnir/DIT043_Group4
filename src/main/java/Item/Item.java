@@ -13,14 +13,14 @@ public class Item {
     private List<Review> reviewList;
     private int numOfReviews;
     private double meanGrade; // For User Story 3.8
-    //private List<Transaction> transactionList;
+    private List<Transaction> transactionList;
 
     public Item(String itemID, String itemName, BigDecimal itemPrice) {
         this.itemID = itemID;
         this.itemName = itemName;
         this.itemPrice = itemPrice.setScale(2, RoundingMode.FLOOR);
         this.reviewList = new ArrayList<>();
-        //this.transactionList = new ArrayList<>();
+        this.transactionList = new ArrayList<>();
     }
 
     public String getItemID(){ return this.itemID; }
@@ -61,11 +61,11 @@ public class Item {
         this.numOfReviews += 1;
     }
 
-//    public List<Transaction> getTransactionList() {
-//        return transactionList;
-//    }
-//
-//    public void setTransactionList(List<Transaction> transactionList) {
-//        this.transactionList = transactionList;
-//    }
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
+    }
 }
