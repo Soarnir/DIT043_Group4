@@ -17,6 +17,15 @@ public class Input {
         return inputScanner.nextLine();
     }
 
+    public static String readItemName() {
+        String name = inputScanner.next();
+        if (name.equals("")) {
+            return "Invalid data for item";
+        } else {
+            return name;
+        }
+    }
+
     /*
      * Method manages user input of menu options, assuming nothing other than integers gets input by the user.
      * User must enter integer between lowerBound and upperBound inclusive in order to progress through menu.

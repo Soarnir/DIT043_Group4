@@ -2,8 +2,6 @@ package Item;
 
 import utility.MenuUtility;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,9 +31,9 @@ public class Storage {
             MenuUtility.sout("Problem: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + checkForUsedID(itemID));
             return "Invalid data for item."; // Not sure about this part yet.
         } else {
-            MenuUtility.sout("Created: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + checkForUsedID(itemID));
+            MenuUtility.sout("Created: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice);
             usedIDs.add(itemID);
-            itemMap.put(itemID, new Item(itemID, itemName, BigDecimal.valueOf(itemPrice)));
+            itemMap.put(itemID, new Item(itemID, itemName, itemPrice));
             return "Item " + itemID + " was registered successfully.";
         }
     }
@@ -48,10 +46,10 @@ public class Storage {
         if (checkForUsedID(itemID) && getItem(itemID) != null) {
             usedIDs.remove(itemID);
             itemMap.remove(itemID);
-            MenuUtility.sout("Item " + itemID + " was successfully removed.");
+            //MenuUtility.sout("Item " + itemID + " was successfully removed.");
             return "Item " + itemID + " was successfully removed.";
         }
-        MenuUtility.sout("Item " + itemID + " could not be removed.");
+        //MenuUtility.sout("Item " + itemID + " could not be removed.");
         return "Item " + itemID + " could not be removed.";
     }
 
@@ -62,7 +60,7 @@ public class Storage {
             StringBuilder stringBuilder = new StringBuilder("All registered items:" + MenuUtility.EOL);
             for (int i = 0; i < usedIDs.size(); i++) {
                 Item item = getItem(usedIDs.get(i));
-                stringBuilder.append(item.getItemID() + ": " + item.getItemName() + ". " + item.getItemPrice() + " SEK" + MenuUtility.EOL);
+                stringBuilder.append(item.printItem()).append(MenuUtility.EOL);
             }
             return stringBuilder.toString();
         }
@@ -80,10 +78,10 @@ public class Storage {
         }
     }
 
-    public String updateItem(String itemID, BigDecimal newPrice) {
+    public String updateItem(String itemID, double newPrice) {
         if (!checkForUsedID(itemID)) {
             return "Item " + itemID + " was not registered yet.";
-        } else if (newPrice.doubleValue() <= 0) {
+        } else if (newPrice <= 0) {
             return "Invalid data for item.";
         } else {
             MenuUtility.sout("Item: " + itemID + " price: " + getItem(itemID).getItemPrice() + " | new price: " + newPrice);
@@ -137,14 +135,11 @@ public class Storage {
 
     // Error handling and making mean grade visible to the user is yet to be implemented.
     public double getItemMeanGrade(String itemID) {
-        BigDecimal sum = BigDecimal.valueOf(0).setScale(2, RoundingMode.FLOOR);
+        double sum = 0;
         for (Review review : getReviewList(itemID)) {
-            sum = sum.add(review.getReviewGrade());
-            MenuUtility.sout(sum.toString());
+            sum += review.getReviewGrade();
         }
-        sum = sum.divide(BigDecimal.valueOf(getReviewList(itemID).size()), RoundingMode.FLOOR);
-        MenuUtility.sout(sum.toString());
-        return MenuUtility.doubleFormatter(sum, 1);
+        return (sum / getReviewList(itemID).size());
     }
 
     public Review getReview(String itemID, int reviewIndex) {

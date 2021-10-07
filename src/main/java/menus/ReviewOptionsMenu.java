@@ -17,6 +17,18 @@ public class ReviewOptionsMenu {
         this.facade = facade;
     }
 
+    //
+    final int CREATE_REVIEW = 1;
+    final int PRINT_SPECIFIC_ITEM_REVIEW = 2;
+    final int PRINT_ALL_ITEM_REVIEW = 3;
+    final int PRINT_MEAN_GRADE_ITEM = 4;
+    final int PRINT_ALL_ITEM_COMMENTS = 5;
+    final int PRINT_ALL_REVIEWS = 6;
+    final int PRINT_MOST_REVIEWS_ITEM = 7;
+    final int PRINT_LEAST_REVIEWS_ITEM = 8;
+    final int PRINT_BEST_MEAN_ITEM = 9;
+    final int PRINT_WORST_MEAN_ITEM = 10;
+
     //Menu text
     String reviewMenuOptions = "Reviews options menu:" + MenuUtility.EOL +
                                "0. Return to Main Menu." + MenuUtility.EOL +
@@ -42,34 +54,34 @@ public class ReviewOptionsMenu {
             MenuUtility.sout(reviewMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 10);
             switch (chosenMenuOption) {
-                case 1:
+                case CREATE_REVIEW:
                     //Create a review for an Item
                     break;
-                case 2:
+                case PRINT_SPECIFIC_ITEM_REVIEW:
                     //Print a specific review of an Item
                     break;
-                case 3:
+                case PRINT_ALL_ITEM_REVIEW:
                     //Print all reviews of an Item
                     break;
-                case 4:
+                case PRINT_MEAN_GRADE_ITEM:
                     //Print mean grade of an Item
                     break;
-                case 5:
+                case PRINT_ALL_ITEM_COMMENTS:
                     //Print all comments of an Item
                     break;
-                case 6:
+                case PRINT_ALL_REVIEWS:
                     //Print all registered reviews
                     break;
-                case 7:
+                case PRINT_MOST_REVIEWS_ITEM:
                     //Print item(s) with most reviews
                     break;
-                case 8:
+                case PRINT_LEAST_REVIEWS_ITEM:
                     //Print item(s) with least reviews
                     break;
-                case 9:
+                case PRINT_BEST_MEAN_ITEM:
                     //Print item(s) with best mean review grade
                     break;
-                case 10:
+                case PRINT_WORST_MEAN_ITEM:
                     //Print item(s) with worst mean review grade
                     break;
                 default:

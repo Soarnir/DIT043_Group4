@@ -2,28 +2,22 @@ package Item;
 
 import utility.MenuUtility;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 public class Transaction {
 
     private final Item item;
     private final int amount;
-    private final BigDecimal transactionCost;
+    private final double transactionCost;
 
     public Transaction(Item item, int amount) {
         this.item = item;
         this.amount = amount;
         if (amount > 4) {
-            BigDecimal discountPrice = item.getItemPrice().multiply(BigDecimal.valueOf(0.7));
+            double discountPrice = item.getItemPrice() * 0.7;
             MenuUtility.sout("" + discountPrice);
-            this.transactionCost = BigDecimal.valueOf(4).multiply(item.getItemPrice())
-                                    .add(BigDecimal.valueOf(amount - 4).multiply(discountPrice))
-                                    .setScale(2, RoundingMode.FLOOR);
+            this.transactionCost = ((4 * item.getItemPrice()) + ((amount - 4) * discountPrice));
             MenuUtility.sout("" + transactionCost);
         } else {
-            this.transactionCost = BigDecimal.valueOf(amount).multiply(item.getItemPrice())
-                                    .setScale(2, RoundingMode.FLOOR);
+            this.transactionCost = amount * item.getItemPrice();
         }
     }
 
@@ -35,7 +29,7 @@ public class Transaction {
         return amount;
     }
 
-    public BigDecimal getTransactionCost() {
+    public double getTransactionCost() {
         return transactionCost;
     }
 }

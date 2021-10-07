@@ -1,7 +1,6 @@
 package utility;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class MenuUtility {
 
@@ -12,8 +11,11 @@ public class MenuUtility {
         System.out.println(text);
     }
 
-    public static double doubleFormatter (BigDecimal value, int scale) {
-        return value.setScale(scale, RoundingMode.FLOOR).doubleValue();
+    public static double doubleFormatter (double value, int scale) {
+        return (Math.floor(value * Math.pow(10, scale))) / Math.pow(10, scale);
     }
 
+    public static String doubleFormatter (double value) {
+        return new DecimalFormat("#.00").format(value);
+    }
 }

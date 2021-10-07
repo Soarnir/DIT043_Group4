@@ -1,24 +1,22 @@
 package Item;
 
-import java.math.BigDecimal;
-
 public class Review {
 
     private String reviewText;
-    private final BigDecimal reviewGrade;
+    private final int reviewGrade;
 
     public Review(String reviewText, int reviewGrade) {
         if (!reviewText.equals("")) {
             this.reviewText = reviewText;
         }
-        this.reviewGrade = BigDecimal.valueOf(reviewGrade);
+        this.reviewGrade = reviewGrade;
     }
 
     public Review(int reviewGrade) {
-        this.reviewGrade = BigDecimal.valueOf(reviewGrade);
+        this.reviewGrade = reviewGrade;
     }
 
-    public BigDecimal getReviewGrade() {
+    public int getReviewGrade() {
         return reviewGrade;
     }
 

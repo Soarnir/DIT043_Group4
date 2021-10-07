@@ -1,7 +1,7 @@
 package Item;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import utility.MenuUtility;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +9,16 @@ public class Item {
 
     private final String itemID;
     private String itemName;
-    private BigDecimal itemPrice;
+    private double itemPrice;
     private List<Review> reviewList;
     private int numOfReviews;
     private double meanGrade; // For User Story 3.8
     private List<Transaction> transactionList;
 
-    public Item(String itemID, String itemName, BigDecimal itemPrice) {
+    public Item(String itemID, String itemName, double itemPrice) {
         this.itemID = itemID;
         this.itemName = itemName;
-        this.itemPrice = itemPrice.setScale(2, RoundingMode.FLOOR);
+        this.itemPrice = itemPrice;
         this.reviewList = new ArrayList<>();
         this.transactionList = new ArrayList<>();
     }
@@ -29,7 +29,7 @@ public class Item {
         return this.itemName;
     }
 
-    public BigDecimal getItemPrice(){
+    public double getItemPrice(){
         return this.itemPrice;
     }
 
@@ -37,12 +37,12 @@ public class Item {
         this.itemName = newName;
     }
 
-    public void updateItemPrice(BigDecimal newPrice) {
+    public void updateItemPrice(double newPrice) {
         this.itemPrice = newPrice;
     }
 
     public String printItem() {
-        return itemID + ": " + itemName + ". " + itemPrice + " SEK";
+        return itemID + ": " + itemName + ". " + MenuUtility.doubleFormatter(itemPrice) + " SEK";
     }
 
     public List<Review> getReviewList() {

@@ -19,6 +19,11 @@ public class MainMenu {
 
     TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(facade);
 
+    //
+    final int ITEM_MENU = 1;
+    final int REVIEW_MENU = 2;
+    final int TRANSACTION_MENU = 3;
+
     //Menu text
     String mainMenuOptions = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
                              "0. Close system." + MenuUtility.EOL +
@@ -37,13 +42,13 @@ public class MainMenu {
             MenuUtility.sout(mainMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
-                case 1:
+                case ITEM_MENU:
                     itemOptionsMenu.printMenu();
                     break;
-                case 2:
+                case REVIEW_MENU:
                     reviewOptionsMenu.printMenu();
                     break;
-                case 3:
+                case TRANSACTION_MENU:
                     transactionHistoryMenu.printMenu();
                     break;
                 default:

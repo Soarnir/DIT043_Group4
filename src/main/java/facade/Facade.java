@@ -3,13 +3,11 @@ package facade;
 import Item.Storage;
 import utility.MenuUtility;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 public class Facade {
 
-    Storage storage;
+    private final Storage storage;
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
@@ -143,7 +141,7 @@ public class Facade {
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        return storage.updateItem(itemID, BigDecimal.valueOf(newPrice).setScale(2, RoundingMode.FLOOR));
+        return storage.updateItem(itemID, newPrice);
     }
 
     public String printAllItems() {

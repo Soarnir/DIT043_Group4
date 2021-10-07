@@ -17,6 +17,14 @@ public class ItemOptionsMenu {
         this.facade = facade;
     }
 
+    //
+    final int CREATE_ITEM = 1;
+    final int REMOVE_ITEM = 2;
+    final int PRINT_ALL_ITEMS = 3;
+    final int BUY_ITEM = 4;
+    final int UPDATE_ITEM_NAME = 5;
+    final int UPDATE_ITEM_PRICE = 6;
+
     //Menu text
     String itemMenuOptions = "Item options menu:" + MenuUtility.EOL +
             "0. Return to Main Menu." + MenuUtility.EOL +
@@ -28,8 +36,6 @@ public class ItemOptionsMenu {
             "6. Update an item’s price." + MenuUtility.EOL + MenuUtility.EOL +
             "Type an option number:";
 
-    String specifyPurchaseItemAmount = "";
-
     /*
      * Enter item menu loop, error handling is managed by Input class
      * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
@@ -40,59 +46,56 @@ public class ItemOptionsMenu {
             MenuUtility.sout(itemMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 6);
             switch (chosenMenuOption) {
-                case 1:
-                    //create item
-                    MenuUtility.sout("pls create item");
-                    String id = Input.readString();
-                    MenuUtility.sout(id);
-                    String itemName = Input.readString(true);
-                    MenuUtility.sout(itemName);
-                    double unitCost = Input.readDouble();
-                    MenuUtility.sout(String.valueOf(unitCost));
-                    facade.createItem(id, itemName, unitCost);
+                case CREATE_ITEM:
+                    System.out.print("ID: ");
+                    String createItemID = Input.readString();
+                    System.out.print("Name: ");
+                    String createItemName = Input.readString(true);
+                    System.out.print("Item price: ");
+                    double createItemPrice = Input.readDouble();
+
+                    facade.createItem(createItemID, createItemName, createItemPrice);
                     break;
-                case 2:
-                    //remove item
-                    MenuUtility.sout("pls remove item");
+                case REMOVE_ITEM:
+                    System.out.print("ID: ");
                     String removeID = Input.readString();
-                    MenuUtility.sout(facade.removeItem(removeID));
+
+                    System.out.println(facade.removeItem(removeID));
                     break;
-                case 3:
+                case PRINT_ALL_ITEMS:
                     //Print all registered Items
                     facade.printAllItems();
                     break;
-                case 4:
+                case BUY_ITEM:
                     //Buy an Item
+                    System.out.print("ID: ");
+                    String purchaseID = Input.readString();
+                    System.out.print("Amount: ");
+                    int purchaseAmount = Input.readInt();
+
+                    System.out.println(facade.buyItem(purchaseID, purchaseAmount));
                     break;
-                case 5:
+                case UPDATE_ITEM_NAME:
                     //Update an item’s name
+                    System.out.print("ID: ");
+                    String updateItemNameID = Input.readString();
+                    System.out.print("Name: ");
+                    String updateItemName = Input.readString(true);
+
+                    System.out.println(facade.updateItemName(updateItemNameID, updateItemName));
                     break;
-                case 6:
+                case UPDATE_ITEM_PRICE:
                     //Update an item’s price
+                    System.out.print("ID: ");
+                    String updateItemPriceID = Input.readString();
+                    System.out.print("Name: ");
+                    double updateItemPrice = Input.readDouble();
+
+                    System.out.println(facade.updateItemPrice(updateItemPriceID, updateItemPrice));
                     break;
                 default:
                     loop = false;
             }
         } while (loop);
-    }
-
-    /*
-     * -Whenever the user decides to buy an Item, he must specify the ID of the Item he wants to buy.
-     * -The System checks if the specified Item ID exists and if so, proceeds to the amount screen
-     * -The amount screen should be put in by the user
-     * -The total price containing discounts should be calculated and then printed by the system
-     * -Return to Item options menu
-     */
-    public String buyItem() {
-
-        MenuUtility.sout("Main Menu > Item options menu > Buy an Item." + MenuUtility.EOL +
-                "Please specify the ID of the item you would like to buy:");
-        //TODO Implement Input ID existance
-        /*
-        if (Item.usedIDs.contains(Item(String inputItemID))){
-
-        }
-        */
-        return "";
     }
 }

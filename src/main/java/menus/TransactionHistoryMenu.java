@@ -17,6 +17,16 @@ public class TransactionHistoryMenu {
         this.facade = facade;
     }
 
+    //
+    final int PRINT_ALL_TOTAL_PROFIT = 1;
+    final int PRINT_ALL_UNITS_SOLD = 2;
+    final int PRINT_ALL_TOTAL_TRANSACTIONS = 3;
+    final int PRINT_ALL_TRANSACTIONS = 4;
+    final int PRINT_ITEM_TOTAL_PROFIT = 5;
+    final int PRINT_ITEM_UNITS_SOLD = 6;
+    final int PRINT_ITEM_TRANSACTIONS = 7;
+    final int PRINT_ITEM_HIGHEST_PROFIT = 8;
+
     //Menu text
     String transactionMenuOptions =  "Transaction History options menu:" + MenuUtility.EOL +
                                      "0. Return to Main Menu." + MenuUtility.EOL +
@@ -40,28 +50,28 @@ public class TransactionHistoryMenu {
             MenuUtility.sout(transactionMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
-                case 1:
+                case PRINT_ALL_TOTAL_PROFIT:
                     //Print total profit from all item purchases
                     break;
-                case 2:
+                case PRINT_ALL_UNITS_SOLD:
                     //Print total units sold from all item purchases
                     break;
-                case 3:
+                case PRINT_ALL_TOTAL_TRANSACTIONS:
                     //Print the total number of item transactions made
                     break;
-                case 4:
+                case PRINT_ALL_TRANSACTIONS:
                     //Print all transactions made
                     break;
-                case 5:
+                case PRINT_ITEM_TOTAL_PROFIT:
                     //Print the total profit of a specific item
                     break;
-                case 6:
+                case PRINT_ITEM_UNITS_SOLD:
                     //Print the number of units sold of a specific item
                     break;
-                case 7:
+                case PRINT_ITEM_TRANSACTIONS:
                     //Print all transactions of a specific item
                     break;
-                case 8:
+                case PRINT_ITEM_HIGHEST_PROFIT:
                     //Print item with highest profit
                     break;
                 default:
@@ -70,5 +80,4 @@ public class TransactionHistoryMenu {
             }
         } while (loop);
     }
-
 }
