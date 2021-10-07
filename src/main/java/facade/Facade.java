@@ -1,6 +1,9 @@
 package facade;
 
 import Item.Storage;
+import handlers.ItemHandler;
+import handlers.ReviewHandler;
+import handlers.TransactionHandler;
 import utility.MenuUtility;
 
 import java.util.List;
@@ -8,16 +11,22 @@ import java.util.List;
 public class Facade {
 
     private final Storage storage;
+    private final ItemHandler itemHandler;
+    private final ReviewHandler reviewHandler;
+    private final TransactionHandler transactionHandler;
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
 
     public Facade(){
         this.storage = new Storage();
+        this.itemHandler = new ItemHandler(storage);
+        this.reviewHandler = new ReviewHandler(storage);
+        this.transactionHandler = new TransactionHandler(storage);
     }
 
     public String createItem(String itemID, String itemName, double unitPrice) {
-        return storage.createItem(itemID, itemName, unitPrice);
+        return itemHandler.createItem(itemID, itemName, unitPrice);
     }
 
     public String printItem(String itemID) {
@@ -29,7 +38,7 @@ public class Facade {
     }
 
     public String removeItem(String itemID) {
-        return storage.removeItem(itemID);
+        return itemHandler.removeItem(itemID);
     }
 
     public boolean containsItem(String itemID) {
@@ -37,15 +46,15 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
-        return storage.buyItem(itemID, amount);
+        return transactionHandler.buyItem(itemID, amount);
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        return storage.createReview(itemID, reviewComment, reviewGrade);
+        return reviewHandler.createReview(itemID, reviewComment, reviewGrade);
     }
 
     public String reviewItem(String itemID, int reviewGrade) {
-        return storage.createReview(itemID, reviewGrade);
+        return reviewHandler.createReview(itemID, reviewGrade);
     }
 
     public String getItemCommentsPrinted(String itemID) {
@@ -53,19 +62,19 @@ public class Facade {
     }
 
     public List<String> getItemComments(String itemID) {
-        return storage.getItemComments(itemID);
+        return reviewHandler.getItemComments(itemID);
     }
 
     public double getItemMeanGrade(String itemID) {
-        return storage.getItemMeanGrade(itemID);
+        return reviewHandler.getItemMeanGrade(itemID);
     }
 
     public int getNumberOfReviews(String itemID) {
-        return storage.getItemComments(itemID).size();
+        return reviewHandler.getItemComments(itemID).size();
     }
 
     public String getPrintedItemReview(String itemID, int reviewNumber) {
-        return storage.printReview(itemID, reviewNumber);
+        return reviewHandler.printReview(itemID, reviewNumber);
     }
 
     public String getPrintedReviews(String itemID) {
@@ -137,16 +146,16 @@ public class Facade {
     }
 
     public String updateItemName(String itemID, String newName) {
-        return storage.updateItem(itemID, newName);
+        return itemHandler.updateItem(itemID, newName);
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        return storage.updateItem(itemID, newPrice);
+        return itemHandler.updateItem(itemID, newPrice);
     }
 
     public String printAllItems() {
-        MenuUtility.sout(storage.printAllItems());
-        return storage.printAllItems();
+        MenuUtility.sout(itemHandler.printAllItems());
+        return itemHandler.printAllItems();
     }
 
     public String printMostProfitableItems() {
