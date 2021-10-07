@@ -11,6 +11,7 @@ import java.util.List;
 public class ReviewHandler {
 
     Storage storage;
+    private boolean aReviewHasBeenCreated = false; //Implementation needs to be checked
 
     public ReviewHandler(Storage storage) {
         this.storage = storage;
@@ -27,6 +28,7 @@ public class ReviewHandler {
             } else {
                 getReviewList(itemID).add(new Review(reviewText, reviewGrade));
             }
+            aReviewHasBeenCreated = true;
             return "Your item review was registered successfully.";
         }
     }
@@ -109,14 +111,14 @@ public class ReviewHandler {
 
     public String printAllReviews() {
         StringBuilder sb = new StringBuilder();
-        if (storage.getItemMap().isEmpty()){
+        if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
         /*
         For the else if condition, we can create a reviewCounter and whenever a Review has been created,
         it increases by 1. Then check if reviewCounter = 0. A reviewList seems unnecessary but discussion
         needed before implementation.
          */
-        } else if (false){
+        } else if (!aReviewHasBeenCreated) {
             sb.append("No items were reviewed yet.");
         } else {
             sb.append("All registered reviews:" + MenuUtility.EOL);
@@ -134,43 +136,37 @@ public class ReviewHandler {
         return sb.toString();
     }
 
-    public List<String> getMostReviewedItems() {
-        // Method is not functional as it does not work when no itemIDs are in highestReviewedItems.
-        List<String> highestReviewedItems = new ArrayList<>();
+    public List<String> getReviewedItems(boolean mostReviewed) {
+        List<String> reviewedItems = new ArrayList<>();
         for (String itemID : storage.getItemMap().keySet()) {
-            if (highestReviewedItems.isEmpty()){
-                highestReviewedItems.add(itemID);
+            if (reviewedItems.isEmpty()){
+                reviewedItems.add(itemID);
             } else {
-                String currentHighestReviewedItem = highestReviewedItems.get(0);
-                if (storage.getItem(itemID).getNumOfReviews() > storage.getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                    highestReviewedItems.clear();
-                    highestReviewedItems.add(itemID);
-                } else if (storage.getItem(itemID).getNumOfReviews() == storage.getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                    highestReviewedItems.add(itemID);
+                String currentReviewedItem = reviewedItems.get(0);
+                if (mostReviewed) {
+                    if (storage.getItem(itemID).getNumOfReviews() > storage.getItem(currentReviewedItem).getNumOfReviews()) {
+                        reviewedItems.clear();
+                        reviewedItems.add(itemID);
+                    }
+                } else if (!mostReviewed) {
+                    if (storage.getItem(itemID).getNumOfReviews() < storage.getItem(currentReviewedItem).getNumOfReviews()) {
+                        reviewedItems.clear();
+                        reviewedItems.add(itemID);
+                    }
+                } else if (storage.getItem(itemID).getNumOfReviews() == storage.getItem(currentReviewedItem).getNumOfReviews()) {
+                    reviewedItems.add(itemID);
                 }
             }
-
         }
-        return highestReviewedItems;
+        return reviewedItems;
     }
 
-    // Method is not functional as it does not work when no itemIDs are in lowestReviewedItems.
+    public List<String> getMostReviewedItems() {
+        return getReviewedItems(true);
+    }
+
     public List<String> getLeastReviewedItems() {
-        List<String> lowestReviewedItems = new ArrayList<>();
-        for (String itemID : storage.getItemMap().keySet()) {
-            if (lowestReviewedItems.isEmpty()){
-                lowestReviewedItems.add(itemID);
-            } else {
-                String currentHighestReviewedItem = lowestReviewedItems.get(0);
-                if (storage.getItem(itemID).getNumOfReviews() < storage.getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                    lowestReviewedItems.clear();
-                    lowestReviewedItems.add(itemID);
-                } else if (storage.getItem(itemID).getNumOfReviews() == storage.getItem(currentHighestReviewedItem).getNumOfReviews()) {
-                    lowestReviewedItems.add(itemID);
-                }
-            }
-        }
-        return lowestReviewedItems;
+        return getReviewedItems(false);
     }
 
     public String printMostReviewedItems() {
@@ -178,7 +174,7 @@ public class ReviewHandler {
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
             // Same problem as before, that's why it's "false" at the moment.
-        } else if (false){
+        } else if (!aReviewHasBeenCreated) {
             sb.append("No items were reviewed yet.");
         } else {
             List<String> highestReviewedItems = getMostReviewedItems();
@@ -196,7 +192,7 @@ public class ReviewHandler {
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
             // Same problem as before, that's why it's "false" at the moment.
-        } else if (false){
+        } else if (!aReviewHasBeenCreated) {
             sb.append("No items were reviewed yet.");
         } else {
             List<String> lowestReviewedItems = getLeastReviewedItems();

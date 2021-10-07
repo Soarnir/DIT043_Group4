@@ -13,6 +13,7 @@ public class TransactionHandler {
     public TransactionHandler (Storage storage) {
         this.storage = storage;
     }
+
     public double buyItem(String itemID, int amount) {
         if (storage.checkForUsedID(itemID)) {
             Transaction transaction = new Transaction(storage.getItem(itemID), amount);

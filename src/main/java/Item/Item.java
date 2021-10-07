@@ -7,23 +7,23 @@ import java.util.List;
 
 public class Item {
 
-    private final String itemID;
+    private final String ITEM_ID;
     private String itemName;
     private double itemPrice;
     private List<Review> reviewList;
-    private int numOfReviews;
+    private int numOfReviews; //This implementation needs to be discussed
     private double meanGrade; // For User Story 3.8
     private List<Transaction> transactionList;
 
-    public Item(String itemID, String itemName, double itemPrice) {
-        this.itemID = itemID;
+    public Item(String ITEM_ID, String itemName, double itemPrice) {
+        this.ITEM_ID = ITEM_ID;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.reviewList = new ArrayList<>();
         this.transactionList = new ArrayList<>();
     }
 
-    public String getItemID(){ return this.itemID; }
+    public String getItemID(){ return this.ITEM_ID; }
 
     public String getItemName(){
         return this.itemName;
@@ -42,7 +42,7 @@ public class Item {
     }
 
     public String printItem() {
-        return itemID + ": " + itemName + ". " + MenuUtility.doubleFormatter(itemPrice) + " SEK";
+        return ITEM_ID + ": " + itemName + ". " + MenuUtility.doubleFormatter(itemPrice) + " SEK";
     }
 
     public List<Review> getReviewList() {
