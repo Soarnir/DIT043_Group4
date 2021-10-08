@@ -11,13 +11,13 @@ public class TransactionHistoryMenu {
 
     /*
      * Constructor for TransactionHistoryMenu
-     * Requires Input and MenuUtility utility classes
+     * Requires Facade passed through
      */
-    public TransactionHistoryMenu (Facade facade) {
+    public TransactionHistoryMenu(Facade facade) {
         this.facade = facade;
     }
 
-    //
+    //Menu options
     final int PRINT_ALL_TOTAL_PROFIT = 1;
     final int PRINT_ALL_UNITS_SOLD = 2;
     final int PRINT_ALL_TOTAL_TRANSACTIONS = 3;
@@ -47,7 +47,7 @@ public class TransactionHistoryMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.sout(transactionMenuOptions);
+            MenuUtility.print(transactionMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case PRINT_ALL_TOTAL_PROFIT:

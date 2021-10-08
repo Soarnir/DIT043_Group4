@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Input {
 
+    //TODO refactor class with exception handling (possibly)
+
     //Create protected Scanner object, due to menu design this is the only scanner created in the project
     final static Scanner inputScanner = new Scanner(System.in);
 
@@ -37,7 +39,7 @@ public class Input {
             x = inputScanner.nextInt();
             inputScanner.nextLine();
             if (x < lowerBound || x > upperBound) {
-                MenuUtility.sout("Invalid menu option. Please type another option");
+                MenuUtility.print("Invalid menu option. Please type another option");
             } else {
                 invalidInput = false;
             }

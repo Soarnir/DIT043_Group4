@@ -7,15 +7,15 @@ public class MenuUtility {
     public static final String EOL = System.lineSeparator();
     
     //helper method for debugging, internal sout can be commented out to disable debug messages
-    public static void sout (String text) {
+    public static void print(String text) {
         System.out.println(text);
     }
 
-    public static double doubleFormatter (double value, int scale) {
-        return (Math.floor(value * Math.pow(10, scale))) / Math.pow(10, scale);
+    public static double doubleTruncate(double value) {
+        return (Math.floor(value * Math.pow(10, 2))) / Math.pow(10, 2);
     }
 
-    public static String doubleFormatter (double value) {
+    public static String doubleFormat(double value) {
         return new DecimalFormat("#.00").format(value);
     }
 }

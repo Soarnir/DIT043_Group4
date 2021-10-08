@@ -1,9 +1,9 @@
 package facade;
 
 import Item.Storage;
-import handlers.ItemHandler;
-import handlers.ReviewHandler;
-import handlers.TransactionHandler;
+import handlers.ItemController;
+import handlers.ReviewController;
+import handlers.TransactionController;
 import utility.MenuUtility;
 
 import java.util.List;
@@ -11,34 +11,34 @@ import java.util.List;
 public class Facade {
 
     private final Storage storage;
-    private final ItemHandler itemHandler;
-    private final ReviewHandler reviewHandler;
-    private final TransactionHandler transactionHandler;
+    private final ItemController itemController;
+    private final ReviewController reviewController;
+    private final TransactionController transactionController;
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
 
     public Facade(){
         this.storage = new Storage();
-        this.itemHandler = new ItemHandler(storage);
-        this.reviewHandler = new ReviewHandler(storage);
-        this.transactionHandler = new TransactionHandler(storage);
+        this.itemController = new ItemController(storage);
+        this.reviewController = new ReviewController(storage);
+        this.transactionController = new TransactionController(storage);
     }
 
     public String createItem(String itemID, String itemName, double unitPrice) {
-        return itemHandler.createItem(itemID, itemName, unitPrice);
+        return itemController.createItem(itemID, itemName, unitPrice);
     }
 
     public String printItem(String itemID) {
         if (storage.checkForUsedID(itemID)) {
-            return storage.getItem(itemID).printItem();
+            return storage.getItem(itemID).toString();
         } else {
             return "Item " + itemID + " was not registered yet.";
         }
     }
 
     public String removeItem(String itemID) {
-        return itemHandler.removeItem(itemID);
+        return itemController.removeItem(itemID);
     }
 
     public boolean containsItem(String itemID) {
@@ -46,15 +46,15 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
-        return transactionHandler.buyItem(itemID, amount);
+        return transactionController.buyItem(itemID, amount);
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        return reviewHandler.createReview(itemID, reviewComment, reviewGrade);
+        return reviewController.createReview(itemID, reviewComment, reviewGrade);
     }
 
     public String reviewItem(String itemID, int reviewGrade) {
-        return reviewHandler.createReview(itemID, reviewGrade);
+        return reviewController.createReview(itemID, reviewGrade);
     }
 
     public String getItemCommentsPrinted(String itemID) {
@@ -62,19 +62,19 @@ public class Facade {
     }
 
     public List<String> getItemComments(String itemID) {
-        return reviewHandler.getItemComments(itemID);
+        return reviewController.getItemComments(itemID);
     }
 
     public double getItemMeanGrade(String itemID) {
-        return reviewHandler.getItemMeanGrade(itemID);
+        return reviewController.getItemMeanGrade(itemID);
     }
 
     public int getNumberOfReviews(String itemID) {
-        return reviewHandler.getItemComments(itemID).size();
+        return reviewController.getItemComments(itemID).size();
     }
 
     public String getPrintedItemReview(String itemID, int reviewNumber) {
-        return reviewHandler.printReview(itemID, reviewNumber);
+        return reviewController.printReview(itemID, reviewNumber);
     }
 
     public String getPrintedReviews(String itemID) {
@@ -98,31 +98,31 @@ public class Facade {
     }
 
     public double getTotalProfit() {
-        return -1.0;
+        return transactionController.getTotalProfit();
     }
 
     public String printItemTransactions(String itemID) {
-        return "";
+        return transactionController.printItemTransactions(itemID);
     }
 
     public int getTotalUnitsSold() {
-        return -1;
+        return transactionController.getTotalUnitsSold();
     }
 
     public int getTotalTransactions() {
-        return -1;
+        return transactionController.getTotalTransactions();
     }
 
     public double getProfit(String itemID) {
-        return -1.0;
+        return transactionController.getProfit(itemID);
     }
 
     public int getUnitsSolds(String itemID) {
-        return -1;
+        return transactionController.getUnitsSold(itemID);
     }
 
     public String printAllTransactions() {
-        return "";
+        return transactionController.printAllTransactions();
     }
 
     public String printWorseReviewedItems() {
@@ -146,19 +146,19 @@ public class Facade {
     }
 
     public String updateItemName(String itemID, String newName) {
-        return itemHandler.updateItem(itemID, newName);
+        return itemController.updateItem(itemID, newName);
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        return itemHandler.updateItem(itemID, newPrice);
+        return itemController.updateItem(itemID, newPrice);
     }
 
     public String printAllItems() {
-        MenuUtility.sout(itemHandler.printAllItems());
-        return itemHandler.printAllItems();
+        MenuUtility.print(itemController.printAllItems());
+        return itemController.printAllItems();
     }
 
     public String printMostProfitableItems() {
-        return "";
+        return transactionController.printMostProfitableItems();
     }
 }

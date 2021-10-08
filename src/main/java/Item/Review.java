@@ -23,4 +23,9 @@ public class Review {
     public String getReviewText() {
         return reviewText;
     }
+
+    @Override
+    public String toString() {
+        return "Grade: " + reviewGrade + "." + reviewText;
+    }
 }

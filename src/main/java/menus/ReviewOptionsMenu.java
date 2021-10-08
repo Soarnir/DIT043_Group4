@@ -11,13 +11,13 @@ public class ReviewOptionsMenu {
 
     /*
      * Constructor for ReviewOptionsMenu
-     * Requires Input and MenuUtility utility classes
+     * Requires Facade passed through
      */
-    public ReviewOptionsMenu (Facade facade) {
+    public ReviewOptionsMenu(Facade facade) {
         this.facade = facade;
     }
 
-    //
+    //Menu options
     final int CREATE_REVIEW = 1;
     final int PRINT_SPECIFIC_ITEM_REVIEW = 2;
     final int PRINT_ALL_ITEM_REVIEW = 3;
@@ -51,7 +51,7 @@ public class ReviewOptionsMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.sout(reviewMenuOptions);
+            MenuUtility.print(reviewMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 10);
             switch (chosenMenuOption) {
                 case CREATE_REVIEW:

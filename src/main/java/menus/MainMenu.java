@@ -19,7 +19,7 @@ public class MainMenu {
 
     TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(facade);
 
-    //
+    //Menu options
     final int ITEM_MENU = 1;
     final int REVIEW_MENU = 2;
     final int TRANSACTION_MENU = 3;
@@ -39,7 +39,7 @@ public class MainMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.sout(mainMenuOptions);
+            MenuUtility.print(mainMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case ITEM_MENU:

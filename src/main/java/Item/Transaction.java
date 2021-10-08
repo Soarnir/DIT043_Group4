@@ -13,9 +13,9 @@ public class Transaction {
         this.amount = amount;
         if (amount > 4) {
             double discountPrice = item.getItemPrice() * 0.7;
-            MenuUtility.sout("" + discountPrice);
+            MenuUtility.print("" + discountPrice);
             this.transactionCost = ((4 * item.getItemPrice()) + ((amount - 4) * discountPrice));
-            MenuUtility.sout("" + transactionCost);
+            MenuUtility.print("" + transactionCost);
         } else {
             this.transactionCost = amount * item.getItemPrice();
         }
@@ -31,5 +31,10 @@ public class Transaction {
 
     public double getTransactionCost() {
         return transactionCost;
+    }
+
+    @Override
+    public String toString() {
+        return item.getItemID() + ": " + amount + " item(s). " + transactionCost + " SEK";
     }
 }

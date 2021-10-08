@@ -11,13 +11,13 @@ public class ItemOptionsMenu {
 
     /*
      * Constructor for ItemOptionsMenu
-     * Requires Input and MenuUtility utility classes
+     * Requires Facade passed through
      */
     public ItemOptionsMenu(Facade facade) {
         this.facade = facade;
     }
 
-    //
+    //Menu options
     final int CREATE_ITEM = 1;
     final int REMOVE_ITEM = 2;
     final int PRINT_ALL_ITEMS = 3;
@@ -43,7 +43,7 @@ public class ItemOptionsMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.sout(itemMenuOptions);
+            MenuUtility.print(itemMenuOptions);
             int chosenMenuOption = Input.readMenuInt(0, 6);
             switch (chosenMenuOption) {
                 case CREATE_ITEM:
@@ -63,11 +63,9 @@ public class ItemOptionsMenu {
                     System.out.println(facade.removeItem(removeID));
                     break;
                 case PRINT_ALL_ITEMS:
-                    //Print all registered Items
                     facade.printAllItems();
                     break;
                 case BUY_ITEM:
-                    //Buy an Item
                     System.out.print("ID: ");
                     String purchaseID = Input.readString();
                     System.out.print("Amount: ");
@@ -76,7 +74,6 @@ public class ItemOptionsMenu {
                     System.out.println(facade.buyItem(purchaseID, purchaseAmount));
                     break;
                 case UPDATE_ITEM_NAME:
-                    //Update an item’s name
                     System.out.print("ID: ");
                     String updateItemNameID = Input.readString();
                     System.out.print("Name: ");
@@ -85,7 +82,6 @@ public class ItemOptionsMenu {
                     System.out.println(facade.updateItemName(updateItemNameID, updateItemName));
                     break;
                 case UPDATE_ITEM_PRICE:
-                    //Update an item’s price
                     System.out.print("ID: ");
                     String updateItemPriceID = Input.readString();
                     System.out.print("Name: ");

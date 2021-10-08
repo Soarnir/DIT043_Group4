@@ -41,10 +41,6 @@ public class Item {
         this.itemPrice = newPrice;
     }
 
-    public String printItem() {
-        return ITEM_ID + ": " + itemName + ". " + MenuUtility.doubleFormatter(itemPrice) + " SEK";
-    }
-
     public List<Review> getReviewList() {
         return reviewList;
     }
@@ -67,5 +63,10 @@ public class Item {
 
     public void setTransactionList(List<Transaction> transactionList) {
         this.transactionList = transactionList;
+    }
+
+    @Override
+    public String toString() {
+        return ITEM_ID + ": " + itemName + ". " + MenuUtility.doubleFormat(itemPrice) + " SEK";
     }
 }
