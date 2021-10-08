@@ -26,7 +26,7 @@ public class ItemOptionsMenu {
     final int UPDATE_ITEM_PRICE = 6;
 
     //Menu text
-    String itemMenuOptions = "Item options menu:" + MenuUtility.EOL +
+    final String ITEM_MENU_OPTIONS = "Item options menu:" + MenuUtility.EOL +
             "0. Return to Main Menu." + MenuUtility.EOL +
             "1. Create an Item." + MenuUtility.EOL +
             "2. Remove an Item." + MenuUtility.EOL +
@@ -43,7 +43,7 @@ public class ItemOptionsMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.print(itemMenuOptions);
+            MenuUtility.print(ITEM_MENU_OPTIONS);
             int chosenMenuOption = Input.readMenuInt(0, 6);
             switch (chosenMenuOption) {
                 case CREATE_ITEM:

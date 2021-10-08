@@ -25,7 +25,8 @@ public class MainMenu {
     final int TRANSACTION_MENU = 3;
 
     //Menu text
-    String mainMenuOptions = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
+    // Need to make this final -K
+    final String MAIN_MENU_OPTIONS = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
                              "0. Close system." + MenuUtility.EOL +
                              "1. Open Item options." + MenuUtility.EOL +
                              "2. Open Review options." + MenuUtility.EOL +
@@ -39,7 +40,7 @@ public class MainMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.print(mainMenuOptions);
+            MenuUtility.print(MAIN_MENU_OPTIONS);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case ITEM_MENU:

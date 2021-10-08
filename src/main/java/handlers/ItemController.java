@@ -13,7 +13,7 @@ public class ItemController {
     }
 
     public String createItem(String itemID, String itemName, double itemPrice) {
-        if (itemID.equals("") || storage.checkForUsedID(itemID) || itemName.equals("") || (itemPrice <= 0)) {
+        if (itemID.isEmpty() || storage.checkForUsedID(itemID) || itemName.isEmpty() || (itemPrice <= 0)) {
             MenuUtility.print("Problem: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + storage.checkForUsedID(itemID));
             return "Invalid data for item.";
         } else {
@@ -51,7 +51,7 @@ public class ItemController {
     public String updateItem(String itemID, String newName) {
         if (!storage.checkForUsedID(itemID)) {
             return "Item " + itemID + " was not registered yet.";
-        } else if (newName.equals("")) {
+        } else if (newName.isEmpty()) {
             return "Invalid data for item.";
         } else {
             MenuUtility.print("Item: " + itemID + " name: " + storage.getItem(itemID).getItemName() + " | new name: " + newName);

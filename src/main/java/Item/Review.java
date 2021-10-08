@@ -3,21 +3,21 @@ package Item;
 public class Review {
 
     private String reviewText;
-    private final int reviewGrade;
+    private final int REVIEW_GRADE;
 
     public Review(String reviewText, int reviewGrade) {
         if (!reviewText.equals("")) {
             this.reviewText = reviewText;
         }
-        this.reviewGrade = reviewGrade;
+        this.REVIEW_GRADE = reviewGrade;
     }
 
     public Review(int reviewGrade) {
-        this.reviewGrade = reviewGrade;
+        this.REVIEW_GRADE = reviewGrade;
     }
 
     public int getReviewGrade() {
-        return reviewGrade;
+        return REVIEW_GRADE;
     }
 
     public String getReviewText() {
@@ -26,6 +26,6 @@ public class Review {
 
     @Override
     public String toString() {
-        return "Grade: " + reviewGrade + "." + reviewText;
+        return "Grade: " + REVIEW_GRADE + "." + reviewText;
     }
 }

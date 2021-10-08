@@ -23,7 +23,7 @@ public class ReviewController {
         } else if (reviewGrade < 1 || reviewGrade > 5) {
             return "Grade values must be between 1 and 5.";
         } else {
-            if (reviewText.equals("")) {
+            if (reviewText.isEmpty()) {
                 getReviewList(itemID).add(new Review(reviewGrade));
             } else {
                 getReviewList(itemID).add(new Review(reviewText, reviewGrade));
@@ -113,11 +113,6 @@ public class ReviewController {
         StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
-        /*
-        For the else if condition, we can create a reviewCounter and whenever a Review has been created,
-        it increases by 1. Then check if reviewCounter = 0. A reviewList seems unnecessary but discussion
-        needed before implementation.
-         */
         } else if (!aReviewHasBeenCreated) {
             sb.append("No items were reviewed yet.");
         } else {
@@ -171,6 +166,11 @@ public class ReviewController {
     public List<String> getLeastReviewedItems() {
         return getReviewedItems(false);
     }
+
+    /*
+    printMostReviewedItems and printLeastReviewedItems needs to be refactored as above
+    but this should be check with Fredrik or during a Q&A session first.
+     */
 
     public String printMostReviewedItems() {
         StringBuilder sb = new StringBuilder();

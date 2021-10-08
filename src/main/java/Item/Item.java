@@ -11,7 +11,7 @@ public class Item {
     private String itemName;
     private double itemPrice;
     private List<Review> reviewList;
-    private int numOfReviews; //This implementation needs to be discussed
+    private int numOfReviews;
     private double meanGrade; // For User Story 3.8
     private List<Transaction> transactionList;
 

@@ -30,7 +30,7 @@ public class ReviewOptionsMenu {
     final int PRINT_WORST_MEAN_ITEM = 10;
 
     //Menu text
-    String reviewMenuOptions = "Reviews options menu:" + MenuUtility.EOL +
+    final String REVIEW_MENU_OPTIONS = "Reviews options menu:" + MenuUtility.EOL +
                                "0. Return to Main Menu." + MenuUtility.EOL +
                                "1. Create a review for an Item." + MenuUtility.EOL +
                                "2. Print a specific review of an Item." + MenuUtility.EOL +
@@ -51,7 +51,7 @@ public class ReviewOptionsMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.print(reviewMenuOptions);
+            MenuUtility.print(REVIEW_MENU_OPTIONS);
             int chosenMenuOption = Input.readMenuInt(0, 10);
             switch (chosenMenuOption) {
                 case CREATE_REVIEW:

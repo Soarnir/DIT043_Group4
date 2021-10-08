@@ -28,7 +28,7 @@ public class TransactionHistoryMenu {
     final int PRINT_ITEM_HIGHEST_PROFIT = 8;
 
     //Menu text
-    String transactionMenuOptions =  "Transaction History options menu:" + MenuUtility.EOL +
+    final String TRANSACTION_MENU_OPTIONS =  "Transaction History options menu:" + MenuUtility.EOL +
                                      "0. Return to Main Menu." + MenuUtility.EOL +
                                      "1. Print total profit from all item purchases" + MenuUtility.EOL +
                                      "2. Print total units sold from all item purchases" + MenuUtility.EOL +
@@ -47,7 +47,7 @@ public class TransactionHistoryMenu {
     public void printMenu() {
         boolean loop = true;
         do {
-            MenuUtility.print(transactionMenuOptions);
+            MenuUtility.print(TRANSACTION_MENU_OPTIONS);
             int chosenMenuOption = Input.readMenuInt(0, 3);
             switch (chosenMenuOption) {
                 case PRINT_ALL_TOTAL_PROFIT:
