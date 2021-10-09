@@ -14,9 +14,7 @@ public class MainMenu {
      * Constructor passes through utility objects such that they do not need to be created multiple times, retaining the same object reference
      */
     ItemOptionsMenu itemOptionsMenu = new ItemOptionsMenu(facade);
-
     ReviewOptionsMenu reviewOptionsMenu = new ReviewOptionsMenu(facade);
-
     TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(facade);
 
     //Menu options
@@ -25,13 +23,12 @@ public class MainMenu {
     final int TRANSACTION_MENU = 3;
 
     //Menu text
-    // Need to make this final -K
     final String MAIN_MENU_OPTIONS = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
-                             "0. Close system." + MenuUtility.EOL +
-                             "1. Open Item options." + MenuUtility.EOL +
-                             "2. Open Review options." + MenuUtility.EOL +
-                             "3. Open Transaction History options." + MenuUtility.EOL + MenuUtility.EOL +
-                             "Type an option number: ";
+                                     "0. Close system." + MenuUtility.EOL +
+                                     "1. Open Item options." + MenuUtility.EOL +
+                                     "2. Open Review options." + MenuUtility.EOL +
+                                     "3. Open Transaction History options." + MenuUtility.EOL + MenuUtility.EOL +
+                                     "Type an option number: ";
 
     /*
      * Enter first menu loop, error handling is managed by Input class

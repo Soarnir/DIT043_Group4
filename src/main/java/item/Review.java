@@ -1,8 +1,8 @@
-package Item;
+package item;
 
 public class Review {
 
-    private String reviewText;
+    private final String REVIEW_TEXT;
     private final int REVIEW_GRADE;
 
     public Review(String reviewText, int reviewGrade) {
@@ -21,11 +21,11 @@ public class Review {
     }
 
     public String getReviewText() {
-        return reviewText;
+        return REVIEW_TEXT;
     }
 
     @Override
     public String toString() {
-        return "Grade: " + REVIEW_GRADE + "." + reviewText;
+        return "Grade: " + REVIEW_GRADE + "." + REVIEW_TEXT;
     }
 }

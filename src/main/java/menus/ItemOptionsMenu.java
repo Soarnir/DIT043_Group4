@@ -27,14 +27,14 @@ public class ItemOptionsMenu {
 
     //Menu text
     final String ITEM_MENU_OPTIONS = "Item options menu:" + MenuUtility.EOL +
-            "0. Return to Main Menu." + MenuUtility.EOL +
-            "1. Create an Item." + MenuUtility.EOL +
-            "2. Remove an Item." + MenuUtility.EOL +
-            "3. Print all registered Items." + MenuUtility.EOL +
-            "4. Buy an Item." + MenuUtility.EOL +
-            "5. Update an item’s name." + MenuUtility.EOL +
-            "6. Update an item’s price." + MenuUtility.EOL + MenuUtility.EOL +
-            "Type an option number:";
+                                     "0. Return to Main Menu." + MenuUtility.EOL +
+                                     "1. Create an Item." + MenuUtility.EOL +
+                                     "2. Remove an Item." + MenuUtility.EOL +
+                                     "3. Print all registered Items." + MenuUtility.EOL +
+                                     "4. Buy an Item." + MenuUtility.EOL +
+                                     "5. Update an item’s name." + MenuUtility.EOL +
+                                     "6. Update an item’s price." + MenuUtility.EOL + MenuUtility.EOL +
+                                     "Type an option number:";
 
     /*
      * Enter item menu loop, error handling is managed by Input class

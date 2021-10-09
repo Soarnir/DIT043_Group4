@@ -62,7 +62,7 @@ public class Epic2AlternativeTests {
     @Test
     public void shouldPrintErrorWhenInvalidUpdate(){
         String itemID = "ID1";
-        String expectedNotRegistered = "Item " + itemID + " was not registered yet.";
+        String expectedNotRegistered = "item " + itemID + " was not registered yet.";
         String expectedInvalidData = "Invalid data for item.";
 
         assertEquals(expectedNotRegistered, facade.updateItemPrice(itemID, -5.0));

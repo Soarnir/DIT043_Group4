@@ -1,7 +1,7 @@
-package handlers;
+package controllers;
 
-import Item.Item;
-import Item.Storage;
+import item.Item;
+import item.Storage;
 import utility.MenuUtility;
 
 public class ItemController {
@@ -20,7 +20,7 @@ public class ItemController {
             MenuUtility.print("Created: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice);
             storage.getUsedIDs().add(itemID);
             storage.getItemMap().put(itemID, new Item(itemID, itemName, itemPrice));
-            return "Item " + itemID + " was registered successfully.";
+            return "item " + itemID + " was registered successfully.";
         }
     }
 
@@ -29,10 +29,10 @@ public class ItemController {
             storage.getUsedIDs().remove(itemID);
             storage.getItemMap().remove(itemID);
             //MenuUtility.print("Item " + itemID + " was successfully removed.");
-            return "Item " + itemID + " was successfully removed.";
+            return "item " + itemID + " was successfully removed.";
         }
         //MenuUtility.print("Item " + itemID + " could not be removed.");
-        return "Item " + itemID + " could not be removed.";
+        return "item " + itemID + " could not be removed.";
     }
 
     public String printAllItems() {
@@ -40,8 +40,7 @@ public class ItemController {
             return "No items registered yet.";
         } else {
             StringBuilder stringBuilder = new StringBuilder("All registered items:" + MenuUtility.EOL);
-            for (int i = 0; i < storage.getUsedIDs().size(); i++) {
-                Item item = storage.getItem(storage.getUsedIDs().get(i));
+            for (Item item : storage.getItemMap().values()) {
                 stringBuilder.append(item.toString()).append(MenuUtility.EOL);
             }
             return stringBuilder.toString();
@@ -50,25 +49,25 @@ public class ItemController {
 
     public String updateItem(String itemID, String newName) {
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
+            return "item " + itemID + " was not registered yet.";
         } else if (newName.isEmpty()) {
             return "Invalid data for item.";
         } else {
             MenuUtility.print("Item: " + itemID + " name: " + storage.getItem(itemID).getItemName() + " | new name: " + newName);
             storage.getItem(itemID).updateItemName(newName);
-            return "Item " + itemID + " was updated successfully.";
+            return "item " + itemID + " was updated successfully.";
         }
     }
 
     public String updateItem(String itemID, double newPrice) {
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
+            return "item " + itemID + " was not registered yet.";
         } else if (newPrice <= 0) {
             return "Invalid data for item.";
         } else {
             MenuUtility.print("Item: " + itemID + " price: " + storage.getItem(itemID).getItemPrice() + " | new price: " + newPrice);
             storage.getItem(itemID).updateItemPrice(newPrice);
-            return "Item " + itemID + " was updated successfully.";
+            return "item " + itemID + " was updated successfully.";
         }
     }
 }

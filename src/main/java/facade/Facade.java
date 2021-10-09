@@ -1,9 +1,9 @@
 package facade;
 
-import Item.Storage;
-import handlers.ItemController;
-import handlers.ReviewController;
-import handlers.TransactionController;
+import item.Storage;
+import controllers.ItemController;
+import controllers.ReviewController;
+import controllers.TransactionController;
 import utility.MenuUtility;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class Facade {
         if (storage.checkForUsedID(itemID)) {
             return storage.getItem(itemID).toString();
         } else {
-            return "Item " + itemID + " was not registered yet.";
+            return "item " + itemID + " was not registered yet.";
         }
     }
 

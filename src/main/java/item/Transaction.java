@@ -1,23 +1,23 @@
-package Item;
+package item;
 
 import utility.MenuUtility;
 
 public class Transaction {
 
     private final Item item;
-    private final int amount;
-    private final double transactionCost;
+    private final int AMOUNT;
+    private final double TRANSACTION_COST;
 
     public Transaction(Item item, int amount) {
         this.item = item;
-        this.amount = amount;
+        this.AMOUNT = amount;
         if (amount > 4) {
             double discountPrice = item.getItemPrice() * 0.7;
             MenuUtility.print("" + discountPrice);
-            this.transactionCost = ((4 * item.getItemPrice()) + ((amount - 4) * discountPrice));
-            MenuUtility.print("" + transactionCost);
+            this.TRANSACTION_COST = ((4 * item.getItemPrice()) + ((amount - 4) * discountPrice));
+            MenuUtility.print("" + TRANSACTION_COST);
         } else {
-            this.transactionCost = amount * item.getItemPrice();
+            this.TRANSACTION_COST = amount * item.getItemPrice();
         }
     }
 
@@ -26,15 +26,15 @@ public class Transaction {
     }
 
     public int getAmount() {
-        return amount;
+        return AMOUNT;
     }
 
     public double getTransactionCost() {
-        return transactionCost;
+        return TRANSACTION_COST;
     }
 
     @Override
     public String toString() {
-        return item.getItemID() + ": " + amount + " item(s). " + transactionCost + " SEK";
+        return item.getItemID() + ": " + AMOUNT + " item(s). " + TRANSACTION_COST + " SEK";
     }
 }

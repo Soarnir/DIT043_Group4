@@ -1,8 +1,8 @@
-package handlers;
+package controllers;
 
-import Item.Item;
-import Item.Review;
-import Item.Storage;
+import item.Item;
+import item.Review;
+import item.Storage;
 import utility.MenuUtility;
 
 import java.util.ArrayList;
@@ -11,7 +11,9 @@ import java.util.List;
 public class ReviewController {
 
     Storage storage;
-    private boolean aReviewHasBeenCreated = false; //Implementation needs to be checked
+    final int LOWEST_REVIEWED_GRADE = 1;
+    final int HIGHEST_REVIEWED_GRADE = 5;
+    final int LOWEST_REVIEW_INDEX = 1;
 
     public ReviewController(Storage storage) {
         this.storage = storage;
@@ -19,30 +21,17 @@ public class ReviewController {
 
     public String createReview(String itemID, String reviewText, int reviewGrade) {
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
-        } else if (reviewGrade < 1 || reviewGrade > 5) {
+            return "item " + itemID + " was not registered yet.";
+        } else if (reviewGrade < LOWEST_REVIEWED_GRADE || reviewGrade > HIGHEST_REVIEWED_GRADE) {
             return "Grade values must be between 1 and 5.";
         } else {
-            if (reviewText.isEmpty()) {
-                getReviewList(itemID).add(new Review(reviewGrade));
-            } else {
-                getReviewList(itemID).add(new Review(reviewText, reviewGrade));
-            }
-            aReviewHasBeenCreated = true;
+            getReviewList(itemID).add(new Review(reviewText, reviewGrade));
             return "Your item review was registered successfully.";
         }
     }
 
     public String createReview(String itemID, int reviewGrade) {
-        if (!storage.getUsedIDs().contains(itemID)) {
-            return "Item <ID> was not registered yet.";
-        } else if (reviewGrade < 1 || reviewGrade > 5) {
-            return "Grade values must be between 1 and 5.";
-        } else {
-            getReviewList(itemID).add(new Review(reviewGrade));
-            storage.getItem(itemID).increaseNumOfReviews();
-            return "Your item review was registered successfully.";
-        }
+        return createReview(itemID, "", reviewGrade);
     }
 
     public List<Review> getReviewList(String itemID) {
@@ -65,7 +54,7 @@ public class ReviewController {
         for (Review review : getReviewList(itemID)) {
             sum += review.getReviewGrade();
         }
-        return (sum / getReviewList(itemID).size());
+        return MenuUtility.doubleTruncate((sum / getReviewList(itemID).size()));
     }
 
     public Review getReview(String itemID, int reviewIndex) {
@@ -75,54 +64,60 @@ public class ReviewController {
     public String printReview(String itemID, int reviewIndex) {
         int reviewListSize = getReviewList(itemID).size();
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
+            return "item " + itemID + " was not registered yet.";
         } else if (reviewListSize == 0) {
-            // Line below was commented out as specs required another print statement.
-            // return "Item " + getItem(itemID).getItemName() + "";
-            return "Item " + storage.getItem(itemID).getItemName() + " has not been reviewed yet.";
-        } else if (reviewIndex < 1 || reviewIndex > reviewListSize) {
+            return "item " + storage.getItem(itemID).getItemName() + " has not been reviewed yet.";
+        } else if (reviewIndex < LOWEST_REVIEW_INDEX || reviewIndex > reviewListSize) {
             return "Invalid review number. Choose between 1 and " + reviewListSize + ".";
         } else {
-            Review review = getReview(itemID, (reviewIndex - 1));
+            Review review = getReview(itemID, (reviewIndex - LOWEST_REVIEW_INDEX));
             return "Grade: " + review.getReviewGrade() + "." + review.getReviewText();
         }
     }
 
     public String printAllItemReviews(String itemID) {
-        //Needs refactoring
         StringBuilder sb = new StringBuilder();
-        int reviewListSize = getReviewList(itemID).size();
+        Item item;
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
-        } else if (reviewListSize == 0) {
-            Item item = storage.getItem(itemID);
-            sb.append("Review(s) for ").append(item.toString()).append(MenuUtility.EOL);
-            sb.append("Item ").append(item.getItemName()).append(" has not been reviewed yet.");
-            return sb.toString();
+            sb.append("item ").append(itemID).append(" was not registered yet.");
         } else {
-            Item item = storage.getItem(itemID);
+            item = storage.getItem(itemID);
             sb.append("Review(s) for ").append(item.toString()).append(MenuUtility.EOL);
-            for (Review review : getReviewList(itemID)) {
-                sb.append(review.toString()).append(MenuUtility.EOL);
+            if (getReviewList(itemID).size() == 0) {
+                sb.append("item ").append(item.getItemName()).append(" has not been reviewed yet.");
+            } else {
+                for (Review review : getReviewList(itemID)) {
+                    sb.append(review.toString()).append(MenuUtility.EOL);
+                }
             }
-            return sb.toString();
         }
+        return sb.toString();
+    }
+
+    public boolean hasAReviewBeenRegistered(){
+        boolean aReviewHasBeenRegistered = false;
+        for(Item item : storage.getItemMap().values()){
+            if (item.getNumOfReviews() > 0){
+                aReviewHasBeenRegistered = true;
+            }
+        }
+        return aReviewHasBeenRegistered;
     }
 
     public String printAllReviews() {
         StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
-        } else if (!aReviewHasBeenCreated) {
+        // Change to use a method to loop true itemMap and check for reviews.
+        } else if (!hasAReviewBeenRegistered()) {
             sb.append("No items were reviewed yet.");
         } else {
             sb.append("All registered reviews:").append(MenuUtility.EOL);
             sb.append("------------------------------------");
-            for (String itemID : storage.getItemMap().keySet()){
+            for (Item item : storage.getItemMap().values()){
                 // Repetition with printAllItemReviews method, need to make it more modular.
-                Item item = storage.getItem(itemID);
                 sb.append("Review(s) for ").append(item.toString()).append(MenuUtility.EOL);
-                for (Review review : getReviewList(itemID)) {
+                for (Review review : getReviewList(item.getItemID())) {
                     sb.append(review.toString()).append(MenuUtility.EOL);
                 }
                 sb.append("------------------------------------");
@@ -131,7 +126,7 @@ public class ReviewController {
         return sb.toString();
     }
 
-    //List<Item> possible here
+    // TODO Need to consider renaming variables -K
     public List<String> getReviewedItems(boolean mostReviewed) {
         List<String> reviewedItems = new ArrayList<>();
         for (String itemID : storage.getItemMap().keySet()) {
@@ -139,17 +134,19 @@ public class ReviewController {
                 reviewedItems.add(itemID);
             } else {
                 String currentReviewedItem = reviewedItems.get(0);
+                int currentItemReviews = storage.getItem(itemID).getNumOfReviews();
+                int storedItemReviews = storage.getItem(currentReviewedItem).getNumOfReviews();
                 if (mostReviewed) {
-                    if (storage.getItem(itemID).getNumOfReviews() > storage.getItem(currentReviewedItem).getNumOfReviews()) {
+                    if (currentItemReviews > storedItemReviews) {
                         reviewedItems.clear();
                         reviewedItems.add(itemID);
                     }
                 } else if (!mostReviewed) {
-                    if (storage.getItem(itemID).getNumOfReviews() < storage.getItem(currentReviewedItem).getNumOfReviews()) {
+                    if (currentItemReviews < storedItemReviews) {
                         reviewedItems.clear();
                         reviewedItems.add(itemID);
                     }
-                } else if (storage.getItem(itemID).getNumOfReviews() == storage.getItem(currentReviewedItem).getNumOfReviews()) {
+                } else if (currentItemReviews == storedItemReviews) {
                     reviewedItems.add(itemID);
                 }
             }
@@ -157,35 +154,33 @@ public class ReviewController {
         return reviewedItems;
     }
 
-    //List<Item> possible here
     public List<String> getMostReviewedItems() {
         return getReviewedItems(true);
     }
 
-    //List<Item> possible here
     public List<String> getLeastReviewedItems() {
         return getReviewedItems(false);
     }
 
     /*
     printMostReviewedItems and printLeastReviewedItems needs to be refactored as above
-    but this should be check with Fredrik or during a Q&A session first.
+    but this should be checked with Fredrik or during a Q&A session first.
      */
 
     public String printMostReviewedItems() {
         StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
-        } else if (!aReviewHasBeenCreated) {
+        // Change to use a method to loop true itemMap and check for reviews.
+        } else if (!hasAReviewBeenRegistered()) {
             sb.append("No items were reviewed yet.");
         } else {
             List<String> highestReviewedItems = getMostReviewedItems();
             String tempItemID = highestReviewedItems.get(0);
             sb.append("Most reviews: ").append(storage.getItem(tempItemID).getNumOfReviews()).append(" review(s) each.");
             for (String itemID : highestReviewedItems) {
-                //TODO temporary cleanup, see @getMostReviewedItems
-                Item item = storage.getItem(itemID);
-                sb.append(item.toString()).append(MenuUtility.EOL);
+                //
+                sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
             }
         }
         return sb.toString();
@@ -195,16 +190,16 @@ public class ReviewController {
         StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
-        } else if (!aReviewHasBeenCreated) {
+        // Change to use a method to loop true itemMap and check for reviews.
+        } else if (!hasAReviewBeenRegistered()) {
             sb.append("No items were reviewed yet.");
         } else {
             List<String> lowestReviewedItems = getLeastReviewedItems();
             String tempItemID = lowestReviewedItems.get(0);
             sb.append("Least reviews: ").append(storage.getItem(tempItemID).getNumOfReviews()).append(" review(s) each.");
             for (String itemID : lowestReviewedItems) {
-                //TODO temporary cleanup, see @getLeastReviewedItems
-                Item item = storage.getItem(itemID);
-                sb.append(item.toString()).append(MenuUtility.EOL);
+                //
+                sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
             }
         }
         return sb.toString();
