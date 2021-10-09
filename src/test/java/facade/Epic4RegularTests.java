@@ -128,7 +128,7 @@ public class Epic4RegularTests {
     @Test
     public void shouldPrintAllTransactions(){
         String expectedPrint = "All purchases made: "  + TestResources.EOL +
-                "Total profit: 9850.12 SEK"            + TestResources.EOL +
+                "Total profit: 9850.11 SEK"            + TestResources.EOL +
                 "Total items sold: 27 units"           + TestResources.EOL +
                 "Total purchases made: 9 transactions" + TestResources.EOL +
                 "------------------------------------" + TestResources.EOL +
