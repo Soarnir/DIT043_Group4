@@ -1,5 +1,6 @@
 package facade;
 
+import item.Review;
 import item.Storage;
 import controllers.ItemController;
 import controllers.ReviewController;
@@ -34,7 +35,7 @@ public class Facade {
         if (storage.checkForUsedID(itemID)) {
             return storage.getItem(itemID).toString();
         } else {
-            return "item " + itemID + " was not registered yet.";
+            return "Item " + itemID + " was not registered yet.";
         }
     }
 
@@ -71,7 +72,7 @@ public class Facade {
     }
 
     public int getNumberOfReviews(String itemID) {
-        return reviewController.getItemComments(itemID).size();
+        return reviewController.getNumberOfReviews(itemID);
     }
 
     public String getPrintedItemReview(String itemID, int reviewNumber) {
@@ -79,23 +80,23 @@ public class Facade {
     }
 
     public String getPrintedReviews(String itemID) {
-        return "";
+        return reviewController.printAllItemReviews(itemID);
     }
 
     public String printMostReviewedItems() {
-        return "";
+        return reviewController.printMostReviewedItems();
     }
 
     public List<String> getMostReviewedItems() {
-        return null;
+        return reviewController.getMostReviewedItems();
     }
 
     public List<String> getLeastReviewedItems() {
-        return null;
+        return reviewController.getLeastReviewedItems();
     }
 
     public String printLeastReviewedItems() {
-        return "";
+        return reviewController.printLeastReviewedItems();
     }
 
     public double getTotalProfit() {
@@ -127,23 +128,23 @@ public class Facade {
     }
 
     public String printWorseReviewedItems() {
-        return "";
+        return reviewController.printWorseReviewedItems();
     }
 
     public String printBestReviewedItems() {
-        return "";
+        return reviewController.printBestReviewedItems();
     }
 
     public List<String> getWorseReviewedItems() {
-        return null;
+        return reviewController.getWorseReviewedItems();
     }
 
     public List<String> getBestReviewedItems() {
-        return null;
+        return reviewController.getBestReviewedItems();
     }
 
     public String printAllReviews() {
-        return "";
+        return reviewController.printAllReviews();
     }
 
     public String updateItemName(String itemID, String newName) {

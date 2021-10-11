@@ -12,7 +12,6 @@ public class Item {
     private double itemPrice;
     private List<Review> reviewList;
     private int numOfReviews;
-    private double meanGrade; // For User Story 3.8
     private List<Transaction> transactionList;
 
     public Item(String ITEM_ID, String itemName, double itemPrice) {

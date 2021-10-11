@@ -2,17 +2,17 @@ package item;
 
 public class Review {
 
-    private final String REVIEW_TEXT;
     private final int REVIEW_GRADE;
+    // Changed back to non-final as second constructor should be implemented
+    private String reviewText;
+
 
     public Review(String reviewText, int reviewGrade) {
-        if (!reviewText.equals("")) {
-            this.reviewText = reviewText;
-        }
+        this.reviewText = reviewText;
         this.REVIEW_GRADE = reviewGrade;
     }
 
-    public Review(int reviewGrade) {
+    public Review(int reviewGrade){
         this.REVIEW_GRADE = reviewGrade;
     }
 
@@ -21,11 +21,24 @@ public class Review {
     }
 
     public String getReviewText() {
-        return REVIEW_TEXT;
+        return reviewText;
     }
+
+    /*
+        This needs to be done as methods in ReviewController call toString for printing
+        and tests require nothing (not 'null') -K
+     */
+//    @Override
+//    public String toString() {
+//        return "Grade: " + REVIEW_GRADE + "." + reviewText;
+//    }
 
     @Override
     public String toString() {
-        return "Grade: " + REVIEW_GRADE + "." + REVIEW_TEXT;
+        if (reviewText == null){
+            return "Grade: " + REVIEW_GRADE + ".";
+        } else {
+            return "Grade: " + REVIEW_GRADE + "." + reviewText;
+        }
     }
 }

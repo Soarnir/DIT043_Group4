@@ -2,6 +2,7 @@ package item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Storage {
@@ -9,7 +10,7 @@ public class Storage {
     // No getter has been implemented because only the Storage class should be accessing usedIDs.
     private final List<String> usedIDs = new ArrayList<>();
 
-    private final HashMap<String, Item> itemMap = new HashMap<>();
+    private final LinkedHashMap<String, Item> itemMap = new LinkedHashMap<>();
 
     public HashMap<String, Item> getItemMap(){
         return itemMap;

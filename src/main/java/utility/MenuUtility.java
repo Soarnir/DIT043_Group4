@@ -15,6 +15,10 @@ public class MenuUtility {
         return (Math.floor(value * Math.pow(10, 2))) / Math.pow(10, 2);
     }
 
+    public static double meanGradeTruncate(double value) {
+        return (Math.floor(value * 10)) / 10;
+    }
+
     public static String doubleFormat(double value) {
         return new DecimalFormat("#.00").format(value);
     }
