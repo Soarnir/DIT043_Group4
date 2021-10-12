@@ -71,11 +71,15 @@ public class ReviewController {
     // Error handling and making mean grade visible to the user is yet to be implemented.
     public double getItemMeanGrade(String itemID) {
         double sum = 0;
-        for (Review review : getReviewList(itemID)) {
-            sum += review.getReviewGrade();
+        if (!getReviewList(itemID).isEmpty()) {
+            for (Review review : getReviewList(itemID)) {
+                sum += review.getReviewGrade();
+            }
+            double meanGradeBeforeTruncation = sum / getReviewList(itemID).size();
+            return MenuUtility.doubleTruncate(meanGradeBeforeTruncation, 1);
+        } else {
+            return 0;
         }
-        double meanGradeBeforeTruncation = sum / getReviewList(itemID).size();
-        return MenuUtility.meanGradeTruncate(meanGradeBeforeTruncation);
     }
 
     public Review getReview(String itemID, int reviewIndex) {
@@ -119,7 +123,7 @@ public class ReviewController {
         return sb.toString();
     }
 
-    public boolean hasAReviewBeenRegistered(){
+    public boolean hasAReviewBeenRegistered() {
         boolean aReviewHasBeenRegistered = false;
         for(Item item : storage.getItemMap().values()){
             if (item.getNumOfReviews() > 0){
@@ -143,7 +147,7 @@ public class ReviewController {
             for (Item item : storage.getItemMap().values()){
                 if (item.getNumOfReviews() > 0){
                     // Repetition with printAllItemReviews method, need to make it more modular.
-                    sb.append("Review(s) for ").append(item.toString()).append(MenuUtility.EOL);
+                    sb.append("Review(s) for ").append(item).append(MenuUtility.EOL);
                     for (Review review : getReviewList(item.getItemID())) {
                         sb.append(review.toString()).append(MenuUtility.EOL);
                     }
@@ -269,7 +273,7 @@ public class ReviewController {
         List<String> worstReviewedItems = new ArrayList<>();
 
         for (String itemID : storage.getItemMap().keySet()) {
-            if (getItemMeanGrade(itemID) > 0){
+            if (getItemMeanGrade(itemID) > 0) {
                 if (worstReviewedItems.isEmpty()) {
                     worstReviewedItems.add(itemID);
                 } else {

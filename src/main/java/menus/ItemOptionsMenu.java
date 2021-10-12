@@ -24,6 +24,7 @@ public class ItemOptionsMenu {
     final int BUY_ITEM = 4;
     final int UPDATE_ITEM_NAME = 5;
     final int UPDATE_ITEM_PRICE = 6;
+    final int PRINT_ITEM = 7;
 
     //Menu text
     final String ITEM_MENU_OPTIONS = "Item options menu:" + MenuUtility.EOL +
@@ -33,7 +34,8 @@ public class ItemOptionsMenu {
                                      "3. Print all registered Items." + MenuUtility.EOL +
                                      "4. Buy an Item." + MenuUtility.EOL +
                                      "5. Update an item’s name." + MenuUtility.EOL +
-                                     "6. Update an item’s price." + MenuUtility.EOL + MenuUtility.EOL +
+                                     "6. Update an item’s price." + MenuUtility.EOL +
+                                     "7. Print a specific item." + MenuUtility.EOL + MenuUtility.EOL +
                                      "Type an option number:";
 
     /*
@@ -44,7 +46,7 @@ public class ItemOptionsMenu {
         boolean loop = true;
         do {
             MenuUtility.print(ITEM_MENU_OPTIONS);
-            int chosenMenuOption = Input.readMenuInt(0, 6);
+            int chosenMenuOption = Input.readMenuInt(0, 7);
             switch (chosenMenuOption) {
                 case CREATE_ITEM:
                     System.out.print("ID: ");
@@ -89,6 +91,11 @@ public class ItemOptionsMenu {
 
                     System.out.println(facade.updateItemPrice(updateItemPriceID, updateItemPrice));
                     break;
+                case PRINT_ITEM:
+                    System.out.print("ID: ");
+                    String printItemID = Input.readString();
+
+                    System.out.println(facade.printItem(printItemID));
                 default:
                     loop = false;
             }

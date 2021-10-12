@@ -22,7 +22,7 @@ public class TransactionController {
         if (storage.checkForUsedID(itemID)) {
             Transaction transaction = new Transaction(storage.getItem(itemID), amount);
             getTransactionList(itemID).add(transaction);
-            return MenuUtility.doubleTruncate(transaction.getTransactionCost());
+            return MenuUtility.doubleTruncate(transaction.getTransactionCost(), 2);
         } else {
             return -1.0;
         }
@@ -45,10 +45,10 @@ public class TransactionController {
         return "";
     }
 
-
     public double getProfit(String itemID) {
         return 0;
     }
+
 
     public int getUnitsSold(String itemID) {
         return 0;

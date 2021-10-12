@@ -11,12 +11,8 @@ public class MenuUtility {
         System.out.println(text);
     }
 
-    public static double doubleTruncate(double value) {
-        return (Math.floor(value * Math.pow(10, 2))) / Math.pow(10, 2);
-    }
-
-    public static double meanGradeTruncate(double value) {
-        return (Math.floor(value * 10)) / 10;
+    public static double doubleTruncate(double value, int scale) {
+        return (Math.floor(value * Math.pow(10, scale))) / Math.pow(10, scale);
     }
 
     public static String doubleFormat(double value) {

@@ -1,12 +1,13 @@
 package facade;
 
-import item.Review;
-import item.Storage;
+import controllers.EmployeeController;
 import controllers.ItemController;
 import controllers.ReviewController;
 import controllers.TransactionController;
+import item.Storage;
 import utility.MenuUtility;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class Facade {
     private final ItemController itemController;
     private final ReviewController reviewController;
     private final TransactionController transactionController;
+    private final EmployeeController employeeController;
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
@@ -25,6 +27,7 @@ public class Facade {
         this.itemController = new ItemController(storage);
         this.reviewController = new ReviewController(storage);
         this.transactionController = new TransactionController(storage);
+        this.employeeController = new EmployeeController(storage);
     }
 
     public String createItem(String itemID, String itemName, double unitPrice) {
@@ -32,6 +35,7 @@ public class Facade {
     }
 
     public String printItem(String itemID) {
+        //TODO implement in ItemController
         if (storage.checkForUsedID(itemID)) {
             return storage.getItem(itemID).toString();
         } else {
@@ -225,7 +229,8 @@ public class Facade {
     }
 
     public Map<String, Integer> mapEachDegree() throws Exception {
-        return null;
+        HashMap<String, Integer> thingmap = new HashMap<>();
+        return thingmap;
     }
 
     public String promoteToManager(String empID, String degree) throws Exception {

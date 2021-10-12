@@ -69,7 +69,7 @@ public class ReviewOptionsMenu {
                 case PRINT_ALL_ITEM_COMMENTS:
                     //Print all comments of an Item
                     break;
-                case PRINT_ALL_ITEM_REVIEWS:
+                case PRINT_ALL_REVIEWS:
                     //Print all registered reviews
                     break;
                 case PRINT_MOST_REVIEWS_ITEM:

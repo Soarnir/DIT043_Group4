@@ -4,6 +4,7 @@ import utility.MenuUtility;
 
 public class Transaction {
 
+    //TODO should be String id?
     private final Item item;
     private final int AMOUNT;
     private final double TRANSACTION_COST;
