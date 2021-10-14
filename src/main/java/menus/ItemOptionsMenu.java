@@ -18,6 +18,7 @@ public class ItemOptionsMenu {
     }
 
     //Menu options
+    final int EXIT = 0;
     final int CREATE_ITEM = 1;
     final int REMOVE_ITEM = 2;
     final int PRINT_ALL_ITEMS = 3;
@@ -43,10 +44,10 @@ public class ItemOptionsMenu {
      * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
      */
     public void printMenu() {
-        boolean loop = true;
+        int chosenMenuOption;
         do {
             MenuUtility.print(ITEM_MENU_OPTIONS);
-            int chosenMenuOption = Input.readMenuInt(0, 7);
+            chosenMenuOption = Input.readMenuInt(0, 7);
             switch (chosenMenuOption) {
                 case CREATE_ITEM:
                     System.out.print("ID: ");
@@ -96,9 +97,7 @@ public class ItemOptionsMenu {
                     String printItemID = Input.readString();
 
                     System.out.println(facade.printItem(printItemID));
-                default:
-                    loop = false;
             }
-        } while (loop);
+        } while (chosenMenuOption != EXIT);
     }
 }

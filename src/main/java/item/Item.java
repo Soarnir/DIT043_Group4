@@ -12,14 +12,12 @@ public class Item {
     private double itemPrice;
     private List<Review> reviewList;
     private int numOfReviews;
-    private List<Transaction> transactionList;
 
     public Item(String ITEM_ID, String itemName, double itemPrice) {
         this.ITEM_ID = ITEM_ID;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.reviewList = new ArrayList<>();
-        this.transactionList = new ArrayList<>();
     }
 
     public String getItemID(){ return this.ITEM_ID; }
@@ -54,14 +52,6 @@ public class Item {
 
     public void increaseNumOfReviews(){
         this.numOfReviews += 1;
-    }
-
-    public List<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
-    public void setTransactionList(List<Transaction> transactionList) {
-        this.transactionList = transactionList;
     }
 
     @Override

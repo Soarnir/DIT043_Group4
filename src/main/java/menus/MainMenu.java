@@ -19,6 +19,7 @@ public class MainMenu {
     EmployeeMenu employeeMenu = new EmployeeMenu(facade);
 
     //Menu options
+    final int EXIT = 0;
     final int ITEM_MENU = 1;
     final int REVIEW_MENU = 2;
     final int TRANSACTION_MENU = 3;
@@ -38,10 +39,10 @@ public class MainMenu {
      * User stays in loop even when moving to separate menu, exit is only provided upon invalid input or 0
      */
     public void printMenu() {
-        boolean loop = true;
+        int chosenMenuOption;
         do {
-            MenuUtility.print(MAIN_MENU_OPTIONS);
-            int chosenMenuOption = Input.readMenuInt(0, 3);
+            System.out.println(MAIN_MENU_OPTIONS);
+            chosenMenuOption = Input.readMenuInt(0, 4);
             switch (chosenMenuOption) {
                 case ITEM_MENU:
                     itemOptionsMenu.printMenu();
@@ -55,11 +56,9 @@ public class MainMenu {
                 case EMPLOYEE_MENU:
                     employeeMenu.printMenu();
                     break;
-                default:
-                    loop = false;
-                    Input.closeScanner();
             }
-        } while (loop);
+        } while (chosenMenuOption != EXIT);
+        Input.closeScanner();
         System.exit(0);
     }
 }

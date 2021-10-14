@@ -11,6 +11,9 @@ public class Storage {
 
     private final LinkedHashMap<String, Item> itemMap = new LinkedHashMap<>();
 
+    private final LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
+
+
     public LinkedHashMap<String, Item> getItemMap(){
         return itemMap;
     }
@@ -19,12 +22,25 @@ public class Storage {
         return usedIDs;
     }
 
+    public Item getItem(String itemID) {
+        return getItemMap().get(itemID);
+    }
+
     public boolean checkForUsedID(String itemID) {
         return usedIDs.contains(itemID);
     }
 
-    public Item getItem(String itemID) {
-        return getItemMap().get(itemID);
+    public List<Transaction> getItemTransactionList(String itemID) {
+        return transactionMap.get(itemID);
+    }
+
+    public LinkedHashMap<String, List<Transaction>> getTransactionMap() {
+        return transactionMap;
+    }
+
+    public String setTransactionList(String itemID, List<Transaction> transactionList) {
+        transactionMap.put(itemID, transactionList);
+        return "updated successfully";
     }
 
 }

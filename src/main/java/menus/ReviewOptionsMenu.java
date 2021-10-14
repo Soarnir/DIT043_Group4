@@ -18,6 +18,7 @@ public class ReviewOptionsMenu {
     }
 
     //Menu options
+    final int EXIT = 0;
     final int CREATE_REVIEW = 1;
     final int PRINT_SPECIFIC_ITEM_REVIEW = 2;
     final int PRINT_ALL_ITEM_REVIEW = 3;
@@ -49,10 +50,10 @@ public class ReviewOptionsMenu {
      * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
      */
     public void printMenu() {
-        boolean loop = true;
+        int chosenMenuOption;
         do {
             MenuUtility.print(REVIEW_MENU_OPTIONS);
-            int chosenMenuOption = Input.readMenuInt(0, 10);
+            chosenMenuOption = Input.readMenuInt(0, 10);
             switch (chosenMenuOption) {
                 case CREATE_REVIEW:
                     //Create a review for an Item
@@ -84,10 +85,8 @@ public class ReviewOptionsMenu {
                 case PRINT_WORST_MEAN_ITEM:
                     //Print item(s) with worst mean review grade
                     break;
-                default:
-                    loop = false;
             }
-        } while (loop);
+        } while (chosenMenuOption != EXIT);
     }
 }
 

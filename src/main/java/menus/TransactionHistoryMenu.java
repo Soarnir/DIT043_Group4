@@ -18,6 +18,7 @@ public class TransactionHistoryMenu {
     }
 
     //Menu options
+    final int EXIT = 0;
     final int PRINT_ALL_TOTAL_PROFIT = 1;
     final int PRINT_ALL_UNITS_SOLD = 2;
     final int PRINT_ALL_TOTAL_TRANSACTIONS = 3;
@@ -45,10 +46,10 @@ public class TransactionHistoryMenu {
      * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
      */
     public void printMenu() {
-        boolean loop = true;
+        int chosenMenuOption;
         do {
             MenuUtility.print(TRANSACTION_MENU_OPTIONS);
-            int chosenMenuOption = Input.readMenuInt(0, 3);
+            chosenMenuOption = Input.readMenuInt(0, 8);
             switch (chosenMenuOption) {
                 case PRINT_ALL_TOTAL_PROFIT:
                     //Print total profit from all item purchases
@@ -74,10 +75,7 @@ public class TransactionHistoryMenu {
                 case PRINT_ITEM_HIGHEST_PROFIT:
                     //Print item with highest profit
                     break;
-                default:
-                    //return to main menu
-                    loop = false;
             }
-        } while (loop);
+        } while (chosenMenuOption != EXIT);
     }
 }

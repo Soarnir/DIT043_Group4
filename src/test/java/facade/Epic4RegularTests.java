@@ -28,16 +28,18 @@ public class Epic4RegularTests {
                 {"ID4", "Sweatpants"    , "120.20"},
                 {"ID5", "Leather jacket", "1200.00"},
         };
+
         for (String[] row : testDataItems) {
             facade.createItem(row[0], row[1], Double.parseDouble(row[2]));
         }
-        // ID1: 4 purchases, 19 items sold, 2551.71 = (452.97 + 709.65 + 1238.11 + 150.99)
+        // ID1: 4 purchases, 17 items sold, 2340.34 = (452.97 + 709.65 + 1026.73 + 150.99)
         // ID2: 2 purchases,  4 items sold, 3998.00 = (999.50 + 2998.50)
         // ID3: 2 purchases,  2 items sold,  900.40 = (450.20 + 450.20)
         // ID4: 0 purchases,  0 items sold,    0.00
         // ID5: 1 purchases,  2 items sold, 2400.00 = (2400.00)
+        // Total profit                   = 9638.74
         String[][] testPurchaseData = {
-                {"ID1", "3"}, {"ID1", "5"}, {"ID1", "10"}, {"ID1", "1"},
+                {"ID1", "3"}, {"ID1", "5"}, {"ID1", "8"}, {"ID1", "1"},
                 {"ID2", "1"}, {"ID2", "3"},
                 {"ID3", "1"}, {"ID3", "1"},
                 {"ID5", "2"}
@@ -50,14 +52,14 @@ public class Epic4RegularTests {
 
     @Test
     public void shouldGetTotalProfit(){
-        double expectedProfit = 9850.11;
+        double expectedProfit = 9638.74;
         double actualProfit = facade.getTotalProfit();
         assertEquals(expectedProfit, actualProfit);
     }
 
     @Test
     public void shouldGetTotalUnitsSold(){
-        int expectedUnits = 27;
+        int expectedUnits = 25;
         int actualUnits = facade.getTotalUnitsSold();
         assertEquals(expectedUnits, actualUnits);
     }
@@ -72,7 +74,7 @@ public class Epic4RegularTests {
     @Test
     public void shouldGetProfitFromAnItem(){
         String itemID1 = "ID1";
-        double expectedProfitID1 = 2551.71;
+        double expectedProfitID1 = 2340.34;
         double actualProfitID1 = facade.getProfit(itemID1);
         assertEquals(expectedProfitID1, actualProfitID1);
 
@@ -90,7 +92,7 @@ public class Epic4RegularTests {
     @Test
     public void shouldGetSoldUnitsFromItem(){
         String itemID1 = "ID1";
-        int expectedUnitsID1 = 19;
+        int expectedUnitsID1 = 17;
         int actualUnitsID1 = facade.getUnitsSolds(itemID1);
         assertEquals(expectedUnitsID1, actualUnitsID1);
 
@@ -112,7 +114,7 @@ public class Epic4RegularTests {
         String expectedPrintID1 = "Transactions for item: ID1: Black T-shirt. 150.99 SEK" + TestResources.EOL +
                 "ID1: 3 item(s). 452.97 SEK"   + TestResources.EOL +
                 "ID1: 5 item(s). 709.65 SEK"   + TestResources.EOL +
-                "ID1: 10 item(s). 1238.11 SEK" + TestResources.EOL +
+                "ID1: 8 item(s). 1026.73 SEK" + TestResources.EOL +
                 "ID1: 1 item(s). 150.99 SEK"   + TestResources.EOL;
 
         String actualPrintID1 = facade.printItemTransactions(itemID1);
@@ -128,13 +130,13 @@ public class Epic4RegularTests {
     @Test
     public void shouldPrintAllTransactions(){
         String expectedPrint = "All purchases made: "  + TestResources.EOL +
-                "Total profit: 9850.11 SEK"            + TestResources.EOL +
-                "Total items sold: 27 units"           + TestResources.EOL +
+                "Total profit: 9638.74 SEK"            + TestResources.EOL +
+                "Total items sold: 25 units"           + TestResources.EOL +
                 "Total purchases made: 9 transactions" + TestResources.EOL +
                 "------------------------------------" + TestResources.EOL +
                 "ID1: 3 item(s). 452.97 SEK"           + TestResources.EOL +
                 "ID1: 5 item(s). 709.65 SEK"           + TestResources.EOL +
-                "ID1: 10 item(s). 1238.11 SEK"         + TestResources.EOL +
+                "ID1: 8 item(s). 1026.73 SEK"         + TestResources.EOL +
                 "ID1: 1 item(s). 150.99 SEK"           + TestResources.EOL +
                 "ID2: 1 item(s). 999.50 SEK"           + TestResources.EOL +
                 "ID2: 3 item(s). 2998.50 SEK"          + TestResources.EOL +

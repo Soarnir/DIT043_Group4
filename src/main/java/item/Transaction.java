@@ -36,6 +36,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return item.getItemID() + ": " + AMOUNT + " item(s). " + TRANSACTION_COST + " SEK";
+        return item.getItemID() + ": " + AMOUNT + " item(s). " + MenuUtility.doubleFormat(TRANSACTION_COST) + " SEK";
     }
 }

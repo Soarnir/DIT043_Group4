@@ -4,6 +4,8 @@ import item.Item;
 import item.Storage;
 import utility.MenuUtility;
 
+import java.util.ArrayList;
+
 public class ItemController {
 
     Storage storage;
@@ -20,6 +22,7 @@ public class ItemController {
             MenuUtility.print("Created: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice);
             storage.getUsedIDs().add(itemID);
             storage.getItemMap().put(itemID, new Item(itemID, itemName, itemPrice));
+            storage.getTransactionMap().put(itemID, new ArrayList<>());
             return "Item " + itemID + " was registered successfully.";
         }
     }
@@ -33,6 +36,14 @@ public class ItemController {
         }
         //MenuUtility.print("Item " + itemID + " could not be removed.");
         return "Item " + itemID + " could not be removed.";
+    }
+
+    public String printItem(String itemID) {
+        if (storage.checkForUsedID(itemID)) {
+            return storage.getItem(itemID).toString();
+        } else {
+            return "Item " + itemID + " was not registered yet.";
+        }
     }
 
     public String printAllItems() {

@@ -18,6 +18,7 @@ public class EmployeeMenu {
     }
 
     //Menu options
+    final int EXIT = 0;
     final int CREATE_EMPLOYEE_REGULAR = 1;
     final int CREATE_EMPLOYEE_MANAGER = 2;
     final int CREATE_EMPLOYEE_DIRECTOR = 3;
@@ -47,10 +48,10 @@ public class EmployeeMenu {
      * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
      */
     public void printMenu() {
-        boolean loop = true;
+        int chosenMenuOption;
         do {
             MenuUtility.print(EMPLOYEE_MENU_OPTIONS);
-            int chosenMenuOption = Input.readMenuInt(0, 9);
+            chosenMenuOption = Input.readMenuInt(0, 9);
             switch (chosenMenuOption) {
                 case CREATE_EMPLOYEE_REGULAR:
 
@@ -79,10 +80,8 @@ public class EmployeeMenu {
                 case PRINT_EMPLOYEE_SORTED:
 
                     break;
-                default:
-                    loop = false;
             }
-        } while (loop);
+        } while (chosenMenuOption != EXIT);
     }
 
 }

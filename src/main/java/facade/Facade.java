@@ -35,12 +35,7 @@ public class Facade {
     }
 
     public String printItem(String itemID) {
-        //TODO implement in ItemController
-        if (storage.checkForUsedID(itemID)) {
-            return storage.getItem(itemID).toString();
-        } else {
-            return "Item " + itemID + " was not registered yet.";
-        }
+        return itemController.printItem(itemID);
     }
 
     public String removeItem(String itemID) {
