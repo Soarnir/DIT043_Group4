@@ -5,6 +5,7 @@ import item.Storage;
 import item.Transaction;
 import utility.MenuUtility;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,21 +35,52 @@ public class TransactionController {
         }
     }
 
-    //TODO EP4 implementation
     public double getTotalProfit() {
-        return 0;
+        double totalProfit = 0;
+        for (String itemID : storage.getUsedIDs()){
+            totalProfit += getProfit(itemID);
+        }
+        return MenuUtility.doubleTruncate(totalProfit, 2);
     }
 
     public int getTotalUnitsSold() {
-        return 0;
+        int totalUnitsSold = 0;
+        for (String itemID : storage.getUsedIDs()){
+            totalUnitsSold += getUnitsSold(itemID);
+        }
+        return totalUnitsSold;
     }
 
     public int getTotalTransactions() {
-        return 0;
+        int totalTransactions = 0;
+        for (String itemID : storage.getUsedIDs()){
+            int numOfTransactions = storage.getItemTransactionList(itemID).size();
+            totalTransactions += numOfTransactions;
+        }
+        return totalTransactions;
     }
 
     public String printAllTransactions() {
-        return "";
+        StringBuilder sb = new StringBuilder("All purchases made: " + MenuUtility.EOL);
+
+        sb.append("Total profit: ");
+        sb.append(MenuUtility.doubleFormat(getTotalProfit()));
+        sb.append(" SEK").append(MenuUtility.EOL);
+        sb.append("Total items sold: ").append(getTotalUnitsSold()).append(" units").append(MenuUtility.EOL);
+        sb.append("Total purchases made: ").append(getTotalTransactions()).append(" transactions").append(MenuUtility.EOL);
+        sb.append("------------------------------------").append(MenuUtility.EOL);
+
+        for (String itemID : storage.getUsedIDs()){
+            List<Transaction> transactions = getTransactionList(itemID);
+            if (transactions != null && !transactions.isEmpty()){
+                for (Transaction transaction : transactions) {
+                    sb.append(transaction.toString()).append(MenuUtility.EOL);
+                }
+            }
+        }
+        //TODO The last EOL append is needed for test but doesn't make sense.
+        sb.append("------------------------------------").append(MenuUtility.EOL);
+        return sb.toString();
     }
 
 
@@ -63,6 +95,7 @@ public class TransactionController {
         return MenuUtility.doubleTruncate(profit, 2);
     }
 
+    //TODO Should we not have checking as in the above method (getProfit)? -K
     public int getUnitsSold(String itemID) {
         int unitsSold = 0;
         for (Transaction transaction : getTransactionList(itemID)) {

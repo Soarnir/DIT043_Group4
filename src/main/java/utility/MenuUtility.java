@@ -16,6 +16,6 @@ public class MenuUtility {
     }
 
     public static String doubleFormat(double value) {
-        return new DecimalFormat("#.00").format(value);
+        return new DecimalFormat("0.00").format(value);
     }
 }
