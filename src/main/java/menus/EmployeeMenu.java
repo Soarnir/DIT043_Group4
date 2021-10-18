@@ -28,6 +28,7 @@ public class EmployeeMenu {
     final int PRINT_EMPLOYEE_ALL = 7;
     final int PRINT_TOTAL_EXPENSE = 8;
     final int PRINT_EMPLOYEE_SORTED = 9;
+    final int TOTAL_MENU_OPTIONS = 9;
 
     //Menu text
     final String EMPLOYEE_MENU_OPTIONS = "Employee options menu:" + MenuUtility.EOL +
@@ -51,7 +52,7 @@ public class EmployeeMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(EMPLOYEE_MENU_OPTIONS);
-            chosenMenuOption = Input.readMenuInt(0, 9);
+            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case CREATE_EMPLOYEE_REGULAR:
 

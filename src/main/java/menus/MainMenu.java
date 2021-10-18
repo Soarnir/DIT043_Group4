@@ -24,6 +24,7 @@ public class MainMenu {
     final int REVIEW_MENU = 2;
     final int TRANSACTION_MENU = 3;
     final int EMPLOYEE_MENU = 4;
+    final int TOTAL_MENU_OPTIONS = 4;
 
     //Menu text
     final String MAIN_MENU_OPTIONS = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
@@ -42,7 +43,7 @@ public class MainMenu {
         int chosenMenuOption;
         do {
             System.out.println(MAIN_MENU_OPTIONS);
-            chosenMenuOption = Input.readMenuInt(0, 4);
+            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case ITEM_MENU:
                     itemOptionsMenu.printMenu();

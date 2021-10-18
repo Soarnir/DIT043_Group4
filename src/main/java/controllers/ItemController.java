@@ -29,7 +29,7 @@ public class ItemController {
 
     public String removeItem(String itemID) {
         if (storage.checkForUsedID(itemID) && storage.getItem(itemID) != null) {
-            storage.getUsedIDs().remove(itemID);
+            //storage.getUsedIDs().remove(itemID);
             storage.getItemMap().remove(itemID);
             //MenuUtility.print("Item " + itemID + " was successfully removed.");
             return "Item " + itemID + " was successfully removed.";

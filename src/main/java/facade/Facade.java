@@ -7,7 +7,6 @@ import controllers.TransactionController;
 import item.Storage;
 import utility.MenuUtility;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -164,80 +163,78 @@ public class Facade {
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
-        return "";
+        return employeeController.createEmployee(employeeID, employeeName, grossSalary);
     }
 
     public String printEmployee(String employeeID) throws Exception {
-        return "";
+        return employeeController.printEmployee(employeeID);
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
-        return "";
+        return employeeController.createManagerEmployee(employeeID, employeeName, grossSalary, degree);
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
-        return "";
+        return employeeController.createInternEmployee(employeeID, employeeName, grossSalary, gpa);
     }
 
     public double getNetSalary(String employeeID) throws Exception {
-        return -1.0;
+        return employeeController.getNetSalary(employeeID);
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
-        return "";
+        return employeeController.createDirectorEmployee(employeeID, employeeName, grossSalary, degree, dept);
     }
 
     public String removeEmployee(String empID) throws Exception {
-        return "";
+        return employeeController.removeEmployee(empID);
     }
 
     public String printAllEmployees() throws Exception {
-        return "";
+        return employeeController.printAllEmployees();
     }
 
     public double getTotalNetSalary() throws Exception {
-        return -1.0;
+        return employeeController.getTotalNetSalary();
     }
 
     public String printSortedEmployees() throws Exception {
-        return "";
+        return employeeController.printSortedEmployees();
     }
 
     public String updateEmployeeName(String empID, String newName) throws Exception {
-        return "";
+        return employeeController.updateEmployeeName(empID, newName);
     }
 
     public String updateInternGPA(String empID, int newGPA) throws Exception {
-        return "";
+        return employeeController.updateInternGPA(empID, newGPA);
     }
 
     public String updateManagerDegree(String empID, String newDegree) throws Exception {
-        return "";
+        return employeeController.updateManagerDegree(empID, newDegree);
     }
 
     public String updateDirectorDept(String empID, String newDepartment) throws Exception {
-        return "";
+        return employeeController.updateDirectorDept(empID, newDepartment);
     }
 
     public String updateGrossSalary(String empID, double newSalary) throws Exception {
-        return "";
+        return employeeController.updateGrossSalary(empID, newSalary);
     }
 
     public Map<String, Integer> mapEachDegree() throws Exception {
-        HashMap<String, Integer> thingmap = new HashMap<>();
-        return thingmap;
+        return employeeController.mapEachDegree();
     }
 
     public String promoteToManager(String empID, String degree) throws Exception {
-        return "";
-
+        return employeeController.promoteToManager(empID, degree);
     }
 
     public String promoteToDirector(String empID, String degree, String department) throws Exception {
-        return "";
+        return employeeController.promoteToDirector(empID, degree, department);
     }
 
     public String promoteToIntern(String empID, int gpa) throws Exception {
-        return "";
+        return employeeController.promoteToIntern(empID, gpa);
     }
 }

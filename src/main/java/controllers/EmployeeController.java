@@ -1,7 +1,13 @@
 package controllers;
 
+import employees.Employee;
+import employees.EmployeeDirector;
+import employees.EmployeeIntern;
+import employees.EmployeeManager;
 import item.Storage;
+import utility.MenuUtility;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class EmployeeController {
@@ -13,27 +19,55 @@ public class EmployeeController {
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
-        return "";
+        try {
+            storage.getEmployeeMap().put(employeeID, new Employee(employeeID, employeeName, grossSalary));
+            MenuUtility.print("ID: " + employeeID + " Name: " + employeeName + " Salary: " + grossSalary);
+            return "Employee " + employeeID + " was registered successfully.";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
     }
 
     public String printEmployee(String employeeID) throws Exception {
-        return "";
+        return storage.getEmployeeMap().get(employeeID).toString();
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
-        return "";
+    public String createManagerEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
+        try {
+            storage.getEmployeeMap().put(employeeID, new EmployeeManager(employeeID, employeeName, grossSalary, degree));
+            MenuUtility.print("ID: " + employeeID + " Name: " + employeeName + " Salary: " + grossSalary);
+            return "Employee " + employeeID + " was registered successfully.";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
-        return "";
+    public String createInternEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
+        try {
+            storage.getEmployeeMap().put(employeeID, new EmployeeIntern(employeeID, employeeName, grossSalary, gpa));
+            MenuUtility.print("ID: " + employeeID + " Name: " + employeeName + " Salary: " + grossSalary);
+            return "Employee " + employeeID + " was registered successfully.";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
     }
 
     public double getNetSalary(String employeeID) throws Exception {
-        return -1.0;
+        return storage.getEmployeeMap().get(employeeID).getNetSalary();
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
-        return "";
+    public String createDirectorEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
+        try {
+            storage.getEmployeeMap().put(employeeID, new EmployeeDirector(employeeID, employeeName, grossSalary, degree, dept));
+            MenuUtility.print("ID: " + employeeID + " Name: " + employeeName + " Salary: " + grossSalary);
+            return "Employee " + employeeID + " was registered successfully.";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
     }
 
     public String removeEmployee(String empID) throws Exception {
@@ -73,12 +107,11 @@ public class EmployeeController {
     }
 
     public Map<String, Integer> mapEachDegree() throws Exception {
-        return null;
+        return new HashMap<>();
     }
 
     public String promoteToManager(String empID, String degree) throws Exception {
         return "";
-
     }
 
     public String promoteToDirector(String empID, String degree, String department) throws Exception {

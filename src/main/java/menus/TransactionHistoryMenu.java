@@ -27,6 +27,7 @@ public class TransactionHistoryMenu {
     final int PRINT_ITEM_UNITS_SOLD = 6;
     final int PRINT_ITEM_TRANSACTIONS = 7;
     final int PRINT_ITEM_HIGHEST_PROFIT = 8;
+    final int TOTAL_MENU_OPTIONS = 8;
 
     //Menu text
     final String TRANSACTION_MENU_OPTIONS =  "Transaction History options menu:" + MenuUtility.EOL +
@@ -49,7 +50,7 @@ public class TransactionHistoryMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(TRANSACTION_MENU_OPTIONS);
-            chosenMenuOption = Input.readMenuInt(0, 8);
+            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case PRINT_ALL_TOTAL_PROFIT:
                     //Print total profit from all item purchases

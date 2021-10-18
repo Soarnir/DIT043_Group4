@@ -34,17 +34,17 @@ public class Input {
      */
     public static int readMenuInt(int lowerBound, int upperBound) {
         boolean invalidInput = true;
-        int x;
+        int inputInteger;
         do {
-            x = inputScanner.nextInt();
+            inputInteger = inputScanner.nextInt();
             inputScanner.nextLine();
-            if (x < lowerBound || x > upperBound) {
+            if (inputInteger < lowerBound || inputInteger > upperBound) {
                 MenuUtility.print("Invalid menu option. Please type another option");
             } else {
                 invalidInput = false;
             }
         } while (invalidInput);
-        return x;
+        return inputInteger;
     }
 
     public static int readInt() {

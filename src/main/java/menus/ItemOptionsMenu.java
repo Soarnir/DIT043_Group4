@@ -26,6 +26,7 @@ public class ItemOptionsMenu {
     final int UPDATE_ITEM_NAME = 5;
     final int UPDATE_ITEM_PRICE = 6;
     final int PRINT_ITEM = 7;
+    final int TOTAL_MENU_OPTIONS = 7;
 
     //Menu text
     final String ITEM_MENU_OPTIONS = "Item options menu:" + MenuUtility.EOL +
@@ -47,7 +48,7 @@ public class ItemOptionsMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(ITEM_MENU_OPTIONS);
-            chosenMenuOption = Input.readMenuInt(0, 7);
+            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case CREATE_ITEM:
                     System.out.print("ID: ");

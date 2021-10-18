@@ -29,6 +29,7 @@ public class ReviewOptionsMenu {
     final int PRINT_LEAST_REVIEWS_ITEM = 8;
     final int PRINT_BEST_MEAN_ITEM = 9;
     final int PRINT_WORST_MEAN_ITEM = 10;
+    final int TOTAL_MENU_OPTIONS = 10;
 
     //Menu text
     final String REVIEW_MENU_OPTIONS = "Reviews options menu:" + MenuUtility.EOL +
@@ -53,7 +54,7 @@ public class ReviewOptionsMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(REVIEW_MENU_OPTIONS);
-            chosenMenuOption = Input.readMenuInt(0, 10);
+            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case CREATE_REVIEW:
                     //Create a review for an Item
@@ -70,7 +71,7 @@ public class ReviewOptionsMenu {
                 case PRINT_ALL_ITEM_COMMENTS:
                     //Print all comments of an Item
                     break;
-                case PRINT_ALL_ITEM_REVIEWS:
+                case PRINT_ALL_REVIEWS:
                     //Print all registered reviews
                     break;
                 case PRINT_MOST_REVIEWS_ITEM:

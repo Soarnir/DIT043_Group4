@@ -5,7 +5,6 @@ import item.Storage;
 import item.Transaction;
 import utility.MenuUtility;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,8 +149,7 @@ public class TransactionController {
 
     public List<String> getMostProfitableItems() {
         List<String> mostProfitable = new ArrayList<>();
-        for (String itemID : storage.getItemMap().keySet()) {
-            List<Transaction> transactions = getTransactionList(itemID);
+        for (String itemID : storage.getTransactionMap().keySet()) {
             if (mostProfitable.isEmpty()) {
                 mostProfitable.add(itemID);
             } else {
