@@ -1,47 +1,17 @@
 package employees;
 
-import utility.MenuUtility;
+public interface Employee {
 
-public class Employee {
+    public String getEmployeeID();
 
-    final String EMPLOYEE_ID;
-    String name;
-    double grossSalary;
-    double netSalary;
+    public String getName();
 
-    public Employee(String employeeID, String name, double grossSalary) {
-        this.EMPLOYEE_ID = employeeID;
-        this.name = name;
-        this.grossSalary = MenuUtility.doubleTruncate(grossSalary, 2);
-        this.netSalary = MenuUtility.doubleTruncate(grossSalary - (grossSalary * 0.1), 2);
-    }
+    public double getGrossSalary();
 
-    public String getEmployeeID() {
-        return EMPLOYEE_ID;
-    }
+    public double getNetSalary();
 
-    public String getName() {
-        return name;
-    }
+    public void setName(String name);
 
-    public double getGrossSalary() {
-        return grossSalary;
-    }
+    public void setGrossSalary(int grossSalary);
 
-    public double getNetSalary() {
-        return netSalary;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGrossSalary(int grossSalary) {
-        this.grossSalary = grossSalary;
-    }
-
-    @Override
-    public String toString() {
-        return this.name + "'s gross salary is " + MenuUtility.doubleFormat(this.grossSalary) + " SEK per month.";
-    }
 }

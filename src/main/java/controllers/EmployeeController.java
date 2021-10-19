@@ -1,9 +1,10 @@
 package controllers;
 
-import employees.Employee;
+import employees.EmployeeRegular;
 import employees.EmployeeDirector;
 import employees.EmployeeIntern;
 import employees.EmployeeManager;
+import exceptions.IDNotFoundException;
 import item.Storage;
 import utility.MenuUtility;
 
@@ -20,7 +21,7 @@ public class EmployeeController {
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
         try {
-            storage.getEmployeeMap().put(employeeID, new Employee(employeeID, employeeName, grossSalary));
+            storage.getEmployeeMap().put(employeeID, new EmployeeRegular(employeeID, employeeName, grossSalary));
             MenuUtility.print("ID: " + employeeID + " Name: " + employeeName + " Salary: " + grossSalary);
             return "Employee " + employeeID + " was registered successfully.";
         } catch (Exception e) {
@@ -71,11 +72,23 @@ public class EmployeeController {
     }
 
     public String removeEmployee(String empID) throws Exception {
-        return "";
+
+        try {
+            storage.getEmployeeMap().remove(empID);
+            return "Employee " + empID + " was successfully removed.";
+        } catch (IDNotFoundException e) {
+            // TODO Where to throw first? -K ("Employee <ID> was not registered yet.")
+            return e.getMessage();
+        }
     }
 
     public String printAllEmployees() throws Exception {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("All registered employees:");
+        for (EmployeeRegular employee : storage.getEmployeeMap().values()){
+            sb.append(employee.toString());
+        }
+        return sb.toString();
     }
 
     public double getTotalNetSalary() throws Exception {

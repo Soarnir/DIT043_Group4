@@ -1,6 +1,6 @@
 package item;
 
-import employees.Employee;
+import employees.EmployeeRegular;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,7 +11,8 @@ public class Storage {
     // No getter has been implemented because only the Storage class should be accessing usedIDs.
     private final List<String> usedIDs = new ArrayList<>();
 
-    private final LinkedHashMap<String, Employee> employeeList = new LinkedHashMap<>();
+    // TODO Rename to employeeMap? -K
+    private final LinkedHashMap<String, EmployeeRegular> employeeList = new LinkedHashMap<>();
 
     private final LinkedHashMap<String, Item> itemMap = new LinkedHashMap<>();
 
@@ -47,7 +48,7 @@ public class Storage {
         return "updated successfully";
     }
 
-    public LinkedHashMap<String, Employee> getEmployeeMap() {
+    public LinkedHashMap<String, EmployeeRegular> getEmployeeMap() {
         return employeeList;
     }
 }
