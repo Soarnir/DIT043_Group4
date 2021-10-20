@@ -5,36 +5,29 @@ import utility.MenuUtility;
 public class EmployeeManager extends EmployeeRegular {
 
     EmployeeDegree degree;
-    final double BSC_BONUS = 0.1;
-    final double MSC_BONUS = 0.2;
-    final double PHD_BONUS = 0.35;
 
     public EmployeeManager(String employeeID, String name, double grossSalary, String degree) {
         super(employeeID, name, grossSalary);
         switch (degree) {
             case "BSc":
                 this.degree = EmployeeDegree.BSc;
-                this.grossSalary += (grossSalary * BSC_BONUS);
+                this.grossSalary += (grossSalary * EmployeeDegree.BSc.getSalaryBonus());
                 break;
             case "MSc":
                 this.degree = EmployeeDegree.MSc;
-                this.grossSalary += (grossSalary * MSC_BONUS);
+                this.grossSalary += (grossSalary * EmployeeDegree.MSc.getSalaryBonus());
                 break;
             case "PhD":
                 this.degree = EmployeeDegree.PhD;
-                this.grossSalary += (grossSalary * PHD_BONUS);
+                this.grossSalary += (grossSalary * EmployeeDegree.PhD.getSalaryBonus());
                 break;
-            default:
-                // ?? -K
-                System.out.println("what");
-                // TODO can this be added here?
-                this.grossSalary = MenuUtility.doubleTruncate(this.grossSalary, 2);
         }
+        this.grossSalary = MenuUtility.doubleTruncate(this.grossSalary, 2);
     }
 
     @Override
     public String toString() {
-        return this.degree + " " + this.name + "'s gross salary is " + MenuUtility.doubleFormat(this.grossSalary) + " SEK per month.";
+        return this.degree + " " + this.name + "'s gross salary is " + MenuUtility.doubleFormat(getGrossSalary()) + " SEK per month.";
     }
 
     public EmployeeDegree getDegree() {
@@ -60,12 +53,19 @@ public class EmployeeManager extends EmployeeRegular {
 //            case PhD:
 //                netSalary = grossSalary + (grossSalary * 0.35);
 //                break;
-//            default:
-//                // ?? -K
-//                System.out.println("what");
 //        }
 //
 //        return netSalary;
 //    }
 
+
+    @Override
+    public double getGrossSalary() {
+        return grossSalary + (grossSalary * degree.getSalaryBonus());
+    }
+
+    @Override
+    public double getNetSalary() {
+        return MenuUtility.doubleTruncate(getGrossSalary() - (getGrossSalary() * 0.1), 2);
+    }
 }

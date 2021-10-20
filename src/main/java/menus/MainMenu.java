@@ -57,9 +57,10 @@ public class MainMenu {
                 case EMPLOYEE_MENU:
                     employeeMenu.printMenu();
                     break;
+                default:
+                    Input.closeScanner();
             }
         } while (chosenMenuOption != EXIT);
-        Input.closeScanner();
         System.exit(0);
     }
 }

@@ -52,37 +52,99 @@ public class EmployeeMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(EMPLOYEE_MENU_OPTIONS);
+            String employeeID, employeeName, degree, department;
+            double grossSalary;
+            int gpa;
             chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case CREATE_EMPLOYEE_REGULAR:
+                    employeeID = Input.readString("ID: ");
+                    employeeName = Input.readString("Name: ", true);
+                    grossSalary = Input.readDouble("Salary: ");
 
+                    try {
+                        System.out.println(facade.createEmployee(employeeID, employeeName, grossSalary));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case CREATE_EMPLOYEE_MANAGER:
+                    employeeID = Input.readString("ID: ");
+                    employeeName = Input.readString("Name: ", true);
+                    grossSalary = Input.readDouble("Salary: ");
+                    degree = Input.readString("Degree: ");
 
+                    try {
+                        System.out.println(facade.createEmployee(employeeID, employeeName, grossSalary, degree));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case CREATE_EMPLOYEE_DIRECTOR:
+                    employeeID = Input.readString("ID: ");
+                    employeeName = Input.readString("Name: ", true);
+                    grossSalary = Input.readDouble("Salary: ");
+                    degree = Input.readString("Degree: ");
+                    department = Input.readString("Department: ");
 
+                    try {
+                        System.out.println(facade.createEmployee(employeeID, employeeName, grossSalary, degree, department));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case CREATE_EMPLOYEE_INTERN:
+                    employeeID = Input.readString("ID: ");
+                    employeeName = Input.readString("Name: ", true);
+                    grossSalary = Input.readDouble("Salary: ");
+                    gpa = Input.readInt("GPA: ");
 
+                    try {
+                        System.out.println(facade.createEmployee(employeeID, employeeName, grossSalary, gpa));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case REMOVE_EMPLOYEE:
+                    employeeID = Input.readString("ID: ");
 
+                    try {
+                        System.out.println(facade.removeEmployee(employeeID));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case PRINT_EMPLOYEE:
+                    employeeID = Input.readString("ID: ");
 
+                    try {
+                        System.out.println(facade.printEmployee(employeeID));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case PRINT_EMPLOYEE_ALL:
-
+                    try {
+                        System.out.println(facade.printAllEmployees());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case PRINT_TOTAL_EXPENSE:
-
+                    try {
+                        System.out.println(facade.getTotalNetSalary());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case PRINT_EMPLOYEE_SORTED:
-
+                    try {
+                        System.out.println(facade.printSortedEmployees());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
             }
         } while (chosenMenuOption != EXIT);
     }
-
 }

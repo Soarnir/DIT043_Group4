@@ -2,7 +2,7 @@ package employees;
 
 import utility.MenuUtility;
 
-public class EmployeeRegular implements Employee{
+public class EmployeeRegular implements Employee {
 
     final String EMPLOYEE_ID;
     String name;

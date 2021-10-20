@@ -50,31 +50,38 @@ public class TransactionHistoryMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(TRANSACTION_MENU_OPTIONS);
+            String itemID;
             chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case PRINT_ALL_TOTAL_PROFIT:
-                    //Print total profit from all item purchases
+                    System.out.println(facade.getTotalProfit());
                     break;
                 case PRINT_ALL_UNITS_SOLD:
-                    //Print total units sold from all item purchases
+                    System.out.println(facade.getTotalUnitsSold());
                     break;
                 case PRINT_ALL_TOTAL_TRANSACTIONS:
-                    //Print the total number of item transactions made
+                    System.out.println(facade.getTotalTransactions());
                     break;
                 case PRINT_ALL_TRANSACTIONS:
-                    //Print all transactions made
+                    System.out.println(facade.printAllTransactions());
                     break;
                 case PRINT_ITEM_TOTAL_PROFIT:
-                    //Print the total profit of a specific item
+                    itemID = Input.readString("ID: ");
+
+                    System.out.println(facade.getProfit(itemID));
                     break;
                 case PRINT_ITEM_UNITS_SOLD:
-                    //Print the number of units sold of a specific item
+                    itemID = Input.readString("ID: ");
+
+                    System.out.println(facade.getUnitsSolds(itemID));
                     break;
                 case PRINT_ITEM_TRANSACTIONS:
-                    //Print all transactions of a specific item
+                    itemID = Input.readString("ID: ");
+
+                    System.out.println(facade.printItemTransactions(itemID));
                     break;
                 case PRINT_ITEM_HIGHEST_PROFIT:
-                    //Print item with highest profit
+                    System.out.println(facade.printMostProfitableItems());
                     break;
             }
         } while (chosenMenuOption != EXIT);

@@ -48,56 +48,48 @@ public class ItemOptionsMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(ITEM_MENU_OPTIONS);
+            String itemID, itemName;
+            double itemPrice;
+            int purchaseAmount;
             chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case CREATE_ITEM:
-                    System.out.print("ID: ");
-                    String createItemID = Input.readString();
-                    System.out.print("Name: ");
-                    String createItemName = Input.readString(true);
-                    System.out.print("Item price: ");
-                    double createItemPrice = Input.readDouble();
+                    itemID = Input.readString("ID: ");
+                    itemName = Input.readString("Name: ",true);
+                    itemPrice = Input.readDouble("Item price: ");
 
-                    facade.createItem(createItemID, createItemName, createItemPrice);
+                    System.out.println(facade.createItem(itemID, itemName, itemPrice));
                     break;
                 case REMOVE_ITEM:
-                    System.out.print("ID: ");
-                    String removeID = Input.readString();
+                    itemID = Input.readString("ID: ");
 
-                    System.out.println(facade.removeItem(removeID));
+                    System.out.println(facade.removeItem(itemID));
                     break;
                 case PRINT_ALL_ITEMS:
                     facade.printAllItems();
                     break;
                 case BUY_ITEM:
-                    System.out.print("ID: ");
-                    String purchaseID = Input.readString();
-                    System.out.print("Amount: ");
-                    int purchaseAmount = Input.readInt();
+                    itemID = Input.readString("ID: ");
+                    purchaseAmount = Input.readInt("Amount: ");
 
-                    System.out.println(facade.buyItem(purchaseID, purchaseAmount));
+                    System.out.println(facade.buyItem(itemID, purchaseAmount));
                     break;
                 case UPDATE_ITEM_NAME:
-                    System.out.print("ID: ");
-                    String updateItemNameID = Input.readString();
-                    System.out.print("Name: ");
-                    String updateItemName = Input.readString(true);
+                    itemID = Input.readString("ID: ");
+                    itemName = Input.readString("Name: ",true);
 
-                    System.out.println(facade.updateItemName(updateItemNameID, updateItemName));
+                    System.out.println(facade.updateItemName(itemID, itemName));
                     break;
                 case UPDATE_ITEM_PRICE:
-                    System.out.print("ID: ");
-                    String updateItemPriceID = Input.readString();
-                    System.out.print("Name: ");
-                    double updateItemPrice = Input.readDouble();
+                    itemID = Input.readString("ID: ");
+                    itemPrice = Input.readDouble("Price: ");
 
-                    System.out.println(facade.updateItemPrice(updateItemPriceID, updateItemPrice));
+                    System.out.println(facade.updateItemPrice(itemID, itemPrice));
                     break;
                 case PRINT_ITEM:
-                    System.out.print("ID: ");
-                    String printItemID = Input.readString();
+                    itemID = Input.readString("ID: ");
 
-                    System.out.println(facade.printItem(printItemID));
+                    System.out.println(facade.printItem(itemID));
             }
         } while (chosenMenuOption != EXIT);
     }

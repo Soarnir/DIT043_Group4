@@ -1,12 +1,8 @@
 package exceptions;
 
-public class InvalidDegreeException extends RuntimeException{
+public class InvalidDegreeException extends RuntimeException {
 
     public InvalidDegreeException() {
-        //default message
-    }
-
-    public InvalidDegreeException(String message) {
-        super(message);
+        super("Degree must be one of the options: BSc, MSc or PhD.");
     }
 }

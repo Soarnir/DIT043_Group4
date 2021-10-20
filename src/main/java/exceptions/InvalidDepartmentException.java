@@ -1,12 +1,8 @@
 package exceptions;
 
-public class InvalidDepartmentException extends RuntimeException{
+public class InvalidDepartmentException extends RuntimeException {
 
     public InvalidDepartmentException() {
-        //default message
-    }
-
-    public InvalidDepartmentException(String message) {
-        super(message);
+        super("Department must be one of the options: Business, Human Resources or Technical.");
     }
 }

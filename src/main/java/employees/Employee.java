@@ -2,16 +2,16 @@ package employees;
 
 public interface Employee {
 
-    public String getEmployeeID();
+    String getEmployeeID();
 
-    public String getName();
+    String getName();
 
-    public double getGrossSalary();
+    double getGrossSalary();
 
-    public double getNetSalary();
+    double getNetSalary();
 
-    public void setName(String name);
+    void setName(String name);
 
-    public void setGrossSalary(int grossSalary);
+    void setGrossSalary(int grossSalary);
 
 }

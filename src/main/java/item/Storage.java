@@ -1,6 +1,7 @@
 package item;
 
 import employees.EmployeeRegular;
+import exceptions.IDNotFoundException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -50,5 +51,13 @@ public class Storage {
 
     public LinkedHashMap<String, EmployeeRegular> getEmployeeMap() {
         return employeeList;
+    }
+
+    public EmployeeRegular getEmployee(String employeeID) throws Exception {
+        if (getEmployeeMap().containsKey(employeeID)) {
+            return getEmployeeMap().get(employeeID);
+        } else {
+            throw new IDNotFoundException(employeeID);
+        }
     }
 }

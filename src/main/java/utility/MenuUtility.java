@@ -1,7 +1,5 @@
 package utility;
 
-import java.text.DecimalFormat;
-
 public class MenuUtility {
 
     public static final String EOL = System.lineSeparator();
@@ -12,10 +10,10 @@ public class MenuUtility {
     }
 
     public static double doubleTruncate(double value, int scale) {
-        return (Math.floor(value * Math.pow(10, scale))) / Math.pow(10, scale);
+        return ((int) (value * Math.pow(10, scale))) / Math.pow(10, scale);
     }
 
     public static String doubleFormat(double value) {
-        return new DecimalFormat("0.00").format(value);
+        return String.format("%.2f", doubleTruncate(value, 2));
     }
 }
