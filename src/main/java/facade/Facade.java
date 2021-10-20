@@ -58,7 +58,7 @@ public class Facade {
     }
 
     public String getItemCommentsPrinted(String itemID) {
-        return "";
+        return reviewController.getItemCommentsPrinted(itemID);
     }
 
     public List<String> getItemComments(String itemID) {

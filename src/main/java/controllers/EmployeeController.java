@@ -121,10 +121,19 @@ public class EmployeeController {
         }
     }
 
-    // Finish getTotalNetSalary and printSortedEmployees -K
+    // TODO Implement getTotalNetSalary and printSortedEmployees -K
 
     public double getTotalNetSalary() throws Exception {
-        return -1.0;
+
+        if (!storage.getEmployeeMap().isEmpty()){
+            double totalNetSalary = 0;
+            for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
+                totalNetSalary += employee.getNetSalary();
+            }
+            return MenuUtility.doubleTruncate(totalNetSalary, 2);
+        } else {
+            throw new EmployeesNotRegisteredException();
+        }
     }
 
     public String printSortedEmployees() throws Exception {
