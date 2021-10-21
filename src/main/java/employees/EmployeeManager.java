@@ -4,7 +4,7 @@ import utility.MenuUtility;
 
 public class EmployeeManager extends EmployeeRegular {
 
-    EmployeeDegree degree;
+    protected EmployeeDegree degree;
     final int DIRECTOR_SALARY_BENEFIT = 5000;
 
     public EmployeeManager(String employeeID, String name, double grossSalary, String degree) {
@@ -18,6 +18,7 @@ public class EmployeeManager extends EmployeeRegular {
 
     //
     public void setDegree(String degree) {
+
         switch (degree) {
             case "BSc":
                 this.degree = EmployeeDegree.BSc;
@@ -39,12 +40,6 @@ public class EmployeeManager extends EmployeeRegular {
     }
 
     @Override
-    public void setRawSalary(double rawSalary) {
-        this.rawSalary = rawSalary;
-        setDegree(this.degree.toString());
-    }
-
-    @Override
     public double getGrossSalary() {
         return this.grossSalary;
     }
@@ -52,6 +47,12 @@ public class EmployeeManager extends EmployeeRegular {
     @Override
     public double getNetSalary() {
         return MenuUtility.doubleTruncate(getGrossSalary() - (getGrossSalary() * 0.1), 2);
+    }
+
+    @Override
+    public void setRawSalary(double rawSalary) {
+        this.rawSalary = rawSalary;
+        setDegree(this.degree.toString());
     }
 
     @Override

@@ -6,10 +6,10 @@ import java.util.Objects;
 
 public class EmployeeRegular implements Employee {
 
-    final String EMPLOYEE_ID;
-    String name;
-    double rawSalary;
-    double grossSalary;
+    protected final String EMPLOYEE_ID;
+    protected String name;
+    protected double rawSalary;
+    protected double grossSalary;
 
     public EmployeeRegular(String employeeID, String name, double grossSalary) {
         this.EMPLOYEE_ID = employeeID;

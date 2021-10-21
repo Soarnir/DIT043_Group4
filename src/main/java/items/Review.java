@@ -12,7 +12,7 @@ public class Review {
         this.REVIEW_GRADE = reviewGrade;
     }
 
-    public Review(int reviewGrade){
+    public Review(int reviewGrade) {
         this.REVIEW_GRADE = reviewGrade;
     }
 
@@ -26,7 +26,7 @@ public class Review {
 
     @Override
     public String toString() {
-        if (reviewText == null){
+        if (reviewText == null) {
             return "Grade: " + REVIEW_GRADE + ".";
         } else {
             return "Grade: " + REVIEW_GRADE + "." + reviewText;

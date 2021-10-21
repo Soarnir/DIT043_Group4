@@ -20,7 +20,7 @@ public class Facade {
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
 
-    public Facade(){
+    public Facade() {
         this.storage = new Storage();
         this.itemController = new ItemController(storage);
         this.reviewController = new ReviewController(storage);

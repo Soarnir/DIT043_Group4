@@ -4,12 +4,12 @@ import utility.MenuUtility;
 
 public class Transaction {
 
-    private final Item item;
+    private final Item ITEM;
     private final int AMOUNT;
     private final double TRANSACTION_COST;
 
     public Transaction(Item item, int amount) {
-        this.item = item;
+        this.ITEM = item;
         this.AMOUNT = amount;
         if (amount > 4) {
             double discountPrice = item.getItemPrice() * 0.7;
@@ -20,7 +20,7 @@ public class Transaction {
     }
 
     public Item getItem() {
-        return item;
+        return ITEM;
     }
 
     public int getAmount() {
@@ -33,6 +33,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return item.getItemID() + ": " + AMOUNT + " item(s). " + MenuUtility.doubleFormat(TRANSACTION_COST) + " SEK";
+        return ITEM.getItemID() + ": " + AMOUNT + " item(s). " + MenuUtility.doubleFormat(TRANSACTION_COST) + " SEK";
     }
 }

@@ -20,14 +20,26 @@ public class Item {
         this.reviewList = new ArrayList<>();
     }
 
-    public String getItemID(){ return this.ITEM_ID; }
+    public String getItemID() { return this.ITEM_ID; }
 
-    public String getItemName(){
+    public String getItemName() {
         return this.itemName;
     }
 
-    public double getItemPrice(){
+    public double getItemPrice() {
         return this.itemPrice;
+    }
+
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public int getNumOfReviews() {
+        return numOfReviews;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 
     public void updateItemName(String newName) {
@@ -38,19 +50,7 @@ public class Item {
         this.itemPrice = newPrice;
     }
 
-    public List<Review> getReviewList() {
-        return reviewList;
-    }
-
-    public void setReviewList(List<Review> reviewList) {
-        this.reviewList = reviewList;
-    }
-
-    public int getNumOfReviews() {
-        return numOfReviews;
-    }
-
-    public void increaseNumOfReviews(){
+    public void increaseNumOfReviews() {
         this.numOfReviews += 1;
     }
 

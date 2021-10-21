@@ -10,6 +10,9 @@ public class ItemController {
 
     Storage storage;
 
+    /*
+     *
+     */
     public ItemController(Storage storage) {
         this.storage = storage;
     }
@@ -33,6 +36,28 @@ public class ItemController {
         return "Item " + itemID + " could not be removed.";
     }
 
+    public String updateItem(String itemID, String newName) {
+        if (!storage.checkForUsedID(itemID)) {
+            return "Item " + itemID + " was not registered yet.";
+        } else if (newName.isEmpty()) {
+            return "Invalid data for item.";
+        } else {
+            storage.getItem(itemID).updateItemName(newName);
+            return "Item " + itemID + " was updated successfully.";
+        }
+    }
+
+    public String updateItem(String itemID, double newPrice) {
+        if (!storage.checkForUsedID(itemID)) {
+            return "Item " + itemID + " was not registered yet.";
+        } else if (newPrice <= 0) {
+            return "Invalid data for item.";
+        } else {
+            storage.getItem(itemID).updateItemPrice(newPrice);
+            return "Item " + itemID + " was updated successfully.";
+        }
+    }
+
     public String printItem(String itemID) {
         if (storage.checkForUsedID(itemID)) {
             return storage.getItem(itemID).toString();
@@ -50,30 +75,6 @@ public class ItemController {
                 stringBuilder.append(item.toString()).append(MenuUtility.EOL);
             }
             return stringBuilder.toString();
-        }
-    }
-
-    public String updateItem(String itemID, String newName) {
-        if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
-        } else if (newName.isEmpty()) {
-            return "Invalid data for item.";
-        } else {
-            //MenuUtility.print("Item: " + itemID + " name: " + storage.getItem(itemID).getItemName() + " | new name: " + newName);
-            storage.getItem(itemID).updateItemName(newName);
-            return "Item " + itemID + " was updated successfully.";
-        }
-    }
-
-    public String updateItem(String itemID, double newPrice) {
-        if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
-        } else if (newPrice <= 0) {
-            return "Invalid data for item.";
-        } else {
-            //MenuUtility.print("Item: " + itemID + " price: " + storage.getItem(itemID).getItemPrice() + " | new price: " + newPrice);
-            storage.getItem(itemID).updateItemPrice(newPrice);
-            return "Item " + itemID + " was updated successfully.";
         }
     }
 }

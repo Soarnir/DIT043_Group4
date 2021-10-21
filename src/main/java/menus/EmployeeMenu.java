@@ -6,7 +6,6 @@ import utility.MenuUtility;
 
 public class EmployeeMenu {
 
-    //Utility class declaration
     Facade facade;
 
     /*
@@ -28,7 +27,6 @@ public class EmployeeMenu {
     final int PRINT_EMPLOYEE_ALL = 7;
     final int PRINT_TOTAL_EXPENSE = 8;
     final int PRINT_EMPLOYEE_SORTED = 9;
-    final int TOTAL_MENU_OPTIONS = 9;
 
     //Menu text
     final String EMPLOYEE_MENU_OPTIONS = "Employee options menu:" + MenuUtility.EOL +
@@ -45,18 +43,26 @@ public class EmployeeMenu {
                                          "Type an option number:";
 
     /*
-     * Enter item menu loop, error handling is managed by Input class
-     * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
+     * Enter employee menu loop, error handling is managed by several custom exceptions during action execution,
+     * hence generic Exception e used to catch all possible thrown errors.
+     * User stays in loop even when accessing menu options, exit is only provided upon invalid non-integer input or 0
      */
     public void printMenu() {
         int chosenMenuOption;
+        boolean shouldPrintMenu = true;
+
         do {
-            MenuUtility.print(EMPLOYEE_MENU_OPTIONS);
             String employeeID, employeeName, degree, department;
             double grossSalary;
             int gpa;
-            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
+
+            if (shouldPrintMenu)
+                System.out.print(EMPLOYEE_MENU_OPTIONS);
+            chosenMenuOption = Input.readInt();
+            shouldPrintMenu = true;
             switch (chosenMenuOption) {
+                case EXIT:
+                    break;
                 case CREATE_EMPLOYEE_REGULAR:
                     employeeID = Input.readString("ID: ");
                     employeeName = Input.readString("Name: ", true);
@@ -85,7 +91,7 @@ public class EmployeeMenu {
                     employeeName = Input.readString("Name: ", true);
                     grossSalary = Input.readDouble("Salary: ");
                     degree = Input.readString("Degree: ");
-                    department = Input.readString("Department: ");
+                    department = Input.readString("Department: ", true);
 
                     try {
                         System.out.println(facade.createEmployee(employeeID, employeeName, grossSalary, degree, department));
@@ -144,6 +150,9 @@ public class EmployeeMenu {
                         System.out.println(e.getMessage());
                     }
                     break;
+                default:
+                    shouldPrintMenu = false;
+                    System.out.println("Invalid menu option. Please type another option");
             }
         } while (chosenMenuOption != EXIT);
     }

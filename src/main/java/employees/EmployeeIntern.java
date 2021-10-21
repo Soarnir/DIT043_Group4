@@ -5,9 +5,9 @@ import utility.MenuUtility;
 public class EmployeeIntern extends EmployeeRegular {
 
     private int gpa;
-    final int LOWER_GPA_BOUND = 5;
-    final int HIGHER_GPA_BOUND = 8;
-    final int ACADEMIC_EXCELLENCE_BONUS = 1000;
+    private final int LOWER_GPA_BOUND = 5;
+    private final int HIGHER_GPA_BOUND = 8;
+    private final int ACADEMIC_EXCELLENCE_BONUS = 1000;
 
     public EmployeeIntern(String employeeID, String name, double grossSalary, int gpa) {
         super(employeeID, name, grossSalary);
@@ -21,18 +21,12 @@ public class EmployeeIntern extends EmployeeRegular {
     public void setGPA(int gpa) {
         if (gpa <= LOWER_GPA_BOUND) {
             this.grossSalary = 0.0;
-        } else if (gpa < HIGHER_GPA_BOUND ) {
+        } else if (gpa < HIGHER_GPA_BOUND) {
             this.grossSalary = MenuUtility.doubleTruncate(this.rawSalary,2 );
         } else {
             this.grossSalary = MenuUtility.doubleTruncate((this.rawSalary + ACADEMIC_EXCELLENCE_BONUS),2 );
         }
         this.gpa = gpa;
-    }
-
-    @Override
-    public void setRawSalary(double rawSalary) {
-        this.rawSalary = rawSalary;
-        setGPA(this.gpa);
     }
 
     @Override
@@ -43,6 +37,12 @@ public class EmployeeIntern extends EmployeeRegular {
     @Override
     public double getNetSalary() {
         return getGrossSalary();
+    }
+
+    @Override
+    public void setRawSalary(double rawSalary) {
+        this.rawSalary = rawSalary;
+        setGPA(this.gpa);
     }
 
     @Override

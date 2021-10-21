@@ -6,7 +6,6 @@ import utility.MenuUtility;
 
 public class TransactionHistoryMenu {
 
-    //Utility class declaration
     Facade facade;
 
     /*
@@ -27,7 +26,6 @@ public class TransactionHistoryMenu {
     final int PRINT_ITEM_UNITS_SOLD = 6;
     final int PRINT_ITEM_TRANSACTIONS = 7;
     final int PRINT_ITEM_HIGHEST_PROFIT = 8;
-    final int TOTAL_MENU_OPTIONS = 8;
 
     //Menu text
     final String TRANSACTION_MENU_OPTIONS =  "Transaction History options menu:" + MenuUtility.EOL +
@@ -43,16 +41,23 @@ public class TransactionHistoryMenu {
                                              "Type an option number: ";
 
     /*
-     * Enter transaction history menu loop, error handling is managed by Input class
-     * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
+     * Enter transaction history menu loop, error handling is limited to correct integer input for menu options
+     * User stays in loop even when accessing menu options, exit is only provided upon invalid non-integer input or 0
      */
     public void printMenu() {
         int chosenMenuOption;
+        boolean shouldPrintMenu = true;
+
         do {
-            MenuUtility.print(TRANSACTION_MENU_OPTIONS);
             String itemID;
-            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
+
+            if (shouldPrintMenu)
+                System.out.print(TRANSACTION_MENU_OPTIONS);
+            chosenMenuOption = Input.readInt();
+            shouldPrintMenu = true;
             switch (chosenMenuOption) {
+                case EXIT:
+                    break;
                 case PRINT_ALL_TOTAL_PROFIT:
                     System.out.println(facade.getTotalProfit());
                     break;
@@ -83,6 +88,9 @@ public class TransactionHistoryMenu {
                 case PRINT_ITEM_HIGHEST_PROFIT:
                     System.out.println(facade.printMostProfitableItems());
                     break;
+                default:
+                    shouldPrintMenu = false;
+                    System.out.println("Invalid menu option. Please type another option");
             }
         } while (chosenMenuOption != EXIT);
     }

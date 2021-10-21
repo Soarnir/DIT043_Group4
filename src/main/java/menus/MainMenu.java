@@ -24,7 +24,6 @@ public class MainMenu {
     final int REVIEW_MENU = 2;
     final int TRANSACTION_MENU = 3;
     final int EMPLOYEE_MENU = 4;
-    final int TOTAL_MENU_OPTIONS = 4;
 
     //Menu text
     final String MAIN_MENU_OPTIONS = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
@@ -36,15 +35,22 @@ public class MainMenu {
                                      "Type an option number: ";
 
     /*
-     * Enter first menu loop, error handling is managed by Input class
-     * User stays in loop even when moving to separate menu, exit is only provided upon invalid input or 0
+     * Enter first menu loop, error handling is limited to correct integer input for menu options
+     * User stays in loop even when moving to separate menu, exit is only provided upon invalid non-integer input or 0
      */
     public void printMenu() {
         int chosenMenuOption;
+        boolean shouldPrintMenu = true;
+
         do {
-            System.out.println(MAIN_MENU_OPTIONS);
-            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
+            if (shouldPrintMenu)
+                System.out.print(MAIN_MENU_OPTIONS);
+            chosenMenuOption = Input.readInt();
+            shouldPrintMenu = true;
             switch (chosenMenuOption) {
+                case EXIT:
+                    Input.closeScanner();
+                    break;
                 case ITEM_MENU:
                     itemOptionsMenu.printMenu();
                     break;
@@ -58,7 +64,8 @@ public class MainMenu {
                     employeeMenu.printMenu();
                     break;
                 default:
-                    Input.closeScanner();
+                    shouldPrintMenu = false;
+                    System.out.println("Invalid menu option. Please type another option");
             }
         } while (chosenMenuOption != EXIT);
         System.exit(0);

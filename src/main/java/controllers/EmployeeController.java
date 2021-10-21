@@ -75,7 +75,6 @@ public class EmployeeController {
             throw new EmployeeNotRegisteredException(empID);
         }
     }
-    // TODO Implement getTotalNetSalary and printSortedEmployees -K
 
     public double getTotalNetSalary() throws Exception {
         if (!storage.getEmployeeMap().isEmpty()) {
@@ -93,28 +92,36 @@ public class EmployeeController {
         return storage.getEmployee(employeeID).getNetSalary();
     }
 
-    public String printEmployee(String employeeID) throws Exception {
-        return storage.getEmployee(employeeID).toString();
-    }
-
-    public String printAllEmployees() throws Exception {
-
-        if (!storage.getEmployeeMap().isEmpty()){
-            StringBuilder sb = new StringBuilder();
-            sb.append("All registered employees:").append(MenuUtility.EOL);
-            for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
-                sb.append(employee.toString()).append(MenuUtility.EOL);
-            }
-            return sb.toString();
-        } else {
+    public Map<String, Integer> mapEachDegree() throws Exception {
+        if (storage.getEmployeeMap().isEmpty()) {
             throw new EmployeesNotRegisteredException();
+        } else {
+            Map<String, Integer> degreeMap = new HashMap<>();
+            int BScDegrees = 0, MScDegrees = 0, PhDDegrees = 0;
+            for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
+                if (employee instanceof EmployeeManager) {
+                    switch (((EmployeeManager) employee).getDegree()) {
+                        case BSc:
+                            BScDegrees += 1;
+                            break;
+                        case MSc:
+                            MScDegrees += 1;
+                            break;
+                        case PhD:
+                            PhDDegrees += 1;
+                            break;
+                    }
+                }
+            }
+            if (BScDegrees > 0)
+                degreeMap.put("BSc", BScDegrees);
+            if (MScDegrees > 0)
+                degreeMap.put("MSc", MScDegrees);
+            if (PhDDegrees > 0)
+                degreeMap.put("PhD", PhDDegrees);
+
+            return degreeMap;
         }
-    }
-
-    // Will refactor this method after testing out functionality -K
-    public String printSortedEmployees() throws Exception {
-
-        return "";
     }
 
     public String updateEmployeeName(String empID, String newName) throws Exception {
@@ -175,38 +182,6 @@ public class EmployeeController {
         return "Employee " + empID + " was updated successfully";
     }
 
-    public Map<String, Integer> mapEachDegree() throws Exception {
-        if (storage.getEmployeeMap().isEmpty()) {
-            throw new EmployeesNotRegisteredException();
-        } else {
-            Map<String, Integer> degreeMap = new HashMap<>();
-            int BScDegrees = 0, MScDegrees = 0, PhDDegrees = 0;
-            for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
-                if (employee instanceof EmployeeManager) {
-                    switch (((EmployeeManager) employee).getDegree()) {
-                        case BSc:
-                            BScDegrees += 1;
-                            break;
-                        case MSc:
-                            MScDegrees += 1;
-                            break;
-                        case PhD:
-                            PhDDegrees += 1;
-                            break;
-                    }
-                }
-            }
-            if (BScDegrees > 0)
-                degreeMap.put("BSc", BScDegrees);
-            if (MScDegrees > 0)
-                degreeMap.put("MSc", MScDegrees);
-            if (PhDDegrees > 0)
-                degreeMap.put("PhD", PhDDegrees);
-
-            return degreeMap;
-        }
-    }
-
     public String promoteToManager(String empID, String degree) throws Exception {
         checkEmployeeExists(empID);
         validateDegree(degree);
@@ -239,6 +214,29 @@ public class EmployeeController {
         removeEmployee(empID);
         createInternEmployee(empID, employeeToPromote.getName(), employeeToPromote.getRawSalary(), gpa);
         return empID + " promoted successfully to Intern.";
+    }
+
+    public String printEmployee(String employeeID) throws Exception {
+        return storage.getEmployee(employeeID).toString();
+    }
+
+    public String printAllEmployees() throws Exception {
+        if (!storage.getEmployeeMap().isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("All registered employees:").append(MenuUtility.EOL);
+            for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
+                sb.append(employee.toString()).append(MenuUtility.EOL);
+            }
+            return sb.toString();
+        } else {
+            throw new EmployeesNotRegisteredException();
+        }
+    }
+
+    // TODO Implement printSortedEmployees -K
+    public String printSortedEmployees() throws Exception {
+
+        return "";
     }
 
     // TODO Need to decide on a better name

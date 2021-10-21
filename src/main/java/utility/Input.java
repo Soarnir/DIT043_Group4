@@ -21,23 +21,10 @@ public class Input {
         return inputScanner.nextLine();
     }
 
-    /*
-     * Method manages user input of menu options, assuming nothing other than integers gets input by the user.
-     * User must enter integer between lowerBound and upperBound inclusive in order to progress through menu.
-     */
-    public static int readMenuInt(int lowerBound, int upperBound) {
-        boolean invalidInput = true;
-        int inputInteger;
-        do {
-            inputInteger = inputScanner.nextInt();
-            inputScanner.nextLine();
-            if (inputInteger < lowerBound || inputInteger > upperBound) {
-                System.out.println("Invalid menu option. Please type another option");
-            } else {
-                invalidInput = false;
-            }
-        } while (invalidInput);
-        return inputInteger;
+    public static int readInt() {
+        int readValue = inputScanner.nextInt();
+        inputScanner.nextLine();
+        return readValue;
     }
 
     public static int readInt(String message) {

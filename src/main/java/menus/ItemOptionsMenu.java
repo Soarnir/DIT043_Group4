@@ -26,7 +26,6 @@ public class ItemOptionsMenu {
     final int UPDATE_ITEM_NAME = 5;
     final int UPDATE_ITEM_PRICE = 6;
     final int PRINT_ITEM = 7;
-    final int TOTAL_MENU_OPTIONS = 7;
 
     //Menu text
     final String ITEM_MENU_OPTIONS = "Item options menu:" + MenuUtility.EOL +
@@ -41,18 +40,25 @@ public class ItemOptionsMenu {
                                      "Type an option number:";
 
     /*
-     * Enter item menu loop, error handling is managed by Input class
-     * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
+     * Enter item menu loop, error handling is limited to correct integer input for menu options
+     * User stays in loop even when accessing menu options, exit is only provided upon invalid non-integer input or 0
      */
     public void printMenu() {
         int chosenMenuOption;
+        boolean shouldPrintMenu = true;
+
         do {
-            System.out.println(ITEM_MENU_OPTIONS);
             String itemID, itemName;
             double itemPrice;
             int purchaseAmount;
-            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
+
+            if (shouldPrintMenu)
+                System.out.print(ITEM_MENU_OPTIONS);
+            chosenMenuOption = Input.readInt();
+            shouldPrintMenu = true;
             switch (chosenMenuOption) {
+                case EXIT:
+                    break;
                 case CREATE_ITEM:
                     itemID = Input.readString("ID: ");
                     itemName = Input.readString("Name: ",true);
@@ -66,7 +72,7 @@ public class ItemOptionsMenu {
                     System.out.println(facade.removeItem(itemID));
                     break;
                 case PRINT_ALL_ITEMS:
-                    facade.printAllItems();
+                    System.out.println(facade.printAllItems());
                     break;
                 case BUY_ITEM:
                     itemID = Input.readString("ID: ");
@@ -90,6 +96,10 @@ public class ItemOptionsMenu {
                     itemID = Input.readString("ID: ");
 
                     System.out.println(facade.printItem(itemID));
+                    break;
+                default:
+                    shouldPrintMenu = false;
+                    System.out.println("Invalid menu option. Please type another option");
             }
         } while (chosenMenuOption != EXIT);
     }

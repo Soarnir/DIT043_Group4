@@ -4,12 +4,12 @@ import utility.MenuUtility;
 
 public class EmployeeDirector extends EmployeeManager {
 
-    EmployeeDepartment department;
-    final int LOWER_SALARY_BOUND = 30000;
-    final int UPPER_SALARY_BOUND = 50000;
-    final double LOW_TAX_PERCENTAGE = 0.1;
-    final double MEDIUM_TAX_PERCENTAGE = 0.2;
-    final double HIGH_TAX_PERCENTAGE = 0.4;
+    private EmployeeDepartment department;
+    private final int LOWER_SALARY_BOUND = 30000;
+    private final int UPPER_SALARY_BOUND = 50000;
+    private final double LOW_TAX_PERCENTAGE = 0.1;
+    private final double MEDIUM_TAX_PERCENTAGE = 0.2;
+    private final double HIGH_TAX_PERCENTAGE = 0.4;
 
     public EmployeeDirector(String employeeID, String name, double grossSalary, String degree, String department) {
         super(employeeID, name, grossSalary, degree);
@@ -43,10 +43,10 @@ public class EmployeeDirector extends EmployeeManager {
     public double getNetSalary() {
         double netSalary;
 
-        if (getGrossSalary() < LOWER_SALARY_BOUND){
+        if (getGrossSalary() < LOWER_SALARY_BOUND) {
             netSalary = getGrossSalary() - (getGrossSalary() * LOW_TAX_PERCENTAGE);
         // TODO Need to clarify if it's <= and >= or < and > -K
-        } else if (getGrossSalary() >= LOWER_SALARY_BOUND && getGrossSalary() <= UPPER_SALARY_BOUND){
+        } else if (getGrossSalary() >= LOWER_SALARY_BOUND && getGrossSalary() <= UPPER_SALARY_BOUND) {
             netSalary = getGrossSalary() - (getGrossSalary() * MEDIUM_TAX_PERCENTAGE);
         } else {
             netSalary = getGrossSalary() - (LOWER_SALARY_BOUND * MEDIUM_TAX_PERCENTAGE);

@@ -6,7 +6,6 @@ import utility.MenuUtility;
 
 public class ReviewOptionsMenu {
 
-    //Utility class declaration
     Facade facade;
 
     /*
@@ -29,7 +28,6 @@ public class ReviewOptionsMenu {
     final int PRINT_LEAST_REVIEWS_ITEM = 8;
     final int PRINT_BEST_MEAN_ITEM = 9;
     final int PRINT_WORST_MEAN_ITEM = 10;
-    final int TOTAL_MENU_OPTIONS = 10;
 
     //Menu text
     final String REVIEW_MENU_OPTIONS = "Reviews options menu:" + MenuUtility.EOL +
@@ -47,17 +45,24 @@ public class ReviewOptionsMenu {
                                        "Type an option number: ";
 
     /*
-     * Enter review menu loop, error handling is managed by Input class
-     * User stays in loop even when accessing menu options, exit is only provided upon invalid input or 0
+     * Enter review menu loop, error handling is limited to correct integer input for menu options
+     * User stays in loop even when accessing menu options, exit is only provided upon invalid non-integer input or 0
      */
     public void printMenu() {
         int chosenMenuOption;
+        boolean shouldPrintMenu = true;
+
         do {
-            MenuUtility.print(REVIEW_MENU_OPTIONS);
             String itemID, reviewComment;
             int reviewGrade, reviewNumber;
-            chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
+
+            if (shouldPrintMenu)
+                System.out.print(REVIEW_MENU_OPTIONS);
+            chosenMenuOption = Input.readInt();
+            shouldPrintMenu = true;
             switch (chosenMenuOption) {
+                case EXIT:
+                    break;
                 case CREATE_REVIEW:
                     itemID = Input.readString("ID: ");
                     reviewGrade = Input.readInt("Review Grade: ");
@@ -102,6 +107,7 @@ public class ReviewOptionsMenu {
                     System.out.println(facade.printWorseReviewedItems());
                     break;
                 default:
+                    shouldPrintMenu = false;
                     System.out.println("Invalid menu option. Please type another option");
             }
         } while (chosenMenuOption != EXIT);
