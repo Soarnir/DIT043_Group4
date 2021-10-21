@@ -7,6 +7,9 @@ public enum EmployeeDegree {
 
     private final double salaryBonus;
 
+    /*
+     * Enum implemented to maintain updated collection of valid Employee degrees and relevant bonuses
+     */
     EmployeeDegree(double salaryBonus) {
         this.salaryBonus = salaryBonus;
     }

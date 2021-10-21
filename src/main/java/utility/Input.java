@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Input {
 
-    //TODO refactor class with exception handling (possibly)
+    //TODO refactor class
 
     //Create protected Scanner object, due to menu design this is the only scanner created in the project
     final static Scanner inputScanner = new Scanner(System.in);
@@ -19,15 +19,6 @@ public class Input {
     public static String readString(String message, boolean words) {
         System.out.print(message);
         return inputScanner.nextLine();
-    }
-
-    public static String readItemName() {
-        String name = inputScanner.next();
-        if (name.equals("")) {
-            return "Invalid data for item";
-        } else {
-            return name;
-        }
     }
 
     /*

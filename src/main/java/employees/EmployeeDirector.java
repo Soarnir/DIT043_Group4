@@ -7,7 +7,6 @@ public class EmployeeDirector extends EmployeeManager {
     EmployeeDepartment department;
     final int LOWER_SALARY_BOUND = 30000;
     final int UPPER_SALARY_BOUND = 50000;
-    // Could have reused two variables but BSC_BONUS would've been unclear -K
     final double LOW_TAX_PERCENTAGE = 0.1;
     final double MEDIUM_TAX_PERCENTAGE = 0.2;
     final double HIGH_TAX_PERCENTAGE = 0.4;

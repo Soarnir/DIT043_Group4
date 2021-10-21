@@ -1,8 +1,8 @@
 package controllers;
 
-import item.Item;
-import item.Review;
-import item.Storage;
+import items.Item;
+import items.Review;
+import utility.Storage;
 import utility.MenuUtility;
 
 import java.util.ArrayList;

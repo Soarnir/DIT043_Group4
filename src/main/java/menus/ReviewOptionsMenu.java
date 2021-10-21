@@ -54,14 +54,11 @@ public class ReviewOptionsMenu {
         int chosenMenuOption;
         do {
             MenuUtility.print(REVIEW_MENU_OPTIONS);
-            String itemID;
-            int reviewGrade;
-            String reviewComment;
-            int reviewNumber;
+            String itemID, reviewComment;
+            int reviewGrade, reviewNumber;
             chosenMenuOption = Input.readMenuInt(EXIT, TOTAL_MENU_OPTIONS);
             switch (chosenMenuOption) {
                 case CREATE_REVIEW:
-                    //Create a review for an Item
                     itemID = Input.readString("ID: ");
                     reviewGrade = Input.readInt("Review Grade: ");
                     reviewComment = Input.readString("Review Comment: ");
@@ -69,48 +66,39 @@ public class ReviewOptionsMenu {
                     System.out.println(facade.reviewItem(itemID, reviewComment, reviewGrade));
                     break;
                 case PRINT_SPECIFIC_ITEM_REVIEW:
-                    //Print a specific review of an Item
                     itemID = Input.readString("ID: ");
                     reviewNumber = Input.readInt("Review Number: ");
 
                     System.out.println(facade.getPrintedItemReview(itemID, reviewNumber));
                     break;
                 case PRINT_ALL_ITEM_REVIEW:
-                    //Print all reviews of an Item
                     itemID = Input.readString("ID: ");
 
                     System.out.println(facade.getPrintedReviews(itemID));
                     break;
                 case PRINT_MEAN_GRADE_ITEM:
-                    //Print mean grade of an Item
                     itemID = Input.readString("ID: ");
 
                     System.out.println(facade.getItemMeanGrade(itemID));
                     break;
                 case PRINT_ALL_ITEM_COMMENTS:
-                    //Print all comments of an Item
                     itemID = Input.readString("ID: ");
 
                     System.out.println(facade.getItemCommentsPrinted(itemID));
                     break;
                 case PRINT_ALL_ITEM_REVIEWS:
-                    //Print all registered reviews
                     System.out.println(facade.printAllReviews());
                     break;
                 case PRINT_MOST_REVIEWS_ITEM:
-                    //Print item(s) with most reviews
                     System.out.println(facade.printMostReviewedItems());
                     break;
                 case PRINT_LEAST_REVIEWS_ITEM:
-                    //Print item(s) with least reviews
                     System.out.println(facade.printLeastReviewedItems());
                     break;
                 case PRINT_BEST_MEAN_ITEM:
-                    //Print item(s) with best mean review grade
                     System.out.println(facade.printBestReviewedItems());
                     break;
                 case PRINT_WORST_MEAN_ITEM:
-                    //Print item(s) with worst mean review grade
                     System.out.println(facade.printWorseReviewedItems());
                     break;
                 default:

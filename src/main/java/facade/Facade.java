@@ -4,7 +4,7 @@ import controllers.EmployeeController;
 import controllers.ItemController;
 import controllers.ReviewController;
 import controllers.TransactionController;
-import item.Storage;
+import utility.Storage;
 
 import java.util.List;
 import java.util.Map;

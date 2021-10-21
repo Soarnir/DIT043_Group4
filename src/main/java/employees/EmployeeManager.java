@@ -16,6 +16,7 @@ public class EmployeeManager extends EmployeeRegular {
         return degree;
     }
 
+    //
     public void setDegree(String degree) {
         switch (degree) {
             case "BSc":

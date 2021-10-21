@@ -7,6 +7,9 @@ public enum EmployeeDepartment {
 
     private final String departmentName;
 
+    /*
+     * Enum implemented to maintain updated collection of valid Employee departments
+     */
     EmployeeDepartment(String name) {
         this.departmentName = name;
     }

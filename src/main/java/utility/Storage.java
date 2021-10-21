@@ -1,7 +1,9 @@
-package item;
+package utility;
 
 import employees.EmployeeRegular;
 import exceptions.EmployeeNotRegisteredException;
+import items.Item;
+import items.Transaction;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

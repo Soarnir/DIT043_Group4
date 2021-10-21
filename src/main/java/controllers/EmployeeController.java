@@ -2,7 +2,7 @@ package controllers;
 
 import employees.*;
 import exceptions.*;
-import item.Storage;
+import utility.Storage;
 import utility.MenuUtility;
 
 import java.util.*;
@@ -24,27 +24,6 @@ public class EmployeeController {
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
-
-//        if (employeeID.isEmpty()) {
-//            throw new InputEmptyException("ID cannot be blank.");
-//        } else if (employeeName.isEmpty()) {
-//            throw new InputEmptyException("Name cannot be blank.");
-//        } else if (grossSalary <= 0) {
-//            throw new InputEmptyException("Salary must be greater than zero.");
-//        } else {
-//            storage.getEmployeeMap().put(employeeID, new EmployeeRegular(employeeID, employeeName, grossSalary));
-//            MenuUtility.print("ID: " + employeeID + " Name: " + employeeName + " Salary: " + grossSalary);
-//            return "Employee " + employeeID + " was registered successfully.";
-//        }
-
-//        if (employeeID.isEmpty() || employeeName.isEmpty() || grossSalary <= 0) {
-//            produceCreationExceptions(employeeID, employeeName, grossSalary);
-//        } else {
-//            storage.getEmployeeMap().put(employeeID, new EmployeeRegular(employeeID, employeeName, grossSalary));
-//            MenuUtility.print("ID: " + employeeID + " Name: " + employeeName + " Salary: " + grossSalary);
-//            return "Employee " + employeeID + " was registered successfully.";
-//        }
-        // TODO check if this works, otherwise make produceCreationExceptionMessage return a boolean. -K
         produceCreationExceptionMessage(employeeID, employeeName, grossSalary);
 
         storage.getEmployeeMap().put(employeeID, new EmployeeRegular(employeeID, employeeName, grossSalary));

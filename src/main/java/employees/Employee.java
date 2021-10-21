@@ -6,11 +6,11 @@ public interface Employee {
 
     String getName();
 
+    double getRawSalary();
+
     double getGrossSalary();
 
     double getNetSalary();
-
-    double getRawSalary();
 
     void setName(String name);
 
