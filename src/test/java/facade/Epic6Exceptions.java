@@ -160,11 +160,11 @@ public class Epic6Exceptions {
         assertEquals("Name cannot be blank.", exceptionInvalidName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionNegativeSalary.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionInvalidDegree.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionInvalidDegree.getMessage());
 
         assertEquals("Name cannot be blank.", exceptionUpdName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionUpdDegree.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionUpdDegree.getMessage());
     }
 
     @Test
@@ -204,12 +204,12 @@ public class Epic6Exceptions {
         assertEquals("Name cannot be blank.", exceptionInvalidName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionNegativeSalary.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionInvalidDegree.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionInvalidDegree.getMessage());
         assertEquals("Department must be one of the options: Business, Human Resources or Technical.", exceptionInvalidDept.getMessage());
 
         assertEquals("Name cannot be blank.", exceptionUpdName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionUpdDegree.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionUpdDegree.getMessage());
         assertEquals("Department must be one of the options: Business, Human Resources or Technical.", exceptionUpdDept.getMessage());
     }
 

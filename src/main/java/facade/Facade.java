@@ -5,7 +5,6 @@ import controllers.ItemController;
 import controllers.ReviewController;
 import controllers.TransactionController;
 import item.Storage;
-import utility.MenuUtility;
 
 import java.util.List;
 import java.util.Map;
@@ -154,7 +153,6 @@ public class Facade {
     }
 
     public String printAllItems() {
-        MenuUtility.print(itemController.printAllItems());
         return itemController.printAllItems();
     }
 

@@ -16,10 +16,8 @@ public class ItemController {
 
     public String createItem(String itemID, String itemName, double itemPrice) {
         if (itemID.isEmpty() || storage.checkForUsedID(itemID) || itemName.isEmpty() || (itemPrice <= 0)) {
-            MenuUtility.print("Problem: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice + " |Exists: " + storage.checkForUsedID(itemID));
             return "Invalid data for item.";
         } else {
-            MenuUtility.print("Created: ID: " + itemID + " |Name: " + itemName + " |itemPrice: " + itemPrice);
             storage.getUsedIDs().add(itemID);
             storage.getItemMap().put(itemID, new Item(itemID, itemName, itemPrice));
             storage.getTransactionMap().put(itemID, new ArrayList<>());
@@ -29,12 +27,9 @@ public class ItemController {
 
     public String removeItem(String itemID) {
         if (storage.checkForUsedID(itemID) && storage.getItem(itemID) != null) {
-            //storage.getUsedIDs().remove(itemID);
             storage.getItemMap().remove(itemID);
-            //MenuUtility.print("Item " + itemID + " was successfully removed.");
             return "Item " + itemID + " was successfully removed.";
         }
-        //MenuUtility.print("Item " + itemID + " could not be removed.");
         return "Item " + itemID + " could not be removed.";
     }
 
@@ -64,7 +59,7 @@ public class ItemController {
         } else if (newName.isEmpty()) {
             return "Invalid data for item.";
         } else {
-            MenuUtility.print("Item: " + itemID + " name: " + storage.getItem(itemID).getItemName() + " | new name: " + newName);
+            //MenuUtility.print("Item: " + itemID + " name: " + storage.getItem(itemID).getItemName() + " | new name: " + newName);
             storage.getItem(itemID).updateItemName(newName);
             return "Item " + itemID + " was updated successfully.";
         }
@@ -76,7 +71,7 @@ public class ItemController {
         } else if (newPrice <= 0) {
             return "Invalid data for item.";
         } else {
-            MenuUtility.print("Item: " + itemID + " price: " + storage.getItem(itemID).getItemPrice() + " | new price: " + newPrice);
+            //MenuUtility.print("Item: " + itemID + " price: " + storage.getItem(itemID).getItemPrice() + " | new price: " + newPrice);
             storage.getItem(itemID).updateItemPrice(newPrice);
             return "Item " + itemID + " was updated successfully.";
         }

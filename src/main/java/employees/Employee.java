@@ -10,8 +10,10 @@ public interface Employee {
 
     double getNetSalary();
 
+    double getRawSalary();
+
     void setName(String name);
 
-    void setGrossSalary(int grossSalary);
+    void setRawSalary(double rawSalary);
 
 }

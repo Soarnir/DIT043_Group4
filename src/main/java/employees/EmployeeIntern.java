@@ -4,39 +4,49 @@ import utility.MenuUtility;
 
 public class EmployeeIntern extends EmployeeRegular {
 
-    int gpa;
-    double grossSalaryPlusBonus;
+    private int gpa;
     final int LOWER_GPA_BOUND = 5;
     final int HIGHER_GPA_BOUND = 8;
     final int ACADEMIC_EXCELLENCE_BONUS = 1000;
 
     public EmployeeIntern(String employeeID, String name, double grossSalary, int gpa) {
         super(employeeID, name, grossSalary);
-        this.gpa = gpa;
-        if (gpa <= LOWER_GPA_BOUND){
-            this.grossSalaryPlusBonus = MenuUtility.doubleTruncate(0,2 );
-        } else if (gpa >= HIGHER_GPA_BOUND){
-            this.grossSalaryPlusBonus += ACADEMIC_EXCELLENCE_BONUS;
-            // TODO could extract the doubleTruncate out of the if-else -K
-            this.grossSalaryPlusBonus = MenuUtility.doubleTruncate(grossSalaryPlusBonus,2 );
-        }
+        setGPA(gpa);
     }
 
     public int getGpa() {
-        return gpa;
+        return this.gpa;
     }
 
-    public void setGpa(int gpa) {
+    public void setGPA(int gpa) {
+        if (gpa <= LOWER_GPA_BOUND) {
+            this.grossSalary = 0.0;
+        } else if (gpa < HIGHER_GPA_BOUND ) {
+            this.grossSalary = MenuUtility.doubleTruncate(this.rawSalary,2 );
+        } else {
+            this.grossSalary = MenuUtility.doubleTruncate((this.rawSalary + ACADEMIC_EXCELLENCE_BONUS),2 );
+        }
         this.gpa = gpa;
+    }
+
+    @Override
+    public void setRawSalary(double rawSalary) {
+        this.rawSalary = rawSalary;
+        setGPA(this.gpa);
+    }
+
+    @Override
+    public double getGrossSalary() {
+        return this.grossSalary;
     }
 
     @Override
     public double getNetSalary() {
-        return grossSalaryPlusBonus;
+        return getGrossSalary();
     }
 
     @Override
     public String toString() {
-        return this.name + "'s gross salary is " + this.grossSalaryPlusBonus + " SEK per month. GPA: " + this.gpa;
+        return this.name + "'s gross salary is " + MenuUtility.doubleFormat(getGrossSalary()) + " SEK per month. GPA: " + this.gpa;
     }
 }

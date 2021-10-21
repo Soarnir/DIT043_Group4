@@ -21,7 +21,7 @@ public class ReviewController {
 
     public String createReview(String itemID, String reviewText, int reviewGrade) {
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " not found.";
+            return "Item " + itemID + " was not registered yet.";
         } else if (reviewGrade < LOWEST_REVIEWED_GRADE || reviewGrade > HIGHEST_REVIEWED_GRADE) {
             return "Grade values must be between 1 and 5.";
         } else if (reviewText.isEmpty()) {
@@ -35,19 +35,8 @@ public class ReviewController {
         }
     }
 
-    // TODO Try calling the above method inside to make it more DRY -K
     public String createReview(String itemID, int reviewGrade) {
-        //return createReview(itemID, "", reviewGrade);
-        // Code repetition, used to check if test works.
-        if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " not found.";
-        } else if (reviewGrade < LOWEST_REVIEWED_GRADE || reviewGrade > HIGHEST_REVIEWED_GRADE) {
-            return "Grade values must be between 1 and 5.";
-        } else {
-            getReviewList(itemID).add(new Review(reviewGrade));
-            storage.getItem(itemID).increaseNumOfReviews();
-            return "Your item review was registered successfully.";
-        }
+        return createReview(itemID, "", reviewGrade);
     }
 
     public List<Review> getReviewList(String itemID) {
@@ -64,7 +53,7 @@ public class ReviewController {
         return itemComments;
     }
 
-    // TODO The implementation of this isn't clear in Specs -K
+    // TODO The implementation of this isn't clear in Specs (Not needed to pass tests either) -K
     public String getItemCommentsPrinted(String itemID) {
         List<String> itemComments = getItemComments(itemID);
         StringBuilder sb = new StringBuilder();

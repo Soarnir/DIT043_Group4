@@ -41,7 +41,7 @@ public class Input {
             inputInteger = inputScanner.nextInt();
             inputScanner.nextLine();
             if (inputInteger < lowerBound || inputInteger > upperBound) {
-                MenuUtility.print("Invalid menu option. Please type another option");
+                System.out.println("Invalid menu option. Please type another option");
             } else {
                 invalidInput = false;
             }

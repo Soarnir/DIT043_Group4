@@ -13,9 +13,7 @@ public class Transaction {
         this.AMOUNT = amount;
         if (amount > 4) {
             double discountPrice = item.getItemPrice() * 0.7;
-            MenuUtility.print("" + discountPrice);
             this.TRANSACTION_COST = ((4 * item.getItemPrice()) + ((amount - 4) * discountPrice));
-            MenuUtility.print("" + TRANSACTION_COST);
         } else {
             this.TRANSACTION_COST = amount * item.getItemPrice();
         }

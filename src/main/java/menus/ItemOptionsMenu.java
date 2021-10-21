@@ -47,7 +47,7 @@ public class ItemOptionsMenu {
     public void printMenu() {
         int chosenMenuOption;
         do {
-            MenuUtility.print(ITEM_MENU_OPTIONS);
+            System.out.println(ITEM_MENU_OPTIONS);
             String itemID, itemName;
             double itemPrice;
             int purchaseAmount;

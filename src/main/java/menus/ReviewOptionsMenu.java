@@ -24,7 +24,7 @@ public class ReviewOptionsMenu {
     final int PRINT_ALL_ITEM_REVIEW = 3;
     final int PRINT_MEAN_GRADE_ITEM = 4;
     final int PRINT_ALL_ITEM_COMMENTS = 5;
-    final int PRINT_ALL_REVIEWS = 6;
+    final int PRINT_ALL_ITEM_REVIEWS = 6;
     final int PRINT_MOST_REVIEWS_ITEM = 7;
     final int PRINT_LEAST_REVIEWS_ITEM = 8;
     final int PRINT_BEST_MEAN_ITEM = 9;
@@ -64,9 +64,9 @@ public class ReviewOptionsMenu {
                     //Create a review for an Item
                     itemID = Input.readString("ID: ");
                     reviewGrade = Input.readInt("Review Grade: ");
-                    // TODO how to deal with reviewComment?
+                    reviewComment = Input.readString("Review Comment: ");
 
-                    System.out.println(facade.reviewItem(itemID, reviewGrade));
+                    System.out.println(facade.reviewItem(itemID, reviewComment, reviewGrade));
                     break;
                 case PRINT_SPECIFIC_ITEM_REVIEW:
                     //Print a specific review of an Item

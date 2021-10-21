@@ -24,15 +24,6 @@ public class Review {
         return reviewText;
     }
 
-    /*
-        This needs to be done as methods in ReviewController call toString for printing
-        and tests require nothing (not 'null') -K
-     */
-//    @Override
-//    public String toString() {
-//        return "Grade: " + REVIEW_GRADE + "." + reviewText;
-//    }
-
     @Override
     public String toString() {
         if (reviewText == null){

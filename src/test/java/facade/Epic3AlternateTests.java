@@ -32,10 +32,10 @@ public class Epic3AlternateTests {
     @Test
     public void shouldPrintErrorForInvalidReview(){
         String itemID = "ID1";
-        String expectedErrorMsg = "Item ID1 not found.";
+        String expectedErrorMsg = "Item ID1 was not registered yet.";
         String expectedGradeError = "Grade values must be between 1 and 5.";
 
-        // Checking messsages for non existing item.
+        // Checking messsages for non-existing item.
         assertEquals(expectedErrorMsg, facade.reviewItem(itemID, 4));
         assertEquals(expectedErrorMsg, facade.reviewItem(itemID, "Should be cheaper.", 3));
 
