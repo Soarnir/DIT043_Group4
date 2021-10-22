@@ -45,17 +45,14 @@ public class Storage {
         return employeeMap;
     }
 
-    public EmployeeRegular getEmployee(String employeeID) throws Exception {
+    public EmployeeRegular getEmployee(String employeeID) throws EmployeeNotRegisteredException {
+        EmployeeRegular employeeRegular;
         if (getEmployeeMap().containsKey(employeeID)) {
-            return getEmployeeMap().get(employeeID);
+            employeeRegular = getEmployeeMap().get(employeeID);
         } else {
             throw new EmployeeNotRegisteredException(employeeID);
         }
-    }
-
-    public String setTransactionList(String itemID, List<Transaction> transactionList) {
-        transactionMap.put(itemID, transactionList);
-        return "updated successfully";
+        return employeeRegular;
     }
 
     public boolean checkForUsedID(String itemID) {

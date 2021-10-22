@@ -5,9 +5,9 @@ import utility.MenuUtility;
 public class EmployeeIntern extends EmployeeRegular {
 
     private int gpa;
-    private final int LOWER_GPA_BOUND = 5;
-    private final int HIGHER_GPA_BOUND = 8;
-    private final int ACADEMIC_EXCELLENCE_BONUS = 1000;
+    private static final int LOWER_GPA_BOUND = 5;
+    private static final int HIGHER_GPA_BOUND = 8;
+    private static final int ACADEMIC_EXCELLENCE_BONUS = 1000;
 
     public EmployeeIntern(String employeeID, String name, double grossSalary, int gpa) {
         super(employeeID, name, grossSalary);

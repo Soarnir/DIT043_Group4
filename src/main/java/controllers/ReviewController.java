@@ -10,29 +10,34 @@ import java.util.List;
 
 public class ReviewController {
 
-    Storage storage;
-    final int LOWEST_REVIEWED_GRADE = 1;
-    final int HIGHEST_REVIEWED_GRADE = 5;
-    final int LOWEST_REVIEW_INDEX = 1;
+    private final Storage storage;
+    private static final int LOWEST_REVIEWED_GRADE = 1;
+    private static final int HIGHEST_REVIEWED_GRADE = 5;
+    private static final int LOWEST_REVIEW_INDEX = 1;
 
+    /*
+     * The controller constructor passes through the same Storage reference from the Facade to be used by the controllers methods
+     */
     public ReviewController(Storage storage) {
         this.storage = storage;
     }
 
     public String createReview(String itemID, String reviewText, int reviewGrade) {
+        String returnString;
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
+            returnString = "Item " + itemID + " was not registered yet.";
         } else if (reviewGrade < LOWEST_REVIEWED_GRADE || reviewGrade > HIGHEST_REVIEWED_GRADE) {
-            return "Grade values must be between 1 and 5.";
+            returnString = "Grade values must be between 1 and 5.";
         } else if (reviewText.isEmpty()) {
             getReviewList(itemID).add(new Review(reviewGrade));
             storage.getItem(itemID).increaseNumOfReviews();
-            return "Your item review was registered successfully."; // So it doesn't count as comment
+            returnString = "Your item review was registered successfully."; // So it doesn't count as comment
         } else {
             getReviewList(itemID).add(new Review(reviewText, reviewGrade));
             storage.getItem(itemID).increaseNumOfReviews();
-            return "Your item review was registered successfully.";
+            returnString = "Your item review was registered successfully.";
         }
+        return returnString;
     }
 
     public String createReview(String itemID, int reviewGrade) {
@@ -70,22 +75,23 @@ public class ReviewController {
     // Error handling and making mean grade visible to the user is yet to be implemented.
     public double getItemMeanGrade(String itemID) {
         double sum = 0;
+        double returnDouble;
         if (!getReviewList(itemID).isEmpty()) {
             for (Review review : getReviewList(itemID)) {
                 sum += review.getReviewGrade();
             }
-            double meanGradeBeforeTruncation = sum / getReviewList(itemID).size();
-            return MenuUtility.doubleTruncate(meanGradeBeforeTruncation, 1);
+            returnDouble = MenuUtility.doubleTruncate(sum / getReviewList(itemID).size(), 1);
         } else {
-            return 0;
+            returnDouble = 0;
         }
+        return returnDouble;
     }
 
     public Review getReview(String itemID, int reviewIndex) {
         return storage.getItem(itemID).getReviewList().get(reviewIndex);
     }
 
-    public List<String> getReviewedItemsBasedOnGrade(Boolean bestReviewed) {
+    public List<String> getReviewedItemsBasedOnGrade(boolean bestReviewed) {
         List<String> reviewedItems = new ArrayList<>();
 
         for (String itemID : storage.getItemMap().keySet()) {
@@ -144,8 +150,7 @@ public class ReviewController {
                         } else if (currentItemReviews == storedItemReviews) {
                             reviewedItems.add(itemID);
                         }
-                    // Can change to else, else-if for debugging purposes
-                    } else if (!mostReviewed) {
+                    } else {
                         if (currentItemReviews < storedItemReviews) {
                             reviewedItems.clear();
                             reviewedItems.add(itemID);
@@ -169,20 +174,22 @@ public class ReviewController {
 
     public String printReview(String itemID, int reviewIndex) {
         int reviewListSize = getReviewList(itemID).size();
+        String returnString;
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
+            returnString = "Item " + itemID + " was not registered yet.";
         } else if (reviewListSize == 0) {
-            return "Item " + storage.getItem(itemID).getItemName() + " has not been reviewed yet.";
+            returnString = "Item " + storage.getItem(itemID).getItemName() + " has not been reviewed yet.";
         } else if (reviewIndex < LOWEST_REVIEW_INDEX || reviewIndex > reviewListSize) {
-            return "Invalid review number. Choose between 1 and " + reviewListSize + ".";
+            returnString = "Invalid review number. Choose between 1 and " + reviewListSize + ".";
         } else {
             Review review = getReview(itemID, (reviewIndex - LOWEST_REVIEW_INDEX));
             if (review.getReviewText() == null) {
-                return "Grade: " + review.getReviewGrade() + ".";
+                returnString = "Grade: " + review.getReviewGrade() + ".";
             } else {
-                return "Grade: " + review.getReviewGrade() + "." + review.getReviewText();
+                returnString = "Grade: " + review.getReviewGrade() + "." + review.getReviewText();
             }
         }
+        return returnString;
     }
 
     public String printAllItemReviews(String itemID) {

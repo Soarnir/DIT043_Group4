@@ -5,11 +5,12 @@ import utility.MenuUtility;
 public class EmployeeDirector extends EmployeeManager {
 
     private EmployeeDepartment department;
-    private final int LOWER_SALARY_BOUND = 30000;
-    private final int UPPER_SALARY_BOUND = 50000;
-    private final double LOW_TAX_PERCENTAGE = 0.1;
-    private final double MEDIUM_TAX_PERCENTAGE = 0.2;
-    private final double HIGH_TAX_PERCENTAGE = 0.4;
+    // These attributes are only used once but this allows for extensibility, and we avoid magic numbers, increasing readability.
+    private static final int LOWER_SALARY_BOUND = 30000;
+    private static final int UPPER_SALARY_BOUND = 50000;
+    private static final double LOW_TAX_PERCENTAGE = 0.1;
+    private static final double MEDIUM_TAX_PERCENTAGE = 0.2;
+    private static final double HIGH_TAX_PERCENTAGE = 0.4;
 
     public EmployeeDirector(String employeeID, String name, double grossSalary, String degree, String department) {
         super(employeeID, name, grossSalary, degree);

@@ -8,73 +8,85 @@ import java.util.ArrayList;
 
 public class ItemController {
 
-    Storage storage;
+    private final Storage storage;
 
     /*
-     *
+     * The controller constructor passes through the same Storage reference from the Facade to be used by the controllers methods
      */
     public ItemController(Storage storage) {
         this.storage = storage;
     }
 
     public String createItem(String itemID, String itemName, double itemPrice) {
+        String returnString;
         if (itemID.isEmpty() || storage.checkForUsedID(itemID) || itemName.isEmpty() || (itemPrice <= 0)) {
-            return "Invalid data for item.";
+            returnString = "Invalid data for item.";
         } else {
             storage.getUsedIDs().add(itemID);
             storage.getItemMap().put(itemID, new Item(itemID, itemName, itemPrice));
             storage.getTransactionMap().put(itemID, new ArrayList<>());
-            return "Item " + itemID + " was registered successfully.";
+            returnString = "Item " + itemID + " was registered successfully.";
         }
+        return returnString;
     }
 
     public String removeItem(String itemID) {
+        String returnString;
         if (storage.checkForUsedID(itemID) && storage.getItem(itemID) != null) {
             storage.getItemMap().remove(itemID);
-            return "Item " + itemID + " was successfully removed.";
+            returnString = "Item " + itemID + " was successfully removed.";
+        } else {
+            returnString = "Item " + itemID + " could not be removed.";
         }
-        return "Item " + itemID + " could not be removed.";
+        return returnString;
     }
 
     public String updateItem(String itemID, String newName) {
+        String returnString;
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
+            returnString = "Item " + itemID + " was not registered yet.";
         } else if (newName.isEmpty()) {
-            return "Invalid data for item.";
+            returnString = "Invalid data for item.";
         } else {
             storage.getItem(itemID).updateItemName(newName);
-            return "Item " + itemID + " was updated successfully.";
+            returnString = "Item " + itemID + " was updated successfully.";
         }
+        return returnString;
     }
 
     public String updateItem(String itemID, double newPrice) {
+        String returnString;
         if (!storage.checkForUsedID(itemID)) {
-            return "Item " + itemID + " was not registered yet.";
+            returnString = "Item " + itemID + " was not registered yet.";
         } else if (newPrice <= 0) {
-            return "Invalid data for item.";
+            returnString = "Invalid data for item.";
         } else {
             storage.getItem(itemID).updateItemPrice(newPrice);
-            return "Item " + itemID + " was updated successfully.";
+            returnString = "Item " + itemID + " was updated successfully.";
         }
+        return returnString;
     }
 
     public String printItem(String itemID) {
+        String returnString;
         if (storage.checkForUsedID(itemID)) {
-            return storage.getItem(itemID).toString();
+            returnString = storage.getItem(itemID).toString();
         } else {
-            return "Item " + itemID + " was not registered yet.";
+            returnString = "Item " + itemID + " was not registered yet.";
         }
+        return returnString;
     }
 
     public String printAllItems() {
+        StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {
-            return "No items registered yet.";
+            sb.append("No items registered yet.");
         } else {
-            StringBuilder stringBuilder = new StringBuilder("All registered items:" + MenuUtility.EOL);
+            sb.append("All registered items:").append(MenuUtility.EOL);
             for (Item item : storage.getItemMap().values()) {
-                stringBuilder.append(item.toString()).append(MenuUtility.EOL);
+                sb.append(item.toString()).append(MenuUtility.EOL);
             }
-            return stringBuilder.toString();
         }
+        return sb.toString();
     }
 }

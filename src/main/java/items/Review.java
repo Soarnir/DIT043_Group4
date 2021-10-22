@@ -26,10 +26,12 @@ public class Review {
 
     @Override
     public String toString() {
+        String returnString;
         if (reviewText == null) {
-            return "Grade: " + REVIEW_GRADE + ".";
+            returnString = "Grade: " + REVIEW_GRADE + ".";
         } else {
-            return "Grade: " + REVIEW_GRADE + "." + reviewText;
+            returnString = "Grade: " + REVIEW_GRADE + "." + reviewText;
         }
+        return returnString;
     }
 }

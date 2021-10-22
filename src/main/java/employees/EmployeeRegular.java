@@ -18,12 +18,6 @@ public class EmployeeRegular implements Employee {
         this.grossSalary = MenuUtility.doubleTruncate(grossSalary, 2);
     }
 
-    //  TODO Discuss this, was implemented so EmployeeManager could handle grossSalary implementation -K
-//    public EmployeeRegular(String employeeID, String name) {
-//        this.EMPLOYEE_ID = employeeID;
-//        this.name = name;
-//    }
-
     public String getEmployeeID() {
         return this.EMPLOYEE_ID;
     }
@@ -60,11 +54,15 @@ public class EmployeeRegular implements Employee {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EmployeeRegular that = (EmployeeRegular) o;
-        return EMPLOYEE_ID.equals(that.EMPLOYEE_ID);
+    public boolean equals(Object employee) {
+        if (this == employee) {
+            return true;
+        }
+        if (employee == null || getClass() != employee.getClass()) {
+            return false;
+        }
+        EmployeeRegular employeeRegular = (EmployeeRegular) employee;
+        return EMPLOYEE_ID.equals(employeeRegular.EMPLOYEE_ID);
     }
 
     @Override

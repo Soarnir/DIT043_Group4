@@ -7,32 +7,33 @@ import utility.MenuUtility;
 public class MainMenu {
 
     //Create Facade
-    Facade facade = new Facade();
+    private final Facade facade = new Facade();
 
     /*
      * Create Menu objects
      * Constructor passes through utility objects such that they do not need to be created multiple times, retaining the same object reference
      */
-    ItemOptionsMenu itemOptionsMenu = new ItemOptionsMenu(facade);
-    ReviewOptionsMenu reviewOptionsMenu = new ReviewOptionsMenu(facade);
-    TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(facade);
-    EmployeeMenu employeeMenu = new EmployeeMenu(facade);
+    private final ItemOptionsMenu itemOptionsMenu = new ItemOptionsMenu(facade);
+    private final ReviewOptionsMenu reviewOptionsMenu = new ReviewOptionsMenu(facade);
+    private final TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(facade);
+    private final EmployeeMenu employeeMenu = new EmployeeMenu(facade);
 
     //Menu options
-    final int EXIT = 0;
-    final int ITEM_MENU = 1;
-    final int REVIEW_MENU = 2;
-    final int TRANSACTION_MENU = 3;
-    final int EMPLOYEE_MENU = 4;
+    private static final int EXIT = 0;
+    private static final int ITEM_MENU = 1;
+    private static final int REVIEW_MENU = 2;
+    private static final int TRANSACTION_MENU = 3;
+    private static final int EMPLOYEE_MENU = 4;
 
     //Menu text
-    final String MAIN_MENU_OPTIONS = "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
-                                     "0. Close system." + MenuUtility.EOL +
-                                     "1. Open Item options." + MenuUtility.EOL +
-                                     "2. Open Review options." + MenuUtility.EOL +
-                                     "3. Open Transaction History options." + MenuUtility.EOL +
-                                     "4. Open Employee options." + MenuUtility.EOL + MenuUtility.EOL +
-                                     "Type an option number: ";
+    private final static String MAIN_MENU_OPTIONS =
+        "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
+        "0. Close system." + MenuUtility.EOL +
+        "1. Open Item options." + MenuUtility.EOL +
+        "2. Open Review options." + MenuUtility.EOL +
+        "3. Open Transaction History options." + MenuUtility.EOL +
+        "4. Open Employee options." + MenuUtility.EOL + MenuUtility.EOL +
+        "Type an option number: ";
 
     /*
      * Enter first menu loop, error handling is limited to correct integer input for menu options

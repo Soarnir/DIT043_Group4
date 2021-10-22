@@ -7,7 +7,7 @@ import utility.MenuUtility;
 public class ItemOptionsMenu {
 
     //Utility class declaration
-    Facade facade;
+    private final Facade facade;
 
     /*
      * Constructor for ItemOptionsMenu
@@ -18,26 +18,27 @@ public class ItemOptionsMenu {
     }
 
     //Menu options
-    final int EXIT = 0;
-    final int CREATE_ITEM = 1;
-    final int REMOVE_ITEM = 2;
-    final int PRINT_ALL_ITEMS = 3;
-    final int BUY_ITEM = 4;
-    final int UPDATE_ITEM_NAME = 5;
-    final int UPDATE_ITEM_PRICE = 6;
-    final int PRINT_ITEM = 7;
+    private static final int EXIT = 0;
+    private static final int CREATE_ITEM = 1;
+    private static final int REMOVE_ITEM = 2;
+    private static final int PRINT_ALL_ITEMS = 3;
+    private static final int BUY_ITEM = 4;
+    private static final int UPDATE_ITEM_NAME = 5;
+    private static final int UPDATE_ITEM_PRICE = 6;
+    private static final int PRINT_ITEM = 7;
 
     //Menu text
-    final String ITEM_MENU_OPTIONS = "Item options menu:" + MenuUtility.EOL +
-                                     "0. Return to Main Menu." + MenuUtility.EOL +
-                                     "1. Create an Item." + MenuUtility.EOL +
-                                     "2. Remove an Item." + MenuUtility.EOL +
-                                     "3. Print all registered Items." + MenuUtility.EOL +
-                                     "4. Buy an Item." + MenuUtility.EOL +
-                                     "5. Update an item’s name." + MenuUtility.EOL +
-                                     "6. Update an item’s price." + MenuUtility.EOL +
-                                     "7. Print a specific item." + MenuUtility.EOL + MenuUtility.EOL +
-                                     "Type an option number:";
+    private static final String ITEM_MENU_OPTIONS =
+        "Item options menu:" + MenuUtility.EOL +
+        "0. Return to Main Menu." + MenuUtility.EOL +
+        "1. Create an Item." + MenuUtility.EOL +
+        "2. Remove an Item." + MenuUtility.EOL +
+        "3. Print all registered Items." + MenuUtility.EOL +
+        "4. Buy an Item." + MenuUtility.EOL +
+        "5. Update an item’s name." + MenuUtility.EOL +
+        "6. Update an item’s price." + MenuUtility.EOL +
+        "7. Print a specific item." + MenuUtility.EOL + MenuUtility.EOL +
+        "Type an option number:";
 
     /*
      * Enter item menu loop, error handling is limited to correct integer input for menu options

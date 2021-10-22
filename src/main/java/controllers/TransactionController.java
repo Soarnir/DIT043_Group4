@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TransactionController {
 
-    Storage storage;
+    private final Storage storage;
 
     /*
      *
@@ -20,11 +20,11 @@ public class TransactionController {
     }
 
     public List<Transaction> getTransactionList(String itemID) {
-        if (storage.getItemTransactionList(itemID) == null) {
-            return new ArrayList<>();
-        } else {
-            return storage.getItemTransactionList(itemID);
+        List<Transaction> transactionList = new ArrayList<>();
+        if (storage.getItemTransactionList(itemID) != null) {
+            transactionList = storage.getItemTransactionList(itemID);
         }
+        return transactionList;
     }
 
     public double getTotalProfit() {
@@ -63,22 +63,24 @@ public class TransactionController {
         return MenuUtility.doubleTruncate(profit, 2);
     }
 
-    //TODO Should we not have checking as in the above method (getProfit)? -K
     public int getUnitsSold(String itemID) {
         int unitsSold = 0;
-        for (Transaction transaction : getTransactionList(itemID)) {
-            unitsSold += transaction.getAmount();
+        List<Transaction> transactions = getTransactionList(itemID);
+        if (transactions != null && !transactions.isEmpty()) {
+            for (Transaction transaction : getTransactionList(itemID)) {
+                unitsSold += transaction.getAmount();
+            }
         }
         return unitsSold;
     }
 
     public String getItemTransactions(String itemID) {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         List<Transaction> itemTransactions = getTransactionList(itemID);
         for (Transaction transaction : itemTransactions) {
-            stringBuilder.append(transaction.toString()).append(MenuUtility.EOL);
+            sb.append(transaction.toString()).append(MenuUtility.EOL);
         }
-        return stringBuilder.toString();
+        return sb.toString();
     }
 
     public List<String> getMostProfitableItems() {
@@ -103,13 +105,15 @@ public class TransactionController {
     }
 
     public double buyItem(String itemID, int amount) {
+        double returnDouble;
         if (storage.checkForUsedID(itemID)) {
             Transaction transaction = new Transaction(storage.getItem(itemID), amount);
             getTransactionList(itemID).add(transaction);
-            return MenuUtility.doubleTruncate(transaction.getTransactionCost(), 2);
+            returnDouble = MenuUtility.doubleTruncate(transaction.getTransactionCost(), 2);
         } else {
-            return -1.0;
+            returnDouble = -1.0;
         }
+        return returnDouble;
     }
 
     public String printAllTransactions() {
@@ -136,37 +140,38 @@ public class TransactionController {
     }
 
     public String printItemTransactions(String itemID) {
+        StringBuilder sb = new StringBuilder();
         if (storage.checkForUsedID(itemID)) {
             Item item = storage.getItem(itemID);
-            StringBuilder stringBuilder = new StringBuilder("Transactions for item: " + item.toString() + MenuUtility.EOL);
+            sb.append("Transactions for item: ").append(item.toString()).append(MenuUtility.EOL);
             if (!getTransactionList(itemID).isEmpty()) {
-                stringBuilder.append(getItemTransactions(item.getItemID()));
+                sb.append(getItemTransactions(item.getItemID()));
             } else {
-                stringBuilder.append("No transactions have been registered for item ").append(item.getItemID()).append(" yet.");
+                sb.append("No transactions have been registered for item ").append(item.getItemID()).append(" yet.");
             }
-            return stringBuilder.toString();
         } else {
-            return "Item " + itemID + " was not registered yet.";
+            sb.append("Item ").append(itemID).append(" was not registered yet.");
         }
+        return sb.toString();
     }
 
     public String printMostProfitableItems() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {
-            stringBuilder.append("No items registered yet.");
+            sb.append("No items registered yet.");
         } else if (storage.getTransactionMap().isEmpty()) {
-            stringBuilder.append("No items were bought yet.");
+            sb.append("No items were bought yet.");
         } else {
-            stringBuilder.append("Most profitable items: ").append(MenuUtility.EOL);
+            sb.append("Most profitable items: ").append(MenuUtility.EOL);
             double totalProfit = 0;
             StringBuilder items = new StringBuilder();
             for (String itemID : getMostProfitableItems()) {
                 totalProfit += getProfit(itemID);
                 items.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
             }
-            stringBuilder.append("Total profit: ").append(MenuUtility.doubleFormat(totalProfit)).append(" SEK").append(MenuUtility.EOL);
-            stringBuilder.append(items);
+            sb.append("Total profit: ").append(MenuUtility.doubleFormat(totalProfit)).append(" SEK").append(MenuUtility.EOL);
+            sb.append(items);
         }
-        return stringBuilder.toString();
+        return sb.toString();
     }
 }

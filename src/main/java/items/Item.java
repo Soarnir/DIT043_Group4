@@ -4,6 +4,7 @@ import utility.MenuUtility;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Item {
 
@@ -57,5 +58,22 @@ public class Item {
     @Override
     public String toString() {
         return ITEM_ID + ": " + itemName + ". " + MenuUtility.doubleFormat(itemPrice) + " SEK";
+    }
+
+    @Override
+    public boolean equals(Object item) {
+        if (this == item) {
+            return true;
+        }
+        if (item == null || getClass() != item.getClass()) {
+            return false;
+        }
+        Item itemChecked = (Item) item;
+        return ITEM_ID.equals(itemChecked.ITEM_ID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ITEM_ID);
     }
 }

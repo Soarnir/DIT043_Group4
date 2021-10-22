@@ -6,7 +6,7 @@ import utility.MenuUtility;
 
 public class EmployeeMenu {
 
-    Facade facade;
+    private final Facade facade;
 
     /*
      * Constructor for EmployeeMenu
@@ -17,30 +17,31 @@ public class EmployeeMenu {
     }
 
     //Menu options
-    final int EXIT = 0;
-    final int CREATE_EMPLOYEE_REGULAR = 1;
-    final int CREATE_EMPLOYEE_MANAGER = 2;
-    final int CREATE_EMPLOYEE_DIRECTOR = 3;
-    final int CREATE_EMPLOYEE_INTERN = 4;
-    final int REMOVE_EMPLOYEE = 5;
-    final int PRINT_EMPLOYEE = 6;
-    final int PRINT_EMPLOYEE_ALL = 7;
-    final int PRINT_TOTAL_EXPENSE = 8;
-    final int PRINT_EMPLOYEE_SORTED = 9;
+    private static final int EXIT = 0;
+    private static final int CREATE_EMPLOYEE_REGULAR = 1;
+    private static final int CREATE_EMPLOYEE_MANAGER = 2;
+    private static final int CREATE_EMPLOYEE_DIRECTOR = 3;
+    private static final int CREATE_EMPLOYEE_INTERN = 4;
+    private static final int REMOVE_EMPLOYEE = 5;
+    private static final int PRINT_EMPLOYEE = 6;
+    private static final int PRINT_EMPLOYEE_ALL = 7;
+    private static final int PRINT_TOTAL_EXPENSE = 8;
+    private static final int PRINT_EMPLOYEE_SORTED = 9;
 
     //Menu text
-    final String EMPLOYEE_MENU_OPTIONS = "Employee options menu:" + MenuUtility.EOL +
-                                         "0. Return to Main Menu." + MenuUtility.EOL +
-                                         "1. Create an employee (Regular Employee)." + MenuUtility.EOL +
-                                         "2. Create an employee (Manager)." + MenuUtility.EOL +
-                                         "3. Create an employee (Director)." + MenuUtility.EOL +
-                                         "4. Create an employee (Intern)." + MenuUtility.EOL +
-                                         "5. Remove an employee." + MenuUtility.EOL +
-                                         "6. Print specific employee." + MenuUtility.EOL +
-                                         "7. Print all registered employees." + MenuUtility.EOL +
-                                         "8. Print the total expense with net salary." + MenuUtility.EOL +
-                                         "9. Print all employees sorted by gross salary." + MenuUtility.EOL + MenuUtility.EOL +
-                                         "Type an option number:";
+    private static final String EMPLOYEE_MENU_OPTIONS =
+        "Employee options menu:" + MenuUtility.EOL +
+        "0. Return to Main Menu." + MenuUtility.EOL +
+        "1. Create an employee (Regular Employee)." + MenuUtility.EOL +
+        "2. Create an employee (Manager)." + MenuUtility.EOL +
+        "3. Create an employee (Director)." + MenuUtility.EOL +
+        "4. Create an employee (Intern)." + MenuUtility.EOL +
+        "5. Remove an employee." + MenuUtility.EOL +
+        "6. Print specific employee." + MenuUtility.EOL +
+        "7. Print all registered employees." + MenuUtility.EOL +
+        "8. Print the total expense with net salary." + MenuUtility.EOL +
+        "9. Print all employees sorted by gross salary." + MenuUtility.EOL + MenuUtility.EOL +
+        "Type an option number:";
 
     /*
      * Enter employee menu loop, error handling is managed by several custom exceptions during action execution,

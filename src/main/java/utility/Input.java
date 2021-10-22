@@ -4,10 +4,8 @@ import java.util.Scanner;
 
 public class Input {
 
-    //TODO refactor class
-
     //Create protected Scanner object, due to menu design this is the only scanner created in the project
-    final static Scanner inputScanner = new Scanner(System.in);
+    private final static Scanner inputScanner = new Scanner(System.in);
 
     public static String readString(String message) {
         System.out.print(message);
