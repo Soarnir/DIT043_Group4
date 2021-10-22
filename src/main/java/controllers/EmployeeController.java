@@ -99,6 +99,9 @@ public class EmployeeController {
             Map<String, Integer> degreeMap = new HashMap<>();
             int BScDegrees = 0, MScDegrees = 0, PhDDegrees = 0;
             for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
+//                else {
+//                    throw new EmployeesNotRegisteredException();
+//                }
                 if (employee instanceof EmployeeManager) {
                     switch (((EmployeeManager) employee).getDegree()) {
                         case BSc:
@@ -121,7 +124,54 @@ public class EmployeeController {
                 degreeMap.put("PhD", PhDDegrees);
 
             return degreeMap;
+
         }
+
+    }
+
+    // Will refactor this method after testing out functionality -K
+    // I need to cite the Math Course Script as the pseudocode was referred to while making this.
+
+    public EmployeeRegular[] getSortedEmployees() {
+        // https://stackoverflow.com/questions/1090556/java-how-to-convert-hashmapstring-object-to-array
+        EmployeeRegular[] arrayOfEmployees = storage.getEmployeeMap().values().toArray(new EmployeeRegular[0]);
+
+        for (int i = 0; i < arrayOfEmployees.length - 1; i++) {
+            int indexOfLowestSalary = i;
+
+            for (int j = i + 1; j < arrayOfEmployees.length; j++) {
+                if (arrayOfEmployees[j].getGrossSalary() < arrayOfEmployees[indexOfLowestSalary].getGrossSalary()) {
+                    indexOfLowestSalary = j;
+                }
+            }
+            if (indexOfLowestSalary != i) {
+                EmployeeRegular initialEmployeeWithLowestSalary = arrayOfEmployees[indexOfLowestSalary];
+                arrayOfEmployees[indexOfLowestSalary] = arrayOfEmployees[i];
+                arrayOfEmployees[i] = initialEmployeeWithLowestSalary;
+            }
+        }
+
+        return arrayOfEmployees;
+    }
+
+    public String printSortedEmployees() throws Exception {
+
+        if (!storage.getEmployeeMap().isEmpty()){
+            StringBuilder sb = new StringBuilder();
+            //sb.append("All registered employees:").append(MenuUtility.EOL);
+            // Tests require not above comment but the "Employees sorted by gross salary (ascending order):"
+            sb.append("Employees sorted by gross salary (ascending order):").append(MenuUtility.EOL);
+            EmployeeRegular[] arrayOfEmployees = getSortedEmployees();
+
+            for (EmployeeRegular employee : arrayOfEmployees){
+                sb.append(employee.toString()).append(MenuUtility.EOL);
+            }
+            return sb.toString();
+
+        } else {
+            throw new EmployeesNotRegisteredException();
+        }
+
     }
 
     public String updateEmployeeName(String empID, String newName) throws Exception {
@@ -231,12 +281,6 @@ public class EmployeeController {
         } else {
             throw new EmployeesNotRegisteredException();
         }
-    }
-
-    // TODO Implement printSortedEmployees -K
-    public String printSortedEmployees() throws Exception {
-
-        return "";
     }
 
     // TODO Need to decide on a better name
