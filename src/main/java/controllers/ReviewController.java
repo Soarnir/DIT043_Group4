@@ -16,12 +16,17 @@ public class ReviewController {
     private static final int LOWEST_REVIEW_INDEX = 1;
 
     /*
-     * The controller constructor passes through the same Storage reference from the Facade to be used by the controllers methods
+     * The controller constructor passes through the same Storage reference from the Facade
+     * to be used by the controller's methods.
      */
     public ReviewController(Storage storage) {
         this.storage = storage;
     }
 
+    /*
+     * Method handles input validation and creation of reviews,
+     * giving feedback to the end user regardless of whether a review was created or not.
+     */
     public String createReview(String itemID, String reviewText, int reviewGrade) {
         String returnString;
         if (!storage.checkForUsedID(itemID)) {
@@ -40,6 +45,7 @@ public class ReviewController {
         return returnString;
     }
 
+    // Method handles review creation in the case that the end user does not have a comment.
     public String createReview(String itemID, int reviewGrade) {
         return createReview(itemID, "", reviewGrade);
     }
@@ -48,6 +54,7 @@ public class ReviewController {
         return storage.getItem(itemID).getReviewList();
     }
 
+    // Returns an ArrayList of comments submitted by users regarding a specific item.
     public List<String> getItemComments(String itemID) {
         List<String> itemComments = new ArrayList<>();
         for (Review review : getReviewList(itemID)) {
@@ -59,6 +66,7 @@ public class ReviewController {
     }
 
     // TODO The implementation of this isn't clear in Specs (Not needed to pass tests either) -K
+    // Prints the comments submitted by users regarding a specific item.
     public String getItemCommentsPrinted(String itemID) {
         List<String> itemComments = getItemComments(itemID);
         StringBuilder sb = new StringBuilder();
@@ -72,7 +80,7 @@ public class ReviewController {
         return storage.getItem(itemID).getNumOfReviews();
     }
 
-    // Error handling and making mean grade visible to the user is yet to be implemented.
+    // Method calculates and returns the mean grade (from reviews) of an item, truncating to 1 decimal point.
     public double getItemMeanGrade(String itemID) {
         double sum = 0;
         double returnDouble;
@@ -91,36 +99,51 @@ public class ReviewController {
         return storage.getItem(itemID).getReviewList().get(reviewIndex);
     }
 
+    /*
+     * The method below is an abstraction of the getBestReviewedItems and getWorstReviewedItems methods.
+     * It's called by getBestReviewedItems & getWorstReviewedItems and the boolean bestReviewed allows for distinguition.
+     * The conditional logic is complex but the decision to abstract the methods was made to maintain DRY code as
+     * otherwise,there would be a lot of repetition between the getBestReviewedItems and getWorstReviewedItems methods.
+     * To help maintain readability, in-line comments have been added to explain sections of the method.
+     */
     public List<String> getReviewedItemsBasedOnGrade(boolean bestReviewed) {
         List<String> reviewedItems = new ArrayList<>();
 
+        //Loops through all registered item IDs.
         for (String itemID : storage.getItemMap().keySet()) {
             if (getItemMeanGrade(itemID) > 0) {
+                // The first item with a mean grade > 0 is added to the list to have a starting point to compare.
                 if (reviewedItems.isEmpty()) {
                     reviewedItems.add(itemID);
                 } else {
-                    String currentBestReviewedItem = reviewedItems.get(0);
+                    String itemInReviewedItems = reviewedItems.get(0);
+                    double storedItemMeanGrade = getItemMeanGrade(itemInReviewedItems);
+                    // TODO do I need to mention itemID in the below comment since itemID is technically being looped? -K
+                    // Current item refers to the item that is being considered in the current loop iteration.
                     double currentItemMeanGrade = getItemMeanGrade(itemID);
-                    double storedItemMeanGrade = getItemMeanGrade(currentBestReviewedItem);
-                    if (bestReviewed) {
+
+                    /*
+                     * If currentItemMeanGrade == storedItemMeanGrade, the itemID is always added regardless
+                     * of whether getBestReviewedItems or getWorstReviewedItems is called.
+                     */
+                    if (currentItemMeanGrade == storedItemMeanGrade) {
+                        reviewedItems.add(itemID);
+                    // The else-if below is executed only if getBestReviewedItems is called.
+                    } else if (bestReviewed) {
                         if (currentItemMeanGrade > storedItemMeanGrade) {
                             reviewedItems.clear();
                             reviewedItems.add(itemID);
-                        } else if (currentItemMeanGrade == storedItemMeanGrade) {
-                            reviewedItems.add(itemID);
                         }
+                    // The else is executed only if getWorseReviewedItems is called.
                     } else {
                         if (currentItemMeanGrade < storedItemMeanGrade) {
                             reviewedItems.clear();
-                            reviewedItems.add(itemID);
-                        } else if (currentItemMeanGrade == storedItemMeanGrade) {
                             reviewedItems.add(itemID);
                         }
                     }
                 }
             }
         }
-
         return reviewedItems;
     }
 
@@ -135,26 +158,40 @@ public class ReviewController {
     // TODO Need to consider renaming variables -K
     public List<String> getReviewedItems(boolean mostReviewed) {
         List<String> reviewedItems = new ArrayList<>();
+
+        // Loops through all registered item IDs.
         for (String itemID : storage.getItemMap().keySet()) {
-            if (storage.getItem(itemID).getNumOfReviews() > 0) {
+            if (getNumberOfReviews(itemID) > 0) {
+                // The first item with at least one review is added to the list to have a starting point to compare.
                 if (reviewedItems.isEmpty()) {
                     reviewedItems.add(itemID);
                 } else {
-                    String currentReviewedItem = reviewedItems.get(0);
-                    int currentItemReviews = storage.getItem(itemID).getNumOfReviews();
-                    int storedItemReviews = storage.getItem(currentReviewedItem).getNumOfReviews();
-                    if (mostReviewed) {
-                        if (currentItemReviews > storedItemReviews) {
+                    String itemInReviewedItems = reviewedItems.get(0);
+                    int numOfReviewsOfStoredItem = storage.getItem(itemInReviewedItems).getNumOfReviews();
+                    // TODO do I need to mention itemID in the below comment since itemID is technically being looped? -K
+                    // numOfReviewsOfCurrentItem refers to the number of reviews of the item in the current loop iteration.
+                    int numOfReviewsOfCurrentItem = getNumberOfReviews(itemID);
+
+                    /*
+                     * The conditionals below are very similar to those in getReviewedItemsBasedOnGrade but since
+                     * these methods were already abstractions, add another abstraction for the abstractions would
+                     * simply result in over-complex code and reduce readability significantly.
+                     *
+                     * If numOfReviewsOfCurrentItem == numOfReviewsOfStoredItem, the itemID is always added regardless
+                     * of whether getMostReviewedItems or getWorstReviewedItems is called.
+                     */
+                    if (numOfReviewsOfCurrentItem == numOfReviewsOfStoredItem){
+                        reviewedItems.add(itemID);
+                    // The else-if below is executed only if getMostReviewedItems is called.
+                    } else if (mostReviewed) {
+                        if (numOfReviewsOfCurrentItem > numOfReviewsOfStoredItem) {
                             reviewedItems.clear();
-                            reviewedItems.add(itemID);
-                        } else if (currentItemReviews == storedItemReviews) {
                             reviewedItems.add(itemID);
                         }
+                    // The else is executed only if getLeastReviewedItems is called.
                     } else {
-                        if (currentItemReviews < storedItemReviews) {
+                        if (numOfReviewsOfCurrentItem < numOfReviewsOfStoredItem) {
                             reviewedItems.clear();
-                            reviewedItems.add(itemID);
-                        } else if (currentItemReviews == storedItemReviews) {
                             reviewedItems.add(itemID);
                         }
                     }
@@ -172,6 +209,11 @@ public class ReviewController {
         return getReviewedItems(false);
     }
 
+    /*
+     * Method prints a specific review and the corresponding grade and comment (if present) of a specific item.
+     * If the item is not registered or the review is specified wrongly,
+     * it prints appropriate messages to inform the end user.
+     */
     public String printReview(String itemID, int reviewIndex) {
         int reviewListSize = getReviewList(itemID).size();
         String returnString;
@@ -182,6 +224,10 @@ public class ReviewController {
         } else if (reviewIndex < LOWEST_REVIEW_INDEX || reviewIndex > reviewListSize) {
             returnString = "Invalid review number. Choose between 1 and " + reviewListSize + ".";
         } else {
+            /*
+             * LOWEST_REVIEW_INDEX is being subtracted from reviewIndex as
+             * review indices start from 1 (according to specs) but Java arrayList indices start from 0.
+             */
             Review review = getReview(itemID, (reviewIndex - LOWEST_REVIEW_INDEX));
             if (review.getReviewText() == null) {
                 returnString = "Grade: " + review.getReviewGrade() + ".";
@@ -192,6 +238,10 @@ public class ReviewController {
         return returnString;
     }
 
+    /*
+     * Method prints all reviews and the corresponding grades and comments (if present) of a specific item.
+     * If the item or at least one review is not registered, it prints appropriate messages to inform the end user.
+     */
     public String printAllItemReviews(String itemID) {
         StringBuilder sb = new StringBuilder();
         Item item;
@@ -211,6 +261,10 @@ public class ReviewController {
         return sb.toString();
     }
 
+    /*
+     * Method prints all registered reviews with their corresponding grades and comments (if present).
+     * If no items or no reviews are registered, appropriate messages are printed to inform the end user.
+     */
     public String printAllReviews() {
         StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {

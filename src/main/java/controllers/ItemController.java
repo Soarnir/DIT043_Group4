@@ -11,12 +11,14 @@ public class ItemController {
     private final Storage storage;
 
     /*
-     * The controller constructor passes through the same Storage reference from the Facade to be used by the controllers methods
+     * The controller constructor passes through the same Storage reference from the Facade
+     * to be used by the controller's methods.
      */
     public ItemController(Storage storage) {
         this.storage = storage;
     }
 
+    // Method handles the creation of items and lets the end user if the item was registered.
     public String createItem(String itemID, String itemName, double itemPrice) {
         String returnString;
         if (itemID.isEmpty() || storage.checkForUsedID(itemID) || itemName.isEmpty() || (itemPrice <= 0)) {
@@ -30,6 +32,7 @@ public class ItemController {
         return returnString;
     }
 
+    // Method handles the removal of items and lets the end user know if it was successfully removed.
     public String removeItem(String itemID) {
         String returnString;
         if (storage.checkForUsedID(itemID) && storage.getItem(itemID) != null) {
@@ -41,6 +44,8 @@ public class ItemController {
         return returnString;
     }
 
+    // TODO It might be possible to combine the two updateItem methods.
+    // Method allows the user to update the name of an existing item.
     public String updateItem(String itemID, String newName) {
         String returnString;
         if (!storage.checkForUsedID(itemID)) {
@@ -54,6 +59,7 @@ public class ItemController {
         return returnString;
     }
 
+    // Method allows the user to update the price of an existing item.
     public String updateItem(String itemID, double newPrice) {
         String returnString;
         if (!storage.checkForUsedID(itemID)) {
@@ -67,6 +73,7 @@ public class ItemController {
         return returnString;
     }
 
+    // Method prints the ID of an item with its corresponding name and price.
     public String printItem(String itemID) {
         String returnString;
         if (storage.checkForUsedID(itemID)) {
@@ -77,6 +84,7 @@ public class ItemController {
         return returnString;
     }
 
+    // Method prints all currently registered item IDs with their corresponding names and prices.
     public String printAllItems() {
         StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {

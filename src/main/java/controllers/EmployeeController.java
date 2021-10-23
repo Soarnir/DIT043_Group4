@@ -91,9 +91,6 @@ public class EmployeeController {
         return storage.getEmployee(employeeID).getNetSalary();
     }
 
-    // Will refactor this method after testing out functionality -K
-    // I need to cite the Math Course Script as the pseudocode was referred to while making this.
-
     public EmployeeRegular[] getSortedEmployees() {
         // https://stackoverflow.com/questions/1090556/java-how-to-convert-hashmapstring-object-to-array
         EmployeeRegular[] arrayOfEmployees = storage.getEmployeeMap().values().toArray(new EmployeeRegular[0]);
@@ -106,11 +103,9 @@ public class EmployeeController {
                     indexOfLowestSalary = j;
                 }
             }
-            if (indexOfLowestSalary != i) {
-                EmployeeRegular initialEmployeeWithLowestSalary = arrayOfEmployees[indexOfLowestSalary];
-                arrayOfEmployees[indexOfLowestSalary] = arrayOfEmployees[i];
-                arrayOfEmployees[i] = initialEmployeeWithLowestSalary;
-            }
+            EmployeeRegular initialEmployeeWithLowestSalary = arrayOfEmployees[indexOfLowestSalary];
+            arrayOfEmployees[indexOfLowestSalary] = arrayOfEmployees[i];
+            arrayOfEmployees[i] = initialEmployeeWithLowestSalary;
         }
         return arrayOfEmployees;
     }
