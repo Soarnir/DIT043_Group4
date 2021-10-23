@@ -24,8 +24,7 @@ public class ItemController {
         if (itemID.isEmpty() || storage.checkForUsedID(itemID) || itemName.isEmpty() || (itemPrice <= 0)) {
             returnString = "Invalid data for item.";
         } else {
-            storage.getUsedIDs().add(itemID);
-            storage.getItemMap().put(itemID, new Item(itemID, itemName, itemPrice));
+            storage.addItem(itemID, new Item(itemID, itemName, itemPrice));
             storage.getTransactionMap().put(itemID, new ArrayList<>());
             returnString = "Item " + itemID + " was registered successfully.";
         }
@@ -36,7 +35,7 @@ public class ItemController {
     public String removeItem(String itemID) {
         String returnString;
         if (storage.checkForUsedID(itemID) && storage.getItem(itemID) != null) {
-            storage.getItemMap().remove(itemID);
+            storage.removeItem(itemID);
             returnString = "Item " + itemID + " was successfully removed.";
         } else {
             returnString = "Item " + itemID + " could not be removed.";

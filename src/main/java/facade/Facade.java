@@ -20,6 +20,16 @@ public class Facade {
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
 
+    /*
+     * Upon Facade initialization in the MainMenu class, 4 controllers and a storage object are created.
+     * This constructor follows test specifications allowing for a new facade to be created when every test is run
+     * with a "fresh" instance of the business logic and storage.
+     *
+     * All facade methods call the respective controller of each function and handle every test case.
+     * Because of the return structure already present in the facade, the menus utilize this by calling
+     * facade methods, rather than controller methods during runtime, allowing for a fully functional
+     * test-bed and program to run in either configuration as needed.
+     */
     public Facade() {
         this.storage = new Storage();
         this.itemController = new ItemController(storage);

@@ -16,7 +16,10 @@ public class EmployeeManager extends EmployeeRegular {
         return degree;
     }
 
-    //
+    /*
+     * Sets the degree for both Managers and Directors using an enum and
+     * calculates the relevant salary bonus for either employee type.
+     */
     public void setDegree(String degree) {
         switch (degree) {
             case "BSc":

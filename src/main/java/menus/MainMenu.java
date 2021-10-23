@@ -6,26 +6,26 @@ import utility.MenuUtility;
 
 public class MainMenu {
 
-    //Create Facade
+    // Create Facade
     private final Facade facade = new Facade();
 
     /*
      * Create Menu objects
      * Constructor passes through utility objects such that they do not need to be created multiple times, retaining the same object reference
      */
-    private final ItemOptionsMenu itemOptionsMenu = new ItemOptionsMenu(facade);
-    private final ReviewOptionsMenu reviewOptionsMenu = new ReviewOptionsMenu(facade);
-    private final TransactionHistoryMenu transactionHistoryMenu = new TransactionHistoryMenu(facade);
+    private final ItemMenu itemMenu = new ItemMenu(facade);
+    private final ReviewMenu reviewMenu = new ReviewMenu(facade);
+    private final TransactionMenu transactionMenu = new TransactionMenu(facade);
     private final EmployeeMenu employeeMenu = new EmployeeMenu(facade);
 
-    //Menu options
+    // Main Menu options
     private static final int EXIT = 0;
     private static final int ITEM_MENU = 1;
     private static final int REVIEW_MENU = 2;
     private static final int TRANSACTION_MENU = 3;
     private static final int EMPLOYEE_MENU = 4;
 
-    //Menu text
+    // Main Menu text
     private final static String MAIN_MENU_OPTIONS =
         "Main Menu: Please choose among the options below." + MenuUtility.EOL + MenuUtility.EOL +
         "0. Close system." + MenuUtility.EOL +
@@ -53,13 +53,13 @@ public class MainMenu {
                     Input.closeScanner();
                     break;
                 case ITEM_MENU:
-                    itemOptionsMenu.printMenu();
+                    itemMenu.printMenu();
                     break;
                 case REVIEW_MENU:
-                    reviewOptionsMenu.printMenu();
+                    reviewMenu.printMenu();
                     break;
                 case TRANSACTION_MENU:
-                    transactionHistoryMenu.printMenu();
+                    transactionMenu.printMenu();
                     break;
                 case EMPLOYEE_MENU:
                     employeeMenu.printMenu();

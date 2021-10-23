@@ -14,10 +14,6 @@ public class EmployeeIntern extends EmployeeRegular {
         setGPA(gpa);
     }
 
-    public int getGpa() {
-        return this.gpa;
-    }
-
     public void setGPA(int gpa) {
         if (gpa <= LOWER_GPA_BOUND) {
             this.grossSalary = 0.0;

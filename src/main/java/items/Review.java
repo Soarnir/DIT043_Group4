@@ -3,12 +3,11 @@ package items;
 public class Review {
 
     private final int REVIEW_GRADE;
-    // Changed back to non-final as second constructor should be implemented
-    private String reviewText;
+    private String reviewComment;
 
 
-    public Review(String reviewText, int reviewGrade) {
-        this.reviewText = reviewText;
+    public Review(String reviewComment, int reviewGrade) {
+        this.reviewComment = reviewComment;
         this.REVIEW_GRADE = reviewGrade;
     }
 
@@ -20,17 +19,18 @@ public class Review {
         return REVIEW_GRADE;
     }
 
-    public String getReviewText() {
-        return reviewText;
+    public String getReviewComment() {
+        return reviewComment;
     }
 
     @Override
     public String toString() {
         String returnString;
-        if (reviewText == null) {
+
+        if (reviewComment == null) {
             returnString = "Grade: " + REVIEW_GRADE + ".";
         } else {
-            returnString = "Grade: " + REVIEW_GRADE + "." + reviewText;
+            returnString = "Grade: " + REVIEW_GRADE + "." + reviewComment;
         }
         return returnString;
     }

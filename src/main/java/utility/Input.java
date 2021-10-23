@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Input {
 
-    //Create protected Scanner object, due to menu design this is the only scanner created in the project
+    // Create protected Scanner object, due to menu design this is the only scanner created in the project.
     private final static Scanner inputScanner = new Scanner(System.in);
 
     public static String readString(String message) {
@@ -42,5 +42,4 @@ public class Input {
     public static void closeScanner() {
         inputScanner.close();
     }
-
 }

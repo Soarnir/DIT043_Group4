@@ -4,20 +4,20 @@ import facade.Facade;
 import utility.Input;
 import utility.MenuUtility;
 
-public class ItemOptionsMenu {
+public class ItemMenu {
 
-    //Utility class declaration
+    // Utility class declaration
     private final Facade facade;
 
     /*
      * Constructor for ItemOptionsMenu
      * Requires Facade passed through
      */
-    public ItemOptionsMenu(Facade facade) {
+    public ItemMenu(Facade facade) {
         this.facade = facade;
     }
 
-    //Menu options
+    // Item Menu options
     private static final int EXIT = 0;
     private static final int CREATE_ITEM = 1;
     private static final int REMOVE_ITEM = 2;
@@ -27,7 +27,7 @@ public class ItemOptionsMenu {
     private static final int UPDATE_ITEM_PRICE = 6;
     private static final int PRINT_ITEM = 7;
 
-    //Menu text
+    // Item Menu text
     private static final String ITEM_MENU_OPTIONS =
         "Item options menu:" + MenuUtility.EOL +
         "0. Return to Main Menu." + MenuUtility.EOL +

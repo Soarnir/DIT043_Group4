@@ -21,6 +21,8 @@ public class EmployeeDirector extends EmployeeManager {
         return this.department.getDepartmentName();
     }
 
+
+    // Sets the department for Directors using an enum.
     public void setDepartment(String department) {
         switch (department) {
             case "Business":
@@ -46,7 +48,6 @@ public class EmployeeDirector extends EmployeeManager {
 
         if (getGrossSalary() < LOWER_SALARY_BOUND) {
             netSalary = getGrossSalary() - (getGrossSalary() * LOW_TAX_PERCENTAGE);
-        // TODO Need to clarify if it's <= and >= or < and > -K
         } else if (getGrossSalary() >= LOWER_SALARY_BOUND && getGrossSalary() <= UPPER_SALARY_BOUND) {
             netSalary = getGrossSalary() - (getGrossSalary() * MEDIUM_TAX_PERCENTAGE);
         } else {

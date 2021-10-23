@@ -26,7 +26,7 @@ public class EmployeeRegular implements Employee {
         return this.name;
     }
 
-    //Regular employees get raw salary vs gross salary as no value manipulation is needed for them.
+    // Regular employees get raw salary vs gross salary as no value manipulation is needed for them.
     public double getGrossSalary() {
         return this.grossSalary;
     }

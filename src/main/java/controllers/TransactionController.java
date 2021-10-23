@@ -13,7 +13,8 @@ public class TransactionController {
     private final Storage storage;
 
     /*
-     *
+     * The controller constructor passes through the same Storage reference from the Facade
+     * to be used by the controllers' methods
      */
     public TransactionController(Storage storage) {
         this.storage = storage;
@@ -21,6 +22,7 @@ public class TransactionController {
 
     public List<Transaction> getTransactionList(String itemID) {
         List<Transaction> transactionList = new ArrayList<>();
+
         if (storage.getItemTransactionList(itemID) != null) {
             transactionList = storage.getItemTransactionList(itemID);
         }
@@ -29,7 +31,8 @@ public class TransactionController {
 
     public double getTotalProfit() {
         double totalProfit = 0;
-        for (String itemID : storage.getUsedIDs()) {
+
+        for (String itemID : storage.getUsedItemIDs()) {
             totalProfit += getProfit(itemID);
         }
         return MenuUtility.doubleTruncate(totalProfit, 2);
@@ -37,7 +40,8 @@ public class TransactionController {
 
     public int getTotalUnitsSold() {
         int totalUnitsSold = 0;
-        for (String itemID : storage.getUsedIDs()) {
+
+        for (String itemID : storage.getUsedItemIDs()) {
             totalUnitsSold += getUnitsSold(itemID);
         }
         return totalUnitsSold;
@@ -45,7 +49,8 @@ public class TransactionController {
 
     public int getTotalTransactions() {
         int totalTransactions = 0;
-        for (String itemID : storage.getUsedIDs()) {
+
+        for (String itemID : storage.getUsedItemIDs()) {
             int numOfTransactions = storage.getItemTransactionList(itemID).size();
             totalTransactions += numOfTransactions;
         }
@@ -55,6 +60,7 @@ public class TransactionController {
     public double getProfit(String itemID) {
         double profit = 0;
         List<Transaction> transactions = getTransactionList(itemID);
+
         if (transactions != null && !transactions.isEmpty()) {
             for (Transaction transaction : transactions) {
                 profit += transaction.getTransactionCost();
@@ -66,6 +72,7 @@ public class TransactionController {
     public int getUnitsSold(String itemID) {
         int unitsSold = 0;
         List<Transaction> transactions = getTransactionList(itemID);
+
         if (transactions != null && !transactions.isEmpty()) {
             for (Transaction transaction : getTransactionList(itemID)) {
                 unitsSold += transaction.getAmount();
@@ -77,6 +84,7 @@ public class TransactionController {
     public String getItemTransactions(String itemID) {
         StringBuilder sb = new StringBuilder();
         List<Transaction> itemTransactions = getTransactionList(itemID);
+
         for (Transaction transaction : itemTransactions) {
             sb.append(transaction.toString()).append(MenuUtility.EOL);
         }
@@ -85,6 +93,7 @@ public class TransactionController {
 
     public List<String> getMostProfitableItems() {
         List<String> mostProfitable = new ArrayList<>();
+
         for (String itemID : storage.getTransactionMap().keySet()) {
             if (mostProfitable.isEmpty()) {
                 mostProfitable.add(itemID);
@@ -106,6 +115,7 @@ public class TransactionController {
 
     public double buyItem(String itemID, int amount) {
         double returnDouble;
+
         if (storage.checkForUsedID(itemID)) {
             Transaction transaction = new Transaction(storage.getItem(itemID), amount);
             getTransactionList(itemID).add(transaction);
@@ -126,7 +136,7 @@ public class TransactionController {
         sb.append("Total purchases made: ").append(getTotalTransactions()).append(" transactions").append(MenuUtility.EOL);
         sb.append("------------------------------------").append(MenuUtility.EOL);
 
-        for (String itemID : storage.getUsedIDs()) {
+        for (String itemID : storage.getUsedItemIDs()) {
             List<Transaction> transactions = getTransactionList(itemID);
             if (transactions != null && !transactions.isEmpty()) {
                 for (Transaction transaction : transactions) {
@@ -134,13 +144,13 @@ public class TransactionController {
                 }
             }
         }
-        //TODO The last EOL append is needed for test but doesn't make sense.
         sb.append("------------------------------------").append(MenuUtility.EOL);
         return sb.toString();
     }
 
     public String printItemTransactions(String itemID) {
         StringBuilder sb = new StringBuilder();
+
         if (storage.checkForUsedID(itemID)) {
             Item item = storage.getItem(itemID);
             sb.append("Transactions for item: ").append(item.toString()).append(MenuUtility.EOL);
@@ -157,6 +167,7 @@ public class TransactionController {
 
     public String printMostProfitableItems() {
         StringBuilder sb = new StringBuilder();
+
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
         } else if (storage.getTransactionMap().isEmpty()) {

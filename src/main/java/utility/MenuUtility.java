@@ -4,6 +4,7 @@ public class MenuUtility {
 
     public static final String EOL = System.lineSeparator();
 
+    // Truncates any double to a set scale, representing the number of decimal points to be truncated to.
     public static double doubleTruncate(double value, int scale) {
         return ((int) (value * Math.pow(10, scale))) / Math.pow(10, scale);
     }

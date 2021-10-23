@@ -4,7 +4,7 @@ import facade.Facade;
 import utility.Input;
 import utility.MenuUtility;
 
-public class ReviewOptionsMenu {
+public class ReviewMenu {
 
     private final Facade facade;
 
@@ -12,11 +12,11 @@ public class ReviewOptionsMenu {
      * Constructor for ReviewOptionsMenu
      * Requires Facade passed through
      */
-    public ReviewOptionsMenu(Facade facade) {
+    public ReviewMenu(Facade facade) {
         this.facade = facade;
     }
 
-    //Menu options
+    // Review Menu options
     private static final int EXIT = 0;
     private static final int CREATE_REVIEW = 1;
     private static final int PRINT_SPECIFIC_ITEM_REVIEW = 2;
@@ -29,7 +29,7 @@ public class ReviewOptionsMenu {
     private static final int PRINT_BEST_MEAN_ITEM = 9;
     private static final int PRINT_WORST_MEAN_ITEM = 10;
 
-    //Menu text
+    // Review Menu text
     private static final String REVIEW_MENU_OPTIONS =
         "Reviews options menu:" + MenuUtility.EOL +
         "0. Return to Main Menu." + MenuUtility.EOL +

@@ -16,7 +16,7 @@ public class EmployeeMenu {
         this.facade = facade;
     }
 
-    //Menu options
+    // Employee Menu options
     private static final int EXIT = 0;
     private static final int CREATE_EMPLOYEE_REGULAR = 1;
     private static final int CREATE_EMPLOYEE_MANAGER = 2;
@@ -28,7 +28,7 @@ public class EmployeeMenu {
     private static final int PRINT_TOTAL_EXPENSE = 8;
     private static final int PRINT_EMPLOYEE_SORTED = 9;
 
-    //Menu text
+    // Employee Menu text
     private static final String EMPLOYEE_MENU_OPTIONS =
         "Employee options menu:" + MenuUtility.EOL +
         "0. Return to Main Menu." + MenuUtility.EOL +

@@ -9,16 +9,24 @@ import java.util.*;
 
 public class EmployeeController {
 
+    // Final attributes not capitalized as they are collections
     private final Storage storage;
-    private final List<String> employeeDegreeList = new ArrayList<>();
-    private final List<String> validDepartments = new ArrayList<>();
+    private final List<String> employeeDegreeList;
+    private final List<String> validDepartments;
 
     /*
-     * The controller constructor passes through the same Storage reference from the Facade to be used by the controllers methods
+     * The controller constructor passes through the same Storage reference from the Facade
+     * to be used by the controllers' methods.
      */
     public EmployeeController(Storage storage) {
         this.storage = storage;
+        this.employeeDegreeList = new ArrayList<>();
+        this.validDepartments = new ArrayList<>();
 
+        /*
+         * Initialize employee degree and department lists,
+         * basing them on enums allows for great extensibility with very minor refactoring.
+         */
         for (EmployeeDegree employeeDegree : EmployeeDegree.values()) {
             employeeDegreeList.add(employeeDegree.toString());
         }
@@ -27,49 +35,43 @@ public class EmployeeController {
         }
     }
 
+    /*
+     * Creation of employees utilize several validation methods to reduce complexity
+     * and improve readability, keeping the overall controller DRY.
+     */
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
-        produceCreationExceptionMessage(employeeID, employeeName, grossSalary);
-        storage.getEmployeeMap().put(employeeID, new EmployeeRegular(employeeID, employeeName, grossSalary));
+        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        storage.addEmployee(employeeID, new EmployeeRegular(employeeID, employeeName, grossSalary));
         return "Employee " + employeeID + " was registered successfully.";
     }
 
     public String createManagerEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
-        produceCreationExceptionMessage(employeeID, employeeName, grossSalary);
-        if (employeeDegreeList.contains(degree)) {
-            storage.getEmployeeMap().put(employeeID, new EmployeeManager(employeeID, employeeName, grossSalary, degree));
-        } else {
-            throw new InvalidDegreeException();
+        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        if (validateDegree(degree)) {
+            storage.addEmployee(employeeID, new EmployeeManager(employeeID, employeeName, grossSalary, degree));
         }
         return "Employee " + employeeID + " was registered successfully.";
     }
 
     public String createInternEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
-        produceCreationExceptionMessage(employeeID, employeeName, grossSalary);
-        if (gpa >= 0 && gpa <= 10) {
-            storage.getEmployeeMap().put(employeeID, new EmployeeIntern(employeeID, employeeName, grossSalary, gpa));
-        } else {
-            throw new InvalidGPAException(gpa);
+        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        if (validateGPA(gpa)) {
+            storage.addEmployee(employeeID, new EmployeeIntern(employeeID, employeeName, grossSalary, gpa));
         }
         return "Employee " + employeeID + " was registered successfully.";
     }
 
     public String createDirectorEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
-        produceCreationExceptionMessage(employeeID, employeeName, grossSalary);
-        if (!employeeDegreeList.contains(degree.trim())) {
-            throw new InvalidDegreeException();
-        } else if (!validDepartments.contains(dept.trim())) {
-            throw new InvalidDepartmentException();
-        } else {
-            storage.getEmployeeMap().put(employeeID, new EmployeeDirector(employeeID, employeeName, grossSalary, degree, dept));
+        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        if (validateDegree(degree) && validateDepartment(dept)) {
+            storage.addEmployee(employeeID, new EmployeeDirector(employeeID, employeeName, grossSalary, degree, dept));
         }
         return "Employee " + employeeID + " was registered successfully.";
     }
 
-    public String removeEmployee(String empID) throws Exception {
-        if (storage.getEmployeeMap().containsKey(empID)) {
-            storage.getEmployeeMap().remove(empID);
-        } else {
-            throw new EmployeeNotRegisteredException(empID);
+    public String removeEmployee(String empID) throws EmployeeNotFoundException {
+        if (checkEmployeeExists(empID)) {
+            storage.removeEmployee(empID);
         }
         return "Employee " + empID + " was successfully removed.";
     }
@@ -77,17 +79,15 @@ public class EmployeeController {
     public double getTotalNetSalary() throws EmployeesNotRegisteredException {
         double totalNetSalary = 0;
 
-        if (!storage.getEmployeeMap().isEmpty()) {
+        if (checkEmployeesRegistered()) {
             for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
                 totalNetSalary += employee.getNetSalary();
             }
-        } else {
-            throw new EmployeesNotRegisteredException();
         }
         return MenuUtility.doubleTruncate(totalNetSalary, 2);
     }
 
-    public double getNetSalary(String employeeID) throws Exception {
+    public double getNetSalary(String employeeID) throws EmployeeNotFoundException {
         return storage.getEmployee(employeeID).getNetSalary();
     }
 
@@ -110,13 +110,13 @@ public class EmployeeController {
         return arrayOfEmployees;
     }
 
-    public Map<String, Integer> mapEachDegree() throws Exception {
+    public Map<String, Integer> mapEachDegree() throws EmployeesNotRegisteredException {
         Map<String, Integer> degreeMap = new HashMap<>();
 
-        if (storage.getEmployeeMap().isEmpty()) {
-            throw new EmployeesNotRegisteredException();
-        } else {
-            int BScDegrees = 0, MScDegrees = 0, PhDDegrees = 0;
+        if (checkEmployeesRegistered()) {
+            int BScDegrees = 0;
+            int MScDegrees = 0;
+            int PhDDegrees = 0;
             for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
                 if (employee instanceof EmployeeManager) {
                     switch (((EmployeeManager) employee).getDegree()) {
@@ -132,30 +132,29 @@ public class EmployeeController {
                     }
                 }
             }
-            if (BScDegrees > 0)
+            if (BScDegrees > 0) {
                 degreeMap.put("BSc", BScDegrees);
-            if (MScDegrees > 0)
+            }
+            if (MScDegrees > 0) {
                 degreeMap.put("MSc", MScDegrees);
-            if (PhDDegrees > 0)
+            }
+            if (PhDDegrees > 0) {
                 degreeMap.put("PhD", PhDDegrees);
+            }
         }
         return degreeMap;
     }
 
-    public String printSortedEmployees() throws Exception {
+    public String printSortedEmployees() throws EmployeesNotRegisteredException {
         StringBuilder sb = new StringBuilder();
 
-        if (!storage.getEmployeeMap().isEmpty()) {
-            // sb.append("All registered employees:").append(MenuUtility.EOL);
-            // Tests require not above comment but the "Employees sorted by gross salary (ascending order):"
+        if (checkEmployeesRegistered()) {
             sb.append("Employees sorted by gross salary (ascending order):").append(MenuUtility.EOL);
             EmployeeRegular[] arrayOfEmployees = getSortedEmployees();
 
             for (EmployeeRegular employee : arrayOfEmployees) {
                 sb.append(employee.toString()).append(MenuUtility.EOL);
             }
-        } else {
-            throw new EmployeesNotRegisteredException();
         }
         return sb.toString();
     }
@@ -172,11 +171,8 @@ public class EmployeeController {
     }
 
     public String updateInternGPA(String empID, int newGPA) throws Exception {
-        if (newGPA < 0 || newGPA > 10) {
-            throw new InvalidGPAException(newGPA);
-        } else if (storage.getEmployee(empID) == null) {
-            throw new EmployeeNotRegisteredException(empID);
-        } else {
+        checkEmployeeExists(empID);
+        if (validateGPA(newGPA)) {
             EmployeeIntern employeeIntern = (EmployeeIntern) storage.getEmployee(empID);
             employeeIntern.setGPA(newGPA);
         }
@@ -184,33 +180,26 @@ public class EmployeeController {
     }
 
     public String updateManagerDegree(String empID, String newDegree) throws Exception {
-        if (storage.getEmployee(empID) == null) {
-            throw new EmployeeNotRegisteredException(empID);
-        } else if (employeeDegreeList.contains(newDegree)) {
+        checkEmployeeExists(empID);
+        if (validateDegree(newDegree)) {
             EmployeeManager employeeManager = (EmployeeManager) storage.getEmployee(empID);
             employeeManager.setDegree(newDegree);
-        } else {
-            throw new InvalidDegreeException();
         }
         return "Employee " + empID + " was updated successfully";
     }
 
     public String updateDirectorDept(String empID, String newDepartment) throws Exception {
-        if (storage.getEmployee(empID) == null) {
-            throw new EmployeeNotRegisteredException(empID);
-        } else if (validDepartments.contains(newDepartment)) {
+        checkEmployeeExists(empID);
+        if (validateDepartment(newDepartment)) {
             EmployeeDirector employeeDirector = (EmployeeDirector) storage.getEmployee(empID);
             employeeDirector.setDepartment(newDepartment);
-        } else {
-            throw new InvalidDepartmentException();
         }
         return "Employee " + empID + " was updated successfully";
     }
 
     public String updateGrossSalary(String empID, double newSalary) throws Exception {
-        if (storage.getEmployee(empID) == null) {
-            throw new EmployeeNotRegisteredException(empID);
-        } else if (newSalary <= 0) {
+        checkEmployeeExists(empID);
+        if (newSalary <= 0) {
             throw new InvalidSalaryException();
         } else {
             storage.getEmployee(empID).setRawSalary(newSalary);
@@ -218,6 +207,9 @@ public class EmployeeController {
         return "Employee " + empID + " was updated successfully";
     }
 
+    /*
+     * Promotions utilize helper methods for exception handling
+     */
     public String promoteToManager(String empID, String degree) throws Exception {
         checkEmployeeExists(empID);
         validateDegree(degree);
@@ -249,25 +241,29 @@ public class EmployeeController {
         return empID + " promoted successfully to Intern.";
     }
 
-    public String printEmployee(String employeeID) throws Exception {
+    public String printEmployee(String employeeID) throws EmployeeNotFoundException {
         return storage.getEmployee(employeeID).toString();
     }
 
     public String printAllEmployees() throws Exception {
         StringBuilder sb = new StringBuilder();
-        if (!storage.getEmployeeMap().isEmpty()) {
+
+        if (checkEmployeesRegistered()) {
             sb.append("All registered employees:").append(MenuUtility.EOL);
             for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
                 sb.append(employee.toString()).append(MenuUtility.EOL);
             }
-        } else {
-            throw new EmployeesNotRegisteredException();
         }
         return sb.toString();
     }
 
-    // TODO Need to decide on a better name
-    public void produceCreationExceptionMessage(String employeeID, String employeeName, double grossSalary) throws Exception {
+    /*
+     * Performs initial validation of common employee attributes and handles throwing of exceptions
+     * Additional checks and validation for more specific employee attributes, handling exception throws this way
+     * allows for clearer code during employee creation
+     */
+    // TODO better?
+    public void validateRegularEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
         if (employeeID.trim().isEmpty()) {
             throw new InputEmptyException("ID cannot be blank.");
         } else if (employeeName.trim().isEmpty()) {
@@ -277,27 +273,38 @@ public class EmployeeController {
         }
     }
 
-    public void checkEmployeeExists(String empID) throws EmployeeNotRegisteredException {
+    public boolean checkEmployeeExists(String empID) throws EmployeeNotFoundException {
         if (storage.getEmployee(empID) == null) {
-            throw new EmployeeNotRegisteredException(empID);
+            throw new EmployeeNotFoundException(empID);
         }
+        return true;
     }
 
-    public void validateDegree(String degree) throws InvalidDegreeException {
+    public boolean checkEmployeesRegistered() throws EmployeesNotRegisteredException{
+        if (storage.getEmployeeMap().isEmpty()) {
+            throw new EmployeesNotRegisteredException();
+        }
+        return true;
+    }
+
+    public boolean validateDegree(String degree) throws InvalidDegreeException {
         if (!employeeDegreeList.contains(degree)) {
             throw new InvalidDegreeException();
         }
+        return true;
     }
 
-    public void validateDepartment(String department) throws InvalidDepartmentException {
+    public boolean validateDepartment(String department) throws InvalidDepartmentException {
         if (!validDepartments.contains(department)) {
             throw new InvalidDepartmentException();
         }
+        return true;
     }
 
-    public void validateGPA(int gpa) throws InvalidGPAException {
+    public boolean validateGPA(int gpa) throws InvalidGPAException {
         if (gpa < 0 || gpa > 10) {
             throw new InvalidGPAException(gpa);
         }
+        return true;
     }
 }

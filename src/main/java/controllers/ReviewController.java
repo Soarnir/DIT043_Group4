@@ -27,25 +27,25 @@ public class ReviewController {
      * Method handles input validation and creation of reviews,
      * giving feedback to the end user regardless of whether a review was created or not.
      */
-    public String createReview(String itemID, String reviewText, int reviewGrade) {
+    public String createReview(String itemID, String reviewComment, int reviewGrade) {
         String returnString;
         if (!storage.checkForUsedID(itemID)) {
             returnString = "Item " + itemID + " was not registered yet.";
         } else if (reviewGrade < LOWEST_REVIEWED_GRADE || reviewGrade > HIGHEST_REVIEWED_GRADE) {
             returnString = "Grade values must be between 1 and 5.";
-        } else if (reviewText.isEmpty()) {
+        } else if (reviewComment.isEmpty()) {
             getReviewList(itemID).add(new Review(reviewGrade));
             storage.getItem(itemID).increaseNumOfReviews();
             returnString = "Your item review was registered successfully."; // So it doesn't count as comment
         } else {
-            getReviewList(itemID).add(new Review(reviewText, reviewGrade));
+            getReviewList(itemID).add(new Review(reviewComment, reviewGrade));
             storage.getItem(itemID).increaseNumOfReviews();
             returnString = "Your item review was registered successfully.";
         }
         return returnString;
     }
 
-    // Method handles review creation in the case that the end user does not have a comment.
+    // Handles review creation in the case that the end user does not have a comment.
     public String createReview(String itemID, int reviewGrade) {
         return createReview(itemID, "", reviewGrade);
     }
@@ -58,8 +58,8 @@ public class ReviewController {
     public List<String> getItemComments(String itemID) {
         List<String> itemComments = new ArrayList<>();
         for (Review review : getReviewList(itemID)) {
-            if (review.getReviewText() != null) {
-                itemComments.add(review.getReviewText());
+            if (review.getReviewComment() != null) {
+                itemComments.add(review.getReviewComment());
             }
         }
         return itemComments;
@@ -109,7 +109,7 @@ public class ReviewController {
     public List<String> getReviewedItemsBasedOnGrade(boolean bestReviewed) {
         List<String> reviewedItems = new ArrayList<>();
 
-        //Loops through all registered item IDs.
+        // Loops through all registered item IDs.
         for (String itemID : storage.getItemMap().keySet()) {
             if (getItemMeanGrade(itemID) > 0) {
                 // The first item with a mean grade > 0 is added to the list to have a starting point to compare.
@@ -174,7 +174,7 @@ public class ReviewController {
 
                     /*
                      * The conditionals below are very similar to those in getReviewedItemsBasedOnGrade but since
-                     * these methods were already abstractions, add another abstraction for the abstractions would
+                     * these methods were already abstractions, adding another abstraction for the abstractions would
                      * simply result in over-complex code and reduce readability significantly.
                      *
                      * If numOfReviewsOfCurrentItem == numOfReviewsOfStoredItem, the itemID is always added regardless
@@ -229,10 +229,10 @@ public class ReviewController {
              * review indices start from 1 (according to specs) but Java arrayList indices start from 0.
              */
             Review review = getReview(itemID, (reviewIndex - LOWEST_REVIEW_INDEX));
-            if (review.getReviewText() == null) {
+            if (review.getReviewComment() == null) {
                 returnString = "Grade: " + review.getReviewGrade() + ".";
             } else {
-                returnString = "Grade: " + review.getReviewGrade() + "." + review.getReviewText();
+                returnString = "Grade: " + review.getReviewGrade() + "." + review.getReviewComment();
             }
         }
         return returnString;
@@ -269,7 +269,6 @@ public class ReviewController {
         StringBuilder sb = new StringBuilder();
         if (storage.getItemMap().isEmpty()) {
             sb.append("No items registered yet.");
-            // Change to use a method to loop true itemMap and check for reviews.
         } else if (!hasAReviewBeenRegistered()) {
             sb.append("No items were reviewed yet.");
         } else {

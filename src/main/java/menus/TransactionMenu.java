@@ -4,7 +4,7 @@ import facade.Facade;
 import utility.Input;
 import utility.MenuUtility;
 
-public class TransactionHistoryMenu {
+public class TransactionMenu {
 
     private final Facade facade;
 
@@ -12,11 +12,11 @@ public class TransactionHistoryMenu {
      * Constructor for TransactionHistoryMenu
      * Requires Facade passed through
      */
-    public TransactionHistoryMenu(Facade facade) {
+    public TransactionMenu(Facade facade) {
         this.facade = facade;
     }
 
-    //Menu options
+    // Transactions Menu options
     private static final int EXIT = 0;
     private static final int PRINT_ALL_TOTAL_PROFIT = 1;
     private static final int PRINT_ALL_UNITS_SOLD = 2;
@@ -27,7 +27,7 @@ public class TransactionHistoryMenu {
     private static final int PRINT_ITEM_TRANSACTIONS = 7;
     private static final int PRINT_ITEM_HIGHEST_PROFIT = 8;
 
-    //Menu text
+    // Transactions Menu text
     private static final String TRANSACTION_MENU_OPTIONS =
         "Transaction History options menu:" + MenuUtility.EOL +
         "0. Return to Main Menu." + MenuUtility.EOL +

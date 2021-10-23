@@ -11,7 +11,7 @@ public class Item {
     private final String ITEM_ID;
     private String itemName;
     private double itemPrice;
-    private List<Review> reviewList;
+    private final List<Review> reviewList;
     private int numOfReviews;
 
     public Item(String ITEM_ID, String itemName, double itemPrice) {
@@ -37,10 +37,6 @@ public class Item {
 
     public int getNumOfReviews() {
         return numOfReviews;
-    }
-
-    public void setReviewList(List<Review> reviewList) {
-        this.reviewList = reviewList;
     }
 
     public void updateItemName(String newName) {
