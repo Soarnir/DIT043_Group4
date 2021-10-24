@@ -52,12 +52,12 @@ public class Storage {
         return usedItemIDs.contains(itemID);
     }
 
+    /*
+     * This check is needed by controllers but implementing the method in storage allows the controllers to
+     * have the desired functionality (of receiving a boolean value) without accessing the item map itself.
+     */
     public boolean isItemMapEmpty(){
-        if (getItemMap().isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return itemMap.isEmpty();
     }
 
     /*-------------------------------------- Transactions ---------------------------------------*/
@@ -69,12 +69,12 @@ public class Storage {
         return transactionMap;
     }
 
+    /*
+     * This check is needed by transaction controller but implementing the method in storage allows it to
+     * have the desired functionality (of receiving a boolean value) without accessing the transaction map itself.
+     */
     public boolean isTransactionMapEmpty(){
-        if (getTransactionMap().isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return transactionMap.isEmpty();
     }
     /*---------------------------------------- Employees ----------------------------------------*/
     public LinkedHashMap<String, EmployeeRegular> getEmployeeMap() {

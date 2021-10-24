@@ -57,10 +57,12 @@ public class EmployeeMenu {
             double grossSalary;
             int gpa;
 
-            if (shouldPrintMenu)
+            if (shouldPrintMenu) {
                 System.out.print(EMPLOYEE_MENU_OPTIONS);
+            }
             chosenMenuOption = Input.readInt();
             shouldPrintMenu = true;
+
             switch (chosenMenuOption) {
                 case EXIT:
                     break;
