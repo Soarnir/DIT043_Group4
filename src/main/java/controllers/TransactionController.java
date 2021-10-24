@@ -168,9 +168,9 @@ public class TransactionController {
     public String printMostProfitableItems() {
         StringBuilder sb = new StringBuilder();
 
-        if (storage.getItemMap().isEmpty()) {
+        if (storage.isItemMapEmpty()) {
             sb.append("No items registered yet.");
-        } else if (storage.getTransactionMap().isEmpty()) {
+        } else if (storage.isTransactionMapEmpty()) {
             sb.append("No items were bought yet.");
         } else {
             sb.append("Most profitable items: ").append(MenuUtility.EOL);

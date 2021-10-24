@@ -52,6 +52,14 @@ public class Storage {
         return usedItemIDs.contains(itemID);
     }
 
+    public boolean isItemMapEmpty(){
+        if (getItemMap().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /*-------------------------------------- Transactions ---------------------------------------*/
     public List<Transaction> getItemTransactionList(String itemID) {
         return transactionMap.get(itemID);
@@ -61,6 +69,13 @@ public class Storage {
         return transactionMap;
     }
 
+    public boolean isTransactionMapEmpty(){
+        if (getTransactionMap().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /*---------------------------------------- Employees ----------------------------------------*/
     public LinkedHashMap<String, EmployeeRegular> getEmployeeMap() {
         return employeeMap;

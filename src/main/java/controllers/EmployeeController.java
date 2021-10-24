@@ -91,18 +91,45 @@ public class EmployeeController {
         return storage.getEmployee(employeeID).getNetSalary();
     }
 
+    /*
+     * The method implements a selection sort to sort the employees in ascending order based on grossSalary.
+     * It is not the most efficient algortihm (with a time complexity of O(n^2) where n is the size of arrayOfEmployees),
+     * but we find this to be a very readable sorting algorithm.
+     * Since the input size is never that large, we chose to prioritise readability over pure efficiency.
+     * To further enhance readability, the details of the algorithm have been explained in comments within the method.
+     */
     public EmployeeRegular[] getSortedEmployees() {
-        // https://stackoverflow.com/questions/1090556/java-how-to-convert-hashmapstring-object-to-array
+        /*
+         * This line of code stores the values of the employee map in storage as an array.
+         * Source: https://stackoverflow.com/questions/1090556/java-how-to-convert-hashmapstring-object-to-array
+         */
         EmployeeRegular[] arrayOfEmployees = storage.getEmployeeMap().values().toArray(new EmployeeRegular[0]);
 
+        // The indices of the employees stored in arrayOfEmployees are looped.
         for (int i = 0; i < arrayOfEmployees.length - 1; i++) {
+            // As the selection sort requires one element to be chosen first, we simply chose the first element as our starting point
+            /*
+             * As a selection sort requires one element to be chosen first,
+             * we simply chose the first element as our starting point.
+             */
             int indexOfLowestSalary = i;
 
+            // Starting from the element after i (hence j = i+1), the rest of the remaining indices are looped through.
             for (int j = i + 1; j < arrayOfEmployees.length; j++) {
+                /*
+                 * It compares whether the gross salary of the current employee (within the inner loop)
+                 * is lesser than the gross salary of the employee at the index specified in indexOfLowestSalary.
+                 */
                 if (arrayOfEmployees[j].getGrossSalary() < arrayOfEmployees[indexOfLowestSalary].getGrossSalary()) {
                     indexOfLowestSalary = j;
                 }
             }
+            /*
+             * The following three lines of code simply swap the values stored in
+             * arrayOfEmployees[indexOfLowestSalary] and arrayOfEmployees[i].
+             * initialEmployeeWithLowestSalary is used to temporarily store the value of
+             * arrayOfEmployees[indexOfLowestSalary] to facilitate this swapping mechanism.
+             */
             EmployeeRegular initialEmployeeWithLowestSalary = arrayOfEmployees[indexOfLowestSalary];
             arrayOfEmployees[indexOfLowestSalary] = arrayOfEmployees[i];
             arrayOfEmployees[i] = initialEmployeeWithLowestSalary;
@@ -145,9 +172,14 @@ public class EmployeeController {
         return degreeMap;
     }
 
+    /*
+     * Using the selection sort implemented by getSortedEmployees,
+     * the method prints out the employees sorted in ascending order, based on the gross salary attribute.
+     */
     public String printSortedEmployees() throws EmployeesNotRegisteredException {
         StringBuilder sb = new StringBuilder();
 
+        // TODO can checkEmployeesRegistered be used like this?
         if (checkEmployeesRegistered()) {
             sb.append("Employees sorted by gross salary (ascending order):").append(MenuUtility.EOL);
             EmployeeRegular[] arrayOfEmployees = getSortedEmployees();
@@ -280,6 +312,7 @@ public class EmployeeController {
         return true;
     }
 
+    // TODO should this be moved to storage for better encapsulation?
     public boolean checkEmployeesRegistered() throws EmployeesNotRegisteredException{
         if (storage.getEmployeeMap().isEmpty()) {
             throw new EmployeesNotRegisteredException();

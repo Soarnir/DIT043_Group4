@@ -43,7 +43,6 @@ public class ItemController {
         return returnString;
     }
 
-    // TODO It might be possible to combine the two updateItem methods.
     // Method allows the user to update the name of an existing item.
     public String updateItem(String itemID, String newName) {
         String returnString;
@@ -86,7 +85,7 @@ public class ItemController {
     // Method prints all currently registered item IDs with their corresponding names and prices.
     public String printAllItems() {
         StringBuilder sb = new StringBuilder();
-        if (storage.getItemMap().isEmpty()) {
+        if (storage.isItemMapEmpty()) {
             sb.append("No items registered yet.");
         } else {
             sb.append("All registered items:").append(MenuUtility.EOL);

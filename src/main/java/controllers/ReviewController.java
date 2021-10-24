@@ -45,7 +45,7 @@ public class ReviewController {
         return returnString;
     }
 
-    // Handles review creation in the case that the end user does not have a comment.
+    // Method handles review creation in the case that the end user does not have a comment.
     public String createReview(String itemID, int reviewGrade) {
         return createReview(itemID, "", reviewGrade);
     }
@@ -54,7 +54,7 @@ public class ReviewController {
         return storage.getItem(itemID).getReviewList();
     }
 
-    // Returns an ArrayList of comments submitted by users regarding a specific item.
+    // Method returns an ArrayList of comments submitted by users regarding a specific item.
     public List<String> getItemComments(String itemID) {
         List<String> itemComments = new ArrayList<>();
         for (Review review : getReviewList(itemID)) {
@@ -66,7 +66,7 @@ public class ReviewController {
     }
 
     // TODO The implementation of this isn't clear in Specs (Not needed to pass tests either) -K
-    // Prints the comments submitted by users regarding a specific item.
+    // Method prints the comments submitted by users regarding a specific item.
     public String getItemCommentsPrinted(String itemID) {
         List<String> itemComments = getItemComments(itemID);
         StringBuilder sb = new StringBuilder();
@@ -96,7 +96,7 @@ public class ReviewController {
     }
 
     public Review getReview(String itemID, int reviewIndex) {
-        return storage.getItem(itemID).getReviewList().get(reviewIndex);
+        return getReviewList(itemID).get(reviewIndex);
     }
 
     /*
@@ -155,7 +155,12 @@ public class ReviewController {
         return getReviewedItemsBasedOnGrade(false);
     }
 
-    // TODO Need to consider renaming variables -K
+    /*
+     * The method below is an abstraction of the getMostReviewedItems and getLeastReviewedItems methods.
+     * It's called by getMostReviewedItems & getLeastReviewedItems and the boolean mostReviewed allows for distinguition.
+     * This decision to abstract the method was made to increase reusability and reduce repetition.
+     * To help maintain readability, comments have been added throughout the method to explain certain sections.
+     */
     public List<String> getReviewedItems(boolean mostReviewed) {
         List<String> reviewedItems = new ArrayList<>();
 
@@ -166,8 +171,8 @@ public class ReviewController {
                 if (reviewedItems.isEmpty()) {
                     reviewedItems.add(itemID);
                 } else {
-                    String itemInReviewedItems = reviewedItems.get(0);
-                    int numOfReviewsOfStoredItem = storage.getItem(itemInReviewedItems).getNumOfReviews();
+                    String itemIDInReviewedItems = reviewedItems.get(0);
+                    int numOfReviewsOfStoredItem = getNumberOfReviews(itemIDInReviewedItems);
                     // TODO do I need to mention itemID in the below comment since itemID is technically being looped? -K
                     // numOfReviewsOfCurrentItem refers to the number of reviews of the item in the current loop iteration.
                     int numOfReviewsOfCurrentItem = getNumberOfReviews(itemID);
@@ -245,6 +250,7 @@ public class ReviewController {
     public String printAllItemReviews(String itemID) {
         StringBuilder sb = new StringBuilder();
         Item item;
+
         if (!storage.checkForUsedID(itemID)) {
             sb.append("Item ").append(itemID).append(" was not registered yet.");
         } else {
@@ -267,17 +273,20 @@ public class ReviewController {
      */
     public String printAllReviews() {
         StringBuilder sb = new StringBuilder();
-        if (storage.getItemMap().isEmpty()) {
+
+        if (storage.isItemMapEmpty()) {
             sb.append("No items registered yet.");
         } else if (!hasAReviewBeenRegistered()) {
             sb.append("No items were reviewed yet.");
         } else {
             sb.append("All registered reviews:").append(MenuUtility.EOL);
             sb.append("------------------------------------").append(MenuUtility.EOL);
+            // Loops through all registered items.
             for (Item item : storage.getItemMap().values()) {
                 if (item.getNumOfReviews() > 0) {
-                    // Repetition with printAllItemReviews method, need to make it more modular.
+                    // TODO should it be .append(item.toString()) or I could also loop through itemID instead.
                     sb.append("Review(s) for ").append(item).append(MenuUtility.EOL);
+                    // Loops through all reviews of the current item that is being iterated over.
                     for (Review review : getReviewList(item.getItemID())) {
                         sb.append(review.toString()).append(MenuUtility.EOL);
                     }
@@ -288,29 +297,45 @@ public class ReviewController {
         return sb.toString();
     }
 
+    /*
+     * The method below is an abstraction of the printMostReviewedItems and printLeastReviewedItems methods.
+     * It's called by printMostReviewedItems & printLeastReviewedItems and the boolean mostReviewed allows for distinguition.
+     * This decision to abstract the method was made to increase reusability and reduce repetition.
+     * To help maintain readability, comments have been added throughout the method to explain certain sections.
+     */
     public String printReviewedItems(boolean mostReviewed) {
         StringBuilder sb = new StringBuilder();
-        if (storage.getItemMap().isEmpty()) {
+        if (storage.isItemMapEmpty()) {
             sb.append("No items registered yet.");
         } else if (!hasAReviewBeenRegistered()) {
             sb.append("No items were reviewed yet.");
         } else {
+            // The body of the if-statement is only run when the printMostReviewedItems method is called.
             if(mostReviewed) {
                 List<String> highestReviewedItems = getMostReviewedItems();
-                String tempItemID = highestReviewedItems.get(0);
-                sb.append("Most reviews: ").append(storage.getItem(tempItemID).getNumOfReviews()).append(" review(s) each.");
+                /*
+                 * Since the number of reviews is the same for all items (linked to the corresponding itemIDs)
+                 * in highestReviewedItems, the first itemID is stored so the number of reviews can be calculated.
+                 * We chose to include a variable to increase readability;
+                 * as otherwise, a method would be called inside another method.
+                 */
+                String firstItemID = highestReviewedItems.get(0);
+                sb.append("Most reviews: ").append(getNumberOfReviews(firstItemID)).append(" review(s) each.");
                 sb.append(MenuUtility.EOL);
                 for (String itemID : highestReviewedItems) {
-                    //
                     sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
                 }
+            // The body of the else-statement is only run when the printLeastReviewedItems method is called.
             } else {
                 List<String> lowestReviewedItems = getLeastReviewedItems();
-                String tempItemID = lowestReviewedItems.get(0);
-                sb.append("Least reviews: ").append(storage.getItem(tempItemID).getNumOfReviews()).append(" review(s) each.");
+                /*
+                 * Since the number of reviews is the same for all items (linked to the corresponding itemIDs)
+                 * in lowestReviewedItems, the first itemID is stored so the number of reviews can be calculated.
+                 */
+                String firsItemID = lowestReviewedItems.get(0);
+                sb.append("Least reviews: ").append(getNumberOfReviews(firsItemID)).append(" review(s) each.");
                 sb.append(MenuUtility.EOL);
                 for (String itemID : lowestReviewedItems) {
-                    //
                     sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
                 }
             }
@@ -326,30 +351,45 @@ public class ReviewController {
         return printReviewedItems(false);
     }
 
+    /*
+     * The method below is an abstraction of the printBestReviewedItems and printWorseReviewedItems methods.
+     * It's called by printBestReviewedItems & printWorseReviewedItems
+     * and the boolean mostReviewed allows for distinguition.
+     */
     public String printReviewedItemsBasedOnGrade(boolean bestReviewed) {
         StringBuilder sb = new StringBuilder();
 
-        if (storage.getItemMap().isEmpty()) {
+        if (storage.isItemMapEmpty()) {
             sb.append("No items registered yet.");
         } else if (!hasAReviewBeenRegistered()) {
             sb.append("No items were reviewed yet.");
         } else {
+            // Body of if-statement is executed only if printBestReviewedItems is called.
             if (bestReviewed) {
                 List<String> bestReviewedItems = getBestReviewedItems();
-                String tempItemID = bestReviewedItems.get(0);
+                /*
+                 * Since all the mean grades are the same for the items (corresponding to their item IDs)
+                 * in bestReviewedItems, the first one is stored and then used to print the mean grade.
+                 */
+                String firstItemID = bestReviewedItems.get(0);
+
                 sb.append("Items with best mean reviews:").append(MenuUtility.EOL);
-                sb.append("Grade: ").append(getItemMeanGrade(tempItemID)).append(MenuUtility.EOL);
+                sb.append("Grade: ").append(getItemMeanGrade(firstItemID)).append(MenuUtility.EOL);
                 for (String itemID : bestReviewedItems) {
-                    //
                     sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
                 }
+            // Body of else-statement is executed only if printWorseReviewedItems is called.
             } else {
                 List<String> worstReviewedItems = getWorseReviewedItems();
-                String tempItemID = worstReviewedItems.get(0);
+                /*
+                 * Since all the mean grades are the same for the items (corresponding to their item IDs)
+                 * in worstReviewedItems, the first one is stored and then used to print the mean grade.
+                 */
+                String firstItemID = worstReviewedItems.get(0);
+
                 sb.append("Items with worst mean reviews:").append(MenuUtility.EOL);
-                sb.append("Grade: ").append(getItemMeanGrade(tempItemID)).append(MenuUtility.EOL);
+                sb.append("Grade: ").append(getItemMeanGrade(firstItemID)).append(MenuUtility.EOL);
                 for (String itemID : worstReviewedItems) {
-                    //
                     sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
                 }
             }
@@ -366,6 +406,11 @@ public class ReviewController {
         return printReviewedItemsBasedOnGrade(false);
     }
 
+    /*
+     * A number of methods above need to handle the case where items are registered but no reviews are registered.
+     * To avoid repetition, a helper method was created to implement this required functionality.
+     */
+    // TODO Should this be moved to storage?
     public boolean hasAReviewBeenRegistered() {
         boolean aReviewHasBeenRegistered = false;
         for(Item item : storage.getItemMap().values()) {
