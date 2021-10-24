@@ -9,7 +9,7 @@ public class TransactionMenu {
     private final Facade facade;
 
     /*
-     * Constructor for TransactionHistoryMenu
+     * Constructor for TransactionMenu
      * Requires Facade passed through
      */
     public TransactionMenu(Facade facade) {

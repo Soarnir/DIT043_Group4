@@ -10,7 +10,7 @@ public class ItemMenu {
     private final Facade facade;
 
     /*
-     * Constructor for ItemOptionsMenu
+     * Constructor for ItemMenu
      * Requires Facade passed through
      */
     public ItemMenu(Facade facade) {

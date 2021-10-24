@@ -9,7 +9,7 @@ public class ReviewMenu {
     private final Facade facade;
 
     /*
-     * Constructor for ReviewOptionsMenu
+     * Constructor for ReviewMenu
      * Requires Facade passed through
      */
     public ReviewMenu(Facade facade) {

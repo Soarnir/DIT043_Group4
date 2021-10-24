@@ -10,6 +10,10 @@ import java.util.List;
 
 public class ReviewController {
 
+    /*
+     * Although the storage attribute is declared as final,
+     * we decided to not use uppercase as it is a reference to an object.
+     */
     private final Storage storage;
     private static final int LOWEST_REVIEWED_GRADE = 1;
     private static final int HIGHEST_REVIEWED_GRADE = 5;
@@ -65,7 +69,6 @@ public class ReviewController {
         return itemComments;
     }
 
-    // TODO The implementation of this isn't clear in Specs (Not needed to pass tests either) -K
     // Method prints the comments submitted by users regarding a specific item.
     public String getItemCommentsPrinted(String itemID) {
         List<String> itemComments = getItemComments(itemID);
@@ -118,7 +121,6 @@ public class ReviewController {
                 } else {
                     String itemInReviewedItems = reviewedItems.get(0);
                     double storedItemMeanGrade = getItemMeanGrade(itemInReviewedItems);
-                    // TODO do I need to mention itemID in the below comment since itemID is technically being looped? -K
                     // Current item refers to the item that is being considered in the current loop iteration.
                     double currentItemMeanGrade = getItemMeanGrade(itemID);
 
@@ -173,7 +175,6 @@ public class ReviewController {
                 } else {
                     String itemIDInReviewedItems = reviewedItems.get(0);
                     int numOfReviewsOfStoredItem = getNumberOfReviews(itemIDInReviewedItems);
-                    // TODO do I need to mention itemID in the below comment since itemID is technically being looped? -K
                     // numOfReviewsOfCurrentItem refers to the number of reviews of the item in the current loop iteration.
                     int numOfReviewsOfCurrentItem = getNumberOfReviews(itemID);
 
@@ -255,12 +256,12 @@ public class ReviewController {
             sb.append("Item ").append(itemID).append(" was not registered yet.");
         } else {
             item = storage.getItem(itemID);
-            sb.append("Review(s) for ").append(item.toString()).append(MenuUtility.EOL);
+            sb.append("Review(s) for ").append(item).append(MenuUtility.EOL);
             if (getReviewList(itemID).size() == 0) {
                 sb.append("The item ").append(item.getItemName()).append(" has not been reviewed yet.");
             } else {
                 for (Review review : getReviewList(itemID)) {
-                    sb.append(review.toString()).append(MenuUtility.EOL);
+                    sb.append(review).append(MenuUtility.EOL);
                 }
             }
         }
@@ -284,11 +285,10 @@ public class ReviewController {
             // Loops through all registered items.
             for (Item item : storage.getItemMap().values()) {
                 if (item.getNumOfReviews() > 0) {
-                    // TODO should it be .append(item.toString()) or I could also loop through itemID instead.
                     sb.append("Review(s) for ").append(item).append(MenuUtility.EOL);
                     // Loops through all reviews of the current item that is being iterated over.
                     for (Review review : getReviewList(item.getItemID())) {
-                        sb.append(review.toString()).append(MenuUtility.EOL);
+                        sb.append(review).append(MenuUtility.EOL);
                     }
                     sb.append("------------------------------------").append(MenuUtility.EOL);
                 }
@@ -323,7 +323,7 @@ public class ReviewController {
                 sb.append("Most reviews: ").append(getNumberOfReviews(firstItemID)).append(" review(s) each.");
                 sb.append(MenuUtility.EOL);
                 for (String itemID : highestReviewedItems) {
-                    sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
+                    sb.append(storage.getItem(itemID)).append(MenuUtility.EOL);
                 }
             // The body of the else-statement is only run when the printLeastReviewedItems method is called.
             } else {
@@ -336,7 +336,7 @@ public class ReviewController {
                 sb.append("Least reviews: ").append(getNumberOfReviews(firsItemID)).append(" review(s) each.");
                 sb.append(MenuUtility.EOL);
                 for (String itemID : lowestReviewedItems) {
-                    sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
+                    sb.append(storage.getItem(itemID)).append(MenuUtility.EOL);
                 }
             }
         }
@@ -376,7 +376,7 @@ public class ReviewController {
                 sb.append("Items with best mean reviews:").append(MenuUtility.EOL);
                 sb.append("Grade: ").append(getItemMeanGrade(firstItemID)).append(MenuUtility.EOL);
                 for (String itemID : bestReviewedItems) {
-                    sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
+                    sb.append(storage.getItem(itemID)).append(MenuUtility.EOL);
                 }
             // Body of else-statement is executed only if printWorseReviewedItems is called.
             } else {
@@ -390,7 +390,7 @@ public class ReviewController {
                 sb.append("Items with worst mean reviews:").append(MenuUtility.EOL);
                 sb.append("Grade: ").append(getItemMeanGrade(firstItemID)).append(MenuUtility.EOL);
                 for (String itemID : worstReviewedItems) {
-                    sb.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
+                    sb.append(storage.getItem(itemID)).append(MenuUtility.EOL);
                 }
             }
         }
@@ -410,7 +410,6 @@ public class ReviewController {
      * A number of methods above need to handle the case where items are registered but no reviews are registered.
      * To avoid repetition, a helper method was created to implement this required functionality.
      */
-    // TODO Should this be moved to storage?
     public boolean hasAReviewBeenRegistered() {
         boolean aReviewHasBeenRegistered = false;
         for(Item item : storage.getItemMap().values()) {

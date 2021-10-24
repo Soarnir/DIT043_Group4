@@ -14,12 +14,13 @@ public class TransactionController {
 
     /*
      * The controller constructor passes through the same Storage reference from the Facade
-     * to be used by the controllers' methods
+     * to be used by the controller's methods
      */
     public TransactionController(Storage storage) {
         this.storage = storage;
     }
 
+    // Method returns an empty arraylist if none is found mapped to the Item.
     public List<Transaction> getTransactionList(String itemID) {
         List<Transaction> transactionList = new ArrayList<>();
 
@@ -74,7 +75,7 @@ public class TransactionController {
         List<Transaction> transactions = getTransactionList(itemID);
 
         if (transactions != null && !transactions.isEmpty()) {
-            for (Transaction transaction : getTransactionList(itemID)) {
+            for (Transaction transaction : transactions) {
                 unitsSold += transaction.getAmount();
             }
         }
@@ -86,7 +87,7 @@ public class TransactionController {
         List<Transaction> itemTransactions = getTransactionList(itemID);
 
         for (Transaction transaction : itemTransactions) {
-            sb.append(transaction.toString()).append(MenuUtility.EOL);
+            sb.append(transaction).append(MenuUtility.EOL);
         }
         return sb.toString();
     }
@@ -94,6 +95,10 @@ public class TransactionController {
     public List<String> getMostProfitableItems() {
         List<String> mostProfitable = new ArrayList<>();
 
+        /*
+         * Iterates over all transactions and compares total item profits until the entire list has been checked
+         * after which it returns a list of the most profitable item(s).
+         */
         for (String itemID : storage.getTransactionMap().keySet()) {
             if (mostProfitable.isEmpty()) {
                 mostProfitable.add(itemID);
@@ -113,19 +118,22 @@ public class TransactionController {
         return mostProfitable;
     }
 
+    /*
+     * Buying an item creates a Transaction object, an immutable object which is an abstraction of the purchase event,
+     * which stores the items ID, the total cost, and the amount purchased.
+     */
     public double buyItem(String itemID, int amount) {
-        double returnDouble;
+        double returnDouble = -1;
 
         if (storage.checkForUsedID(itemID)) {
             Transaction transaction = new Transaction(storage.getItem(itemID), amount);
             getTransactionList(itemID).add(transaction);
             returnDouble = MenuUtility.doubleTruncate(transaction.getTransactionCost(), 2);
-        } else {
-            returnDouble = -1.0;
         }
         return returnDouble;
     }
 
+    // Method prints all transactions that have been made, detailing item ID, name and purchase price.
     public String printAllTransactions() {
         StringBuilder sb = new StringBuilder("All purchases made: " + MenuUtility.EOL);
 
@@ -136,11 +144,12 @@ public class TransactionController {
         sb.append("Total purchases made: ").append(getTotalTransactions()).append(" transactions").append(MenuUtility.EOL);
         sb.append("------------------------------------").append(MenuUtility.EOL);
 
+        // Iterates over all items and prints all transactions if they exist for each item.
         for (String itemID : storage.getUsedItemIDs()) {
             List<Transaction> transactions = getTransactionList(itemID);
             if (transactions != null && !transactions.isEmpty()) {
                 for (Transaction transaction : transactions) {
-                    sb.append(transaction.toString()).append(MenuUtility.EOL);
+                    sb.append(transaction).append(MenuUtility.EOL);
                 }
             }
         }
@@ -148,12 +157,13 @@ public class TransactionController {
         return sb.toString();
     }
 
+    // Method prints all transactions for individual items.
     public String printItemTransactions(String itemID) {
         StringBuilder sb = new StringBuilder();
 
         if (storage.checkForUsedID(itemID)) {
             Item item = storage.getItem(itemID);
-            sb.append("Transactions for item: ").append(item.toString()).append(MenuUtility.EOL);
+            sb.append("Transactions for item: ").append(item).append(MenuUtility.EOL);
             if (!getTransactionList(itemID).isEmpty()) {
                 sb.append(getItemTransactions(item.getItemID()));
             } else {
@@ -165,6 +175,7 @@ public class TransactionController {
         return sb.toString();
     }
 
+    // Method prints the most profitable items, using the list acquired from getMostProfitableItems().
     public String printMostProfitableItems() {
         StringBuilder sb = new StringBuilder();
 
@@ -178,7 +189,7 @@ public class TransactionController {
             StringBuilder items = new StringBuilder();
             for (String itemID : getMostProfitableItems()) {
                 totalProfit += getProfit(itemID);
-                items.append(storage.getItem(itemID).toString()).append(MenuUtility.EOL);
+                items.append(storage.getItem(itemID)).append(MenuUtility.EOL);
             }
             sb.append("Total profit: ").append(MenuUtility.doubleFormat(totalProfit)).append(" SEK").append(MenuUtility.EOL);
             sb.append(items);

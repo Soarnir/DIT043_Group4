@@ -5,16 +5,16 @@ public enum EmployeeDegree {
     MSc(0.2),
     PhD(0.35);
 
-    private final double salaryBonus;
+    private final double SALARY_BONUS;
 
     /*
      * Enum implemented to maintain updated collection of valid Employee degrees and relevant bonuses
      */
     EmployeeDegree(double salaryBonus) {
-        this.salaryBonus = salaryBonus;
+        this.SALARY_BONUS = salaryBonus;
     }
 
     public double getSalaryBonus() {
-        return salaryBonus;
+        return SALARY_BONUS;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Storage {
 
-    // Final attributes not capitalized as they are collections
+    // These final attributes are not capitalized as they are collections.
     private final List<String> usedItemIDs;
 
     private final LinkedHashMap<String, EmployeeRegular> employeeMap;
@@ -26,6 +26,7 @@ public class Storage {
         itemMap = new LinkedHashMap<>();
         transactionMap = new LinkedHashMap<>();
     }
+
     /*------------------------------------------ Items ------------------------------------------*/
     public LinkedHashMap<String, Item> getItemMap() {
         return itemMap;
@@ -76,6 +77,7 @@ public class Storage {
     public boolean isTransactionMapEmpty(){
         return transactionMap.isEmpty();
     }
+
     /*---------------------------------------- Employees ----------------------------------------*/
     public LinkedHashMap<String, EmployeeRegular> getEmployeeMap() {
         return employeeMap;
@@ -83,6 +85,7 @@ public class Storage {
 
     public EmployeeRegular getEmployee(String employeeID) throws EmployeeNotFoundException {
         EmployeeRegular employeeRegular;
+
         if (getEmployeeMap().containsKey(employeeID)) {
             employeeRegular = getEmployeeMap().get(employeeID);
         } else {

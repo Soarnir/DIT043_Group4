@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 public class ItemController {
 
+    /*
+     * Although the storage attribute is declared as final,
+     * we decided to not use uppercase as it is a reference to an object.
+     */
     private final Storage storage;
 
     /*
@@ -90,7 +94,7 @@ public class ItemController {
         } else {
             sb.append("All registered items:").append(MenuUtility.EOL);
             for (Item item : storage.getItemMap().values()) {
-                sb.append(item.toString()).append(MenuUtility.EOL);
+                sb.append(item).append(MenuUtility.EOL);
             }
         }
         return sb.toString();

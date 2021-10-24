@@ -9,14 +9,18 @@ import java.util.*;
 
 public class EmployeeController {
 
-    // Final attributes not capitalized as they are collections
+    /*
+     * Although the storage attribute is declared as final,
+     * we decided to not use uppercase as it is a reference to an object.
+     * The other final attributes are also not capitalized as they are collections.
+     */
     private final Storage storage;
     private final List<String> employeeDegreeList;
     private final List<String> validDepartments;
 
     /*
      * The controller constructor passes through the same Storage reference from the Facade
-     * to be used by the controllers' methods.
+     * to be used by the controller's methods.
      */
     public EmployeeController(Storage storage) {
         this.storage = storage;
@@ -40,13 +44,13 @@ public class EmployeeController {
      * and improve readability, keeping the overall controller DRY.
      */
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
-        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        validateRegularEmployeeAttributes(employeeID, employeeName, grossSalary);
         storage.addEmployee(employeeID, new EmployeeRegular(employeeID, employeeName, grossSalary));
         return "Employee " + employeeID + " was registered successfully.";
     }
 
     public String createManagerEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
-        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        validateRegularEmployeeAttributes(employeeID, employeeName, grossSalary);
         if (validateDegree(degree)) {
             storage.addEmployee(employeeID, new EmployeeManager(employeeID, employeeName, grossSalary, degree));
         }
@@ -54,7 +58,7 @@ public class EmployeeController {
     }
 
     public String createInternEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
-        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        validateRegularEmployeeAttributes(employeeID, employeeName, grossSalary);
         if (validateGPA(gpa)) {
             storage.addEmployee(employeeID, new EmployeeIntern(employeeID, employeeName, grossSalary, gpa));
         }
@@ -62,7 +66,7 @@ public class EmployeeController {
     }
 
     public String createDirectorEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
-        validateRegularEmployee(employeeID, employeeName, grossSalary);
+        validateRegularEmployeeAttributes(employeeID, employeeName, grossSalary);
         if (validateDegree(degree) && validateDepartment(dept)) {
             storage.addEmployee(employeeID, new EmployeeDirector(employeeID, employeeName, grossSalary, degree, dept));
         }
@@ -76,6 +80,7 @@ public class EmployeeController {
         return "Employee " + empID + " was successfully removed.";
     }
 
+    // Method returns the total net salary of all employees.
     public double getTotalNetSalary() throws EmployeesNotRegisteredException {
         double totalNetSalary = 0;
 
@@ -93,7 +98,7 @@ public class EmployeeController {
 
     /*
      * The method implements a selection sort to sort the employees in ascending order based on grossSalary.
-     * It is not the most efficient algortihm (with a time complexity of O(n^2) where n is the size of arrayOfEmployees),
+     * It is not the most efficient algorithm (with a time complexity of O(n^2) where n is the size of arrayOfEmployees),
      * but we find this to be a very readable sorting algorithm.
      * Since the input size is never that large, we chose to prioritise readability over pure efficiency.
      * To further enhance readability, the details of the algorithm have been explained in comments within the method.
@@ -137,6 +142,11 @@ public class EmployeeController {
         return arrayOfEmployees;
     }
 
+    /*
+     * Gets the current list of employees, and iterates over it attempting to find EmployeeManager objects
+     * (and EmployeeDirector objects as a result of polymorphism). It then checks each employee's degree enum and
+     * increments the relevant statistic which at the end is collected into a map and returned to the facade.
+     */
     public Map<String, Integer> mapEachDegree() throws EmployeesNotRegisteredException {
         Map<String, Integer> degreeMap = new HashMap<>();
 
@@ -179,18 +189,23 @@ public class EmployeeController {
     public String printSortedEmployees() throws EmployeesNotRegisteredException {
         StringBuilder sb = new StringBuilder();
 
-        // TODO can checkEmployeesRegistered be used like this?
         if (checkEmployeesRegistered()) {
             sb.append("Employees sorted by gross salary (ascending order):").append(MenuUtility.EOL);
             EmployeeRegular[] arrayOfEmployees = getSortedEmployees();
 
             for (EmployeeRegular employee : arrayOfEmployees) {
-                sb.append(employee.toString()).append(MenuUtility.EOL);
+                sb.append(employee).append(MenuUtility.EOL);
             }
         }
         return sb.toString();
     }
 
+    /*
+     * Each update method validates employees through the getEmployee method implemented in storage.
+     * All input is validated as well, using helper methods where relevant, which throw exceptions as necessary.
+     * Handling of salary calculations has been assigned to the relevant employee type, which ensures no data is lost
+     * and the employee object itself is responsible for keeping track of its salary, greatly reducing complexity.
+     */
     public String updateEmployeeName(String empID, String newName) throws Exception {
         if (empID.trim().equals("")) {
             throw new InputEmptyException("ID cannot be blank.");
@@ -241,6 +256,10 @@ public class EmployeeController {
 
     /*
      * Promotions utilize helper methods for exception handling
+     * 1. Validate employee and input
+     * 2. Create a copy of employee
+     * 3. Remove employee
+     * 4. Create a new employee of relevant type using copied object and method signature information
      */
     public String promoteToManager(String empID, String degree) throws Exception {
         checkEmployeeExists(empID);
@@ -283,7 +302,7 @@ public class EmployeeController {
         if (checkEmployeesRegistered()) {
             sb.append("All registered employees:").append(MenuUtility.EOL);
             for (EmployeeRegular employee : storage.getEmployeeMap().values()) {
-                sb.append(employee.toString()).append(MenuUtility.EOL);
+                sb.append(employee).append(MenuUtility.EOL);
             }
         }
         return sb.toString();
@@ -292,10 +311,9 @@ public class EmployeeController {
     /*
      * Performs initial validation of common employee attributes and handles throwing of exceptions
      * Additional checks and validation for more specific employee attributes, handling exception throws this way
-     * allows for clearer code during employee creation
+     * allows for clearer and cleaner code during employee creation.
      */
-    // TODO better?
-    public void validateRegularEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
+    public void validateRegularEmployeeAttributes(String employeeID, String employeeName, double grossSalary) throws Exception {
         if (employeeID.trim().isEmpty()) {
             throw new InputEmptyException("ID cannot be blank.");
         } else if (employeeName.trim().isEmpty()) {
@@ -312,7 +330,6 @@ public class EmployeeController {
         return true;
     }
 
-    // TODO should this be moved to storage for better encapsulation?
     public boolean checkEmployeesRegistered() throws EmployeesNotRegisteredException{
         if (storage.getEmployeeMap().isEmpty()) {
             throw new EmployeesNotRegisteredException();
